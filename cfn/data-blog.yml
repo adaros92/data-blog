@@ -1,0 +1,109 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: S3 / Route53 / CloudFront CloudFormation configuration
+
+Parameters:
+  # SSL certificate created by CertificateManager
+  AwsCertificateArn:
+    Type:         String
+    Default:      arn:aws:acm:us-east-1:146066720211:certificate/c681b862-cbdc-4d52-9029-13cc15a4c87f
+    Description:  Certificate must be created before CloudFormation stack so the value is fixed
+  AwsRoute53CloudFrontHostedZoneId:
+    Type:         String
+    Default:      Z2FDTNDATAQYW2
+    Description:  CloudFront resources HostedZoneId
+  # decipheringbigdata.net
+  RootDomainName:
+    Description: Domain name for your website (example.com)
+    Type: String
+
+Resources:
+  # Identity to use in CDN
+  DataBlogCloudFrontIdentity:
+    Type: AWS::CloudFront::CloudFrontOriginAccessIdentity
+    Properties:
+      CloudFrontOriginAccessIdentityConfig:
+        Comment: "Decipheringbigdata Origin Access Identity"
+
+  # Where to store the actual website files
+  DataBlogS3Bucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Ref RootDomainName
+
+  # CDN distribution of the files in the S3 bucket above
+  DataBlogCloudFront:
+    Type: "AWS::CloudFront::Distribution"
+    Properties:
+      DistributionConfig:
+        Aliases:
+          - !Ref RootDomainName
+        Comment: !Ref RootDomainName
+        DefaultCacheBehavior:
+          AllowedMethods:
+            - GET
+            - HEAD
+          CachedMethods:
+            - GET
+            - HEAD
+          ForwardedValues:
+            QueryString: True
+          TargetOriginId:
+            !Join ["", ["S3-origin-", !Ref RootDomainName]]
+          ViewerProtocolPolicy: redirect-to-https
+        DefaultRootObject: index.html
+        Enabled: True
+        HttpVersion: http2
+        IPV6Enabled: True
+        Origins:
+          - DomainName: !GetAtt DataBlogS3Bucket.RegionalDomainName
+            Id: !Join ["", ["S3-origin-", !Ref RootDomainName]]
+            S3OriginConfig:
+              OriginAccessIdentity: !Sub "origin-access-identity/cloudfront/${DataBlogCloudFrontIdentity}"
+        PriceClass: PriceClass_All
+        ViewerCertificate:
+          AcmCertificateArn: !Ref AwsCertificateArn
+          MinimumProtocolVersion: TLSv1.2_2018 
+          SslSupportMethod: sni-only
+
+  # Allow access only by the CDN identity; no public access to the S3 files themselves is allowed
+  DataBlogS3BucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref DataBlogS3Bucket
+      PolicyDocument:
+        Statement:
+          - Action:
+              - "s3:GetObject"
+            Effect: Allow
+            Principal:
+              AWS:
+                !Join [
+                  "",
+                  [
+                    "arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity ",
+                    !Ref DataBlogCloudFrontIdentity,
+                  ],
+                ]
+            Resource: !Join ["", ["arn:aws:s3:::", !Ref DataBlogS3Bucket, "/*"]]
+        Version: "2012-10-17"
+
+  # How to redirect requests to decipheringbigdata.net to the CDN
+  DataBlogRoute53:
+    Type: AWS::Route53::RecordSet
+    Properties:
+      AliasTarget:
+        DNSName: !GetAtt DataBlogCloudFront.DomainName
+        EvaluateTargetHealth: False
+        HostedZoneId: !Ref AwsRoute53CloudFrontHostedZoneId
+      Comment: !Ref RootDomainName
+      HostedZoneName: !Sub '${RootDomainName}.'
+      Name: !Ref RootDomainName
+      Type: A
+
+Outputs:
+  Route53URL:
+    Value:        !Ref DataBlogRoute53
+    Description:  "DataBlog URL"
+  CloudFrontURL:
+    Value:        !GetAtt DataBlogCloudFront.DomainName
+    Description:  "DataBlogCloudFront URL"
