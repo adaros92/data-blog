@@ -28,6 +28,6 @@ LINKEDIN_URL = 'https://www.linkedin.com/in/adamsr09/'
 # Homepage header cover
 HEADER_COVER = 'static/masthead.jpg'
 
-DEFAULT_PAGINATION = False
+DEFAULT_PAGINATION = 8
 
 THEME = "/Users/adamsrosales/pelican-addon-clones/pelican-themes/clean-blog"
