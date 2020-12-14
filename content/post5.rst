@@ -130,7 +130,7 @@ questions.
 Are These Modeling Techniques Used In Practice?
 ###############################################
 It depends. I have found that interviewers for data engineering positions focus a lot on star schema modeling but I have not
-actual come across true star schemas that often on the job. I have seen relics of star schemas with dim tables here and
+actually come across true star schemas that often on the job. I have seen relics of star schemas with dim tables here and
 there but it always seems like people just abandon the approach and data tend to merge together into a set of core tables
 combining both dims and facts.
 
@@ -147,5 +147,5 @@ in S3), it's easy to recompute large amounts of data (up to hundreds of terabyte
 That is if a dimension changes, the dataset owners can easily backfill that dimension into the one table that also has
 facts within a matter of hours or days.
 
-I think these techniques are still worth understanding as logical data models though but they're not requirements
+I think these techniques are still worth understanding as logical data models, but they're not requirements
 when physically storing the data.
