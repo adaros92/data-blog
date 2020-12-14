@@ -4,10 +4,10 @@ Be Normal
 
 :date: 2020-12-12 00:00
 :modified: 2020-12-12 00:00
-:tags: Python
-:category: Python
+:tags: Data Modeling
+:category: Data Modeling
 :authors: Adams Rosales
-:summary: How to normalize and denormalize data with ease
+:summary: The normal forms of OLTP data modeling
 :header_cover: /static/post4/header.jpg
 
 What is Data Normalization?
