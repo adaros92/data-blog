@@ -12,10 +12,10 @@ Stars and Snowflakes
 
 Requirements in an OLAP System
 ##############################
-In my previous `Be Normal <be-normal.html>`_ post I mentioned that normalization is good for OLTP but not so
-much for OLAP systems. The way you adapt data models for OLAP purposes is by de-normalizing tables in a normalized
-data model. At a high level this process involves precomputing certain features and joining tables together for our
-analyst customers.
+In my previous `Be Normal <https://decipheringbigdata.net/be-normal.html>`_ post I mentioned that normalization is good
+for OLTP but not so much for OLAP systems. The way you adapt data models for OLAP purposes is by de-normalizing tables in
+a normalized data model. At a high level this process involves precomputing certain features and joining tables together
+for our analyst customers.
 
 Analysts typically need to answer complex business questions dealing with certain "facts" about a business. For example,
 what do revenues look like over time? What category of product sells the best during sale periods? Which apps are the
@@ -40,7 +40,7 @@ This gives us a central denormalized location where the crucial measures are sto
 bunch of system tables together to derive those measures and some lookup tables that we can easily join to segment the
 data depending on the task at hand.
 
-Take the following normalized set of tables from the `previous post <be-normal.html>`_.
+Take the following normalized set of tables from the `previous post <https://decipheringbigdata.net/be-normal.html>`_.
 
 .. image:: /static/post4/post4_complexdiagram.jpg
   :width: 90%

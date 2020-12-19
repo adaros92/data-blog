@@ -3,6 +3,9 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+# Pelican output directory
+output
+
 .DS_Store
 .idea
 
