@@ -434,3 +434,5 @@ Hit Test and voila!
   :width: 100%
   :alt: An e-mail from the restock Lambda service
 
+You can see the full code in my `GitHub repo <https://github.com/adaros92/RestockLambda>`_.
+
