@@ -19,7 +19,11 @@ AUTHOR_FEED_ATOM = None
 AUTHOR_FEED_RSS = None
 
 # Static files to include with the site
-STATIC_PATHS = ['static']
+STATIC_PATHS = ['static', "extra"]
+
+EXTRA_PATH_METADATA = {
+    'extra/favicon.ico': {'path': 'favicon.ico'}
+}
 
 # Social widget
 GITHUB_URL = 'https://github.com/adaros92'
