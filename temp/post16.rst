@@ -35,7 +35,7 @@ to learn valuable skills on the job.
 
 Rampant Bureaucracy
 ###################
-There is a lot of corporate red tape at FAANG companies. 
+There is a lot of corporate red tape at FAANG companies.
 
 Easy to Get Stuck in Ops Hell
 #############################
