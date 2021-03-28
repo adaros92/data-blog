@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+            <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="Adams Rosales' personal blog on everything data, software, and working in the tech industry">
+        <meta name="keywords" content="Data,Machine Learning,Data Science,Engineering,AI,Analytics,Big Data,Software">
+        <meta name="author" content="Adams Rosales">
+
+        <title>Deciphering Big Data</title>
+
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-DZPNKZL3NS"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', 'G-DZPNKZL3NS');
+        </script>
+
+
+        <!-- Bootstrap Core CSS -->
+        <link href="/theme/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- Custom CSS -->
+        <link href="/theme/css/clean-blog.min.css" rel="stylesheet">
+
+        <!-- Code highlight color scheme -->
+            <link href="/theme/css/code_blocks/darkly.css" rel="stylesheet">
+
+        <link rel="apple-touch-icon" sizes="180x180" href="extra/favicon/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="extra/favicon/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="extra/favicon/favicon-16x16.png">
+        <link rel="icon" sizes="16x16 24x24 32x32 48x48 64x64" href="extra/favicon/favicon.ico">
+        <link rel="manifest" href="extra/favicon/site.webmanifest">
+
+        <!-- Custom Fonts -->
+        <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+        
+
+
+
+
+        <meta name="tags" contents="Data Modeling" />
+
+
+			<meta property="og:locale" content="en">
+		<meta property="og:site_name" content="Deciphering Big Data">
+
+	<meta property="og:type" content="article">
+	<meta property="article:author" content="">
+	<meta property="og:url" content="/be-normal.html">
+	<meta property="og:title" content="Be Normal">
+	<meta property="og:description" content="">
+	<meta property="og:image" content="//static/post4/header.jpg">
+	<meta property="article:published_time" content="2020-12-12 00:00:00-08:00">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">Deciphering Big Data</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <!-- Page Header -->
+        <header class="intro-header" style="background-image: url('/static/post4/header.jpg');opacity: 0.9">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-heading">
+                        <h1>Be Normal</h1>
+                        <span class="meta">Posted by
+                                <a href="https://www.linkedin.com/in/adamsr09/">Adams Rosales</a>
+                             on Sat 12 December 2020
+                        </span>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+    <!-- Post Content -->
+    <article>
+        <div class="section" id="what-is-data-normalization">
+<h2>What is Data Normalization?</h2>
+<p>Normalization is a fancy term to describe the process of organizing data into relations or tables to remove redundancy
+through decomposition.</p>
+<p>There are 5 different forms of normalization:</p>
+<ol class="arabic simple">
+<li>First Normal Form</li>
+<li>Second Normal Form</li>
+<li>Third Normal Form</li>
+<li>Boyce and Codd Normal Form</li>
+<li>Fourth Normal Form</li>
+</ol>
+<p>As we go down this list data becomes less redundant and the more tables we end up with in our database. I'll walk
+through concrete examples of these different forms below!</p>
+</div>
+<div class="section" id="a-world-without-normalization">
+<h2>A World Without Normalization</h2>
+<p>First let's take a look at what lack of data normalization means. It helps to picture a giant spreadsheet that collects
+all kinds of data about some subject. Let's say someone in your neighborhood keeps a spreadsheet of every single person
+that lives in the neighborhood. It contains the relationships between neighbors in separate columns, the colors of the
+houses, how many cars each house has, when deliveries and public services like trash collection pass by each house, etc.</p>
+<p>It looks something like this (shout out to <a class="reference external" href="https://www.behindthename.com/random/">https://www.behindthename.com/random/</a>).</p>
+<img alt="Creepy neighbordhood spreadsheet" src="/static/post4/post4_normalization1.jpg" style="width: 100%;" />
+<p>If keeping a creepy list did not raise any red flags before, this atrocity of a data structure should. It's not difficult to
+imagine how difficult it would be to maintain data in such a list as it grows. Updates would be a pain! For example,
+if a neighbor paints their house you would need to update each household member's record in this list, not just
+a single house record. If Alf has a baby, you will need to add a family_3 column to record the relationship between the
+existing 3 members and the new addition to the family. This affects all records in the table. Same thing if someone gets
+a new car or the garbage collection routes change.</p>
+<p>So let's say your creepy neighbor wants to do better. What can they do?</p>
+</div>
+<div class="section" id="first-normal-form">
+<h2>First Normal Form</h2>
+<p>First normal form refers to data models that have only atomic values in each column and where no table has repeating
+groups. Atomic values are simply those that can't be broken down into many values. Fortunately all of the values in
+this spreadsheet are atomic. If we had a column called cars and in that column we had a record like
+Toyota Camry, Toyota Camry, Toyota Corolla then this value would need to be broken down so that each value is stored
+in its own record.</p>
+<p>What we do have here though are repeating groups. This refers to groups of values that can repeat for any one of the
+primary keys in the tables. In this case, values that can repeat for each neighbor stored in the spreadsheet. Those
+groups are the car, family, and friend columns.</p>
+<p>The solution to get rid of these repeating groups is to split the one table into 3 individual tables - neighbors,
+vehicles, and relationships.</p>
+<img alt="First normal form example" src="/static/post4/post4_fnf.jpg" style="width: 100%;" />
+<p>The vehicles table will have the name of each person and a vehicle in their household. It's easier to update the vehicles
+in each household now because we don't need to amend all records in the table by changing a column. We can simply amend,
+delete, or add rows in the vehicles table. The same is true for relationships between neighbors. To add new ones we can
+simply append rows to the relationships table.</p>
+</div>
+<div class="section" id="second-normal-form">
+<h2>Second Normal Form</h2>
+<p>Second normal form dictates that &quot;all non-key attributes should be functionality dependent on the primary key.&quot; What
+this means in plain English is that each table should contain only information about one topic and all attributes in
+that table should serve to describe the topic and nothing else.</p>
+<p>For example, in our first normal form model, the color of the house and the garbage routes are stored with the neighbors
+table. The primary key of that table is the neighbor's name. Neither the house color nor the garbage route depend on
+each neighbor. They instead depend solely on the house where the neighbors live in. Each house is uniquely identified
+by an address in our data so each of these attributes should be stored in its own table as shown below.</p>
+<img alt="Second normal form example" src="/static/post4/post4_snf.jpg" style="width: 100%;" />
+<p>The advantage of this data model is that we remove the additional redundancy of having attributes related to the address
+in the neighbors table where addresses can be repeated for each neighbor that lives in the same house as other neighbors.
+For example, if we wanted to update the color of the house at 12234 NE 20th ST, we would only need to do it once in the
+location_attributes table instead of 3 times in the neighbors table.</p>
+<p>It also means that if we delete any records from the neighbors table because people move out of the neighborhood, we
+will still preserve all of the information related to the houses at the locations where they used to live.</p>
+</div>
+<div class="section" id="third-normal-form">
+<h2>Third Normal Form</h2>
+<p>Tables should contain columns that are non-transitively dependent on the primary key.</p>
+<img alt="Confused Marky Mark" src="https://media.giphy.com/media/zjQrmdlR9ZCM/giphy.gif" style="width: 60%;" />
+<p>This one sounds complicated but it actually just means that we shouldn't store columns that depend on the primary key
+of a table AND on other columns in that table. For example, our garbage_collection table has a column for the route
+number and for the day when the garbage truck swings by at an address. Garbage route depends on the address and the day
+of collection depends on the garbage route so a transitive dependency exists.</p>
+<p>The reason why we don't want these types of dependencies in our tables is because updates have to change multiple
+attributes in a table when one attribute in the transitive dependency is updated, which can lead to inconsistencies.
+For example, if we assign a different route to an address and that route runs on a different date then we also need to
+update the date of collection for the address. We need to make sure to update both or else our data will be wrong.</p>
+<p>To fix it we can just add an additional table that stores the relationship between route and collection day.</p>
+<img alt="Third normal form example" src="/static/post4/post4_tnf.jpg" style="width: 100%;" />
+</div>
+<div class="section" id="boyce-and-codd-normal-form">
+<h2>Boyce and Codd Normal Form</h2>
+<p>This normal form adds a minor restriction to the third normal form - attributes should depend only on a super key (a
+column or collection of columns that uniquely identify records in a table).</p>
+<p>Our data model above is both in 3NF and BCNF but suppose instead that we also stored the garbage collection crew number
+in the garbage_routes table. The individual crew would determine the collection_day based on when they work in the week
+so collection_day would depend on the crew number. However, crew number would not be a super key because one crew can
+service multiple routes (crew number would not uniquely identify records in this table). This scenario would satisfy
+3NF constraints but not BCNF constraints.</p>
+<p>We could fix a scenario like this by splitting the garbage_routes table into two, one storing the relationship between
+route and crew and another storing the relationship between crew and collection_day.</p>
+<img alt="BCNF example" src="/static/post4/post4_bcnf.jpg" style="width: 100%;" />
+</div>
+<div class="section" id="fourth-normal-form">
+<h2>Fourth Normal Form</h2>
+<p>Finally, the fourth normal form requires us to avoid multi-valued dependencies in tables. This means that for any
+dependency A -&gt; B in a table, if multiple values of B exist for any single value of A and there are more than 2 columns
+in that table then there is a multi-valued dependency violating the 4NF.</p>
+<p>Our BCNF data model above also satisfies 4NF but what if a single crew had multiple collection days and we also stored
+the truck_id of each crew in the crew_collection_days table. Truck_id and collection_day here are independent of each
+other so BCNF is satisfied but this would be a multi-valued dependency because the key crew_number can have multiple
+collection days and can drive one or more trucks</p>
+<p>We can further normalize this by splitting crew_collection_days into two tables, one that maintain the one to many
+relationship between crew_number and collection_day and another the one to many relationship between crew_number and
+truck_id.</p>
+<img alt="Fourth normal form example" src="/static/post4/post4_4nf.jpg" style="width: 100%;" />
+</div>
+<div class="section" id="normalize-all-the-tables">
+<h2>Normalize All The Tables?</h2>
+<p>Normalization kicks ass, right? Well, not always. There are cases where we may want to do the opposite of normalizing
+or as they say in the biz, &quot;de-normalize.&quot;</p>
+<p>Normalization works well in OLTP databases where tables are strongly tied to engineering systems that update them. These
+are your point-of-sale, online checkout, messaging applications, etc. which are organized into individual
+objects that maintain state and functionality for very specific components of the broader systems. The individual
+objects may not be aware of other objects' state and so can only update the data for the specific table that backs
+the one component. For example, a post class that's part of a forum web application updating a post table which just
+contains information about individual posts on the forum and nothing else.</p>
+<p>For OLAP workloads that seek to answer overarching business questions, normalized databases can actually be
+a hindrance. This is because to answer the types of analytical questions typically asked in these settings, an analyst
+would need to first understand how all of the tables in a complex model like the one shown below fit together and then
+write a massive query to join all of the tables together. Such a query would be inefficient and error-prone.</p>
+<img alt="Complex OLTP diagram" src="/static/post4/post4_complexdiagram.jpg" style="width: 90%;" />
+<p>For example, say an analyst were asked to produce a summary of total quantity ordered for product categories that were
+under special offer during some time range. The analyst would need to join the SalesOrderHeader, SalesOrderDetail,
+SpecialOfferProduct, SpecialOffer, Product, ProductSubcategory, and ProductCategory tables together to produce an
+answer. Not a fun exercise!</p>
+<p>In these cases, pre-joining tables together or &quot;de-normalizing&quot; makes sense. We're willing to break normalization rules
+and introduce some redundancy to our data models in order to make analytical queries more efficient and make the lives
+of our analytics customers easier. This is where star and snowflake schemas come in handy but that's a different topic
+for another day!</p>
+</div>
+
+    </article>
+
+    <hr>
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-2">
+                    <!-- AddToAny BEGIN -->
+                <div class="a2a_kit a2a_kit_size_32 a2a_default_style">
+                    <a class="a2a_button_facebook"></a>
+                    <a class="a2a_button_twitter"></a>
+                    <a class="a2a_button_email"></a>
+                    <a class="a2a_button_reddit"></a>
+                    <a class="a2a_button_linkedin"></a>
+                    <a class="a2a_button_evernote"></a>
+                    <a class="a2a_dd" href="https://www.addtoany.com/share"></a>
+                </div>
+                <script async src="https://static.addtoany.com/menu/page.js"></script>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <!-- AddToAny END -->
+            <p class="copyright text-muted">Learn more about me at my <a href="https://www.linkedin.com/in/adamsr09/">LinkedIn</a> or <a href="https://github.com/adaros92">Github</a>.</p>
+        </div>
+    </footer>
+
+    <!-- jQuery -->
+    <script src="/theme/js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="/theme/js/bootstrap.min.js"></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script src="/theme/js/clean-blog.min.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+            <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="Adams Rosales' personal blog on everything data, software, and working in the tech industry">
+        <meta name="keywords" content="Data,Machine Learning,Data Science,Engineering,AI,Analytics,Big Data,Software">
+        <meta name="author" content="Adams Rosales">
+
+        <title>Deciphering Big Data</title>
+
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-DZPNKZL3NS"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', 'G-DZPNKZL3NS');
+        </script>
+
+
+        <!-- Bootstrap Core CSS -->
+        <link href="/theme/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- Custom CSS -->
+        <link href="/theme/css/clean-blog.min.css" rel="stylesheet">
+
+        <!-- Code highlight color scheme -->
+            <link href="/theme/css/code_blocks/darkly.css" rel="stylesheet">
+
+        <link rel="apple-touch-icon" sizes="180x180" href="extra/favicon/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="extra/favicon/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="extra/favicon/favicon-16x16.png">
+        <link rel="icon" sizes="16x16 24x24 32x32 48x48 64x64" href="extra/favicon/favicon.ico">
+        <link rel="manifest" href="extra/favicon/site.webmanifest">
+
+        <!-- Custom Fonts -->
+        <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+        
+
+
+
+
+        <meta name="tags" contents="Programming" />
+
+
+			<meta property="og:locale" content="en">
+		<meta property="og:site_name" content="Deciphering Big Data">
+
+	<meta property="og:type" content="article">
+	<meta property="article:author" content="">
+	<meta property="og:url" content="/useless-but-fun-command-line-hangman.html">
+	<meta property="og:title" content="Useless but Fun: Command Line Hangman">
+	<meta property="og:description" content="">
+	<meta property="og:image" content="//static/post9/header.jpg">
+	<meta property="article:published_time" content="2020-12-29 00:00:00-08:00">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">Deciphering Big Data</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <!-- Page Header -->
+        <header class="intro-header" style="background-image: url('/static/post9/header.jpg');opacity: 0.9">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-heading">
+                        <h1>Useless but Fun: Command Line Hangman</h1>
+                        <span class="meta">Posted by
+                                <a href="https://www.linkedin.com/in/adamsr09/">Adams Rosales</a>
+                             on Tue 29 December 2020
+                        </span>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+    <!-- Post Content -->
+    <article>
+        <div class="section" id="interesting-tell-me-more">
+<h2>Interesting...Tell Me More</h2>
+<p>I'm building a Python package called <a class="reference external" href="https://github.com/adaros92/pygme">pygme</a> for playing simple games on your
+terminal. It's purely because this is how I enjoy spending my time :).</p>
+<p>Last time I wrote about implementing <a class="reference external" href="https://decipheringbigdata.net/useless-but-fun-command-line-snake.html">Snake</a>.
+That was okay but it was missing some of that edge. Some of that spice that makes a game <em>really</em> fun. Well, don't fret
+because today I am implementing Hangman!</p>
+<img alt="Excited elf" src="https://media.giphy.com/media/LNE01Z89j9gis/giphy.gif" style="width: 50%;" />
+</div>
+<div class="section" id="design">
+<h2>Design</h2>
+<p>Just like with any other serious software project, one must always begin with a well thought-out design. Don't worry. I
+got you. Behold, the components of the game!</p>
+<ul class="simple">
+<li>Game - contains the game loop and manages interactions between the objects involved in the game</li>
+<li>Board - handy dandy interface used for other board-like games used here as a container for the noose pieces</li>
+<li>Noose - implements and manages the various components of the Hangman noose (pole, rope, head, arms, legs, etc)</li>
+<li>Word - supplements the built-in string class with additional functionality specific to a game of Hangman</li>
+<li>Dictionary - a container class for all possible words that can be generated at random</li>
+</ul>
+<p>The actual dictionary of words will be stored in a text file and distributed with the pygme Python package. The
+Dictionary class will manage this file by reading in all of the words available and converting them into special
+word objects. These word objects will alter the way the characters in each word are represented based on individual characters
+that have already been guessed. For example, if the word is &quot;sunny&quot; but the player has only guessed the character &quot;n&quot;, it
+will display the word as __nn_ when either the Python str or repr functions are called on it.</p>
+<p>The Noose class here is just a collection of smaller objects that define how to display each of the components of a
+Hangman noose to the user. A noose object will consist of the noose holder thing (?) made up by the base, pole,
+top piece, and rope in addition to the man that it will hold, which will be made up by the head, arms, body, and legs.</p>
+<p>The Board class is just a handy 2D grid that can hold any data needed for a game. In this case I'm just using it to store
+the different components of a noose and &quot;draw&quot; the additional pieces whenever the player's guess is wrong.</p>
+<p>Finally, the Game class will just manage all the other components and dictate the flow of the game. At a high level, it
+will do the following:</p>
+<ol class="arabic simple">
+<li>Instantiate the necessary board, noose, and dictionary objects</li>
+<li>Get a random word to guess from the dictionary</li>
+<li>Display the base noose and hidden word that needs to be guessed to the user</li>
+<li>Ask for the player's guess and validate it</li>
+<li>Check if the guess is right or wrong and update the noose object accordingly</li>
+<li>Display the update to the player (either correct characters appear or a new body part is filled in)</li>
+</ol>
+<p>It keeps doing 4-6 until a game over condition is reached (the noose is full or all letters have been guessed).</p>
+</div>
+<div class="section" id="noose-implementation">
+<h2>Noose Implementation</h2>
+<p>Starting out with Noose class we have the following.</p>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pygme.game.board</span> <span class="kn">import</span> <span class="n">GameBoard</span>
+
+
+<span class="k">class</span> <span class="nc">Noose</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Combines noose and body parts together to make up the Hangman noose that is displayed to the user</span>
+<span class="sd">    Constructor parameters:</span>
+<span class="sd">    @param game_board - the board to draw the noose on</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">game_board</span><span class="p">:</span> <span class="n">GameBoard</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">game_board</span> <span class="o">=</span> <span class="n">game_board</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">noose_components</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="c1"># The base of the noose and rope</span>
+            <span class="p">{</span><span class="s2">&quot;x_index&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;y_index&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s2">&quot;part&quot;</span><span class="p">:</span> <span class="n">NoosePart</span><span class="p">(</span><span class="s2">&quot;base&quot;</span><span class="p">),</span> <span class="s2">&quot;displayed&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span>
+            <span class="p">{</span><span class="s2">&quot;x_index&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;y_index&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s2">&quot;part&quot;</span><span class="p">:</span> <span class="n">NoosePart</span><span class="p">(</span><span class="s2">&quot;pole&quot;</span><span class="p">),</span> <span class="s2">&quot;displayed&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span>
+            <span class="p">{</span><span class="s2">&quot;x_index&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;y_index&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s2">&quot;part&quot;</span><span class="p">:</span> <span class="n">NoosePart</span><span class="p">(</span><span class="s2">&quot;base&quot;</span><span class="p">),</span> <span class="s2">&quot;displayed&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span>
+            <span class="p">{</span><span class="s2">&quot;x_index&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;y_index&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s2">&quot;part&quot;</span><span class="p">:</span> <span class="n">NoosePart</span><span class="p">(</span><span class="s2">&quot;pole&quot;</span><span class="p">),</span> <span class="s2">&quot;displayed&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span>
+            <span class="p">{</span><span class="s2">&quot;x_index&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;y_index&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;part&quot;</span><span class="p">:</span> <span class="n">NoosePart</span><span class="p">(</span><span class="s2">&quot;pole&quot;</span><span class="p">),</span> <span class="s2">&quot;displayed&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span>
+            <span class="p">{</span><span class="s2">&quot;x_index&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;y_index&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;part&quot;</span><span class="p">:</span> <span class="n">NoosePart</span><span class="p">(</span><span class="s2">&quot;pole&quot;</span><span class="p">),</span> <span class="s2">&quot;displayed&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span>
+            <span class="p">{</span><span class="s2">&quot;x_index&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;y_index&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;part&quot;</span><span class="p">:</span> <span class="n">NoosePart</span><span class="p">(</span><span class="s2">&quot;pole&quot;</span><span class="p">),</span> <span class="s2">&quot;displayed&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span>
+            <span class="p">{</span><span class="s2">&quot;x_index&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;y_index&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;part&quot;</span><span class="p">:</span> <span class="n">NoosePart</span><span class="p">(</span><span class="s2">&quot;top&quot;</span><span class="p">),</span> <span class="s2">&quot;displayed&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span>
+            <span class="p">{</span><span class="s2">&quot;x_index&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;y_index&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;part&quot;</span><span class="p">:</span> <span class="n">NoosePart</span><span class="p">(</span><span class="s2">&quot;top&quot;</span><span class="p">),</span> <span class="s2">&quot;displayed&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span>
+            <span class="p">{</span><span class="s2">&quot;x_index&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s2">&quot;y_index&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;part&quot;</span><span class="p">:</span> <span class="n">NoosePart</span><span class="p">(</span><span class="s2">&quot;rope&quot;</span><span class="p">),</span> <span class="s2">&quot;displayed&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span>
+            <span class="c1"># The body</span>
+            <span class="p">{</span><span class="s2">&quot;x_index&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s2">&quot;y_index&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;part&quot;</span><span class="p">:</span> <span class="n">BodyPart</span><span class="p">(</span><span class="s2">&quot;head&quot;</span><span class="p">),</span> <span class="s2">&quot;displayed&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">},</span>
+            <span class="p">{</span><span class="s2">&quot;x_index&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s2">&quot;y_index&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;part&quot;</span><span class="p">:</span> <span class="n">BodyPart</span><span class="p">(</span><span class="s2">&quot;body&quot;</span><span class="p">),</span> <span class="s2">&quot;displayed&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">},</span>
+            <span class="p">{</span><span class="s2">&quot;x_index&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;y_index&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;part&quot;</span><span class="p">:</span> <span class="n">BodyPart</span><span class="p">(</span><span class="s2">&quot;left_arm&quot;</span><span class="p">),</span> <span class="s2">&quot;displayed&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">},</span>
+            <span class="p">{</span><span class="s2">&quot;x_index&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s2">&quot;y_index&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;part&quot;</span><span class="p">:</span> <span class="n">BodyPart</span><span class="p">(</span><span class="s2">&quot;right_arm&quot;</span><span class="p">),</span> <span class="s2">&quot;displayed&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">},</span>
+            <span class="p">{</span><span class="s2">&quot;x_index&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;y_index&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s2">&quot;part&quot;</span><span class="p">:</span> <span class="n">BodyPart</span><span class="p">(</span><span class="s2">&quot;left_leg&quot;</span><span class="p">),</span> <span class="s2">&quot;displayed&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">},</span>
+            <span class="p">{</span><span class="s2">&quot;x_index&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s2">&quot;y_index&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s2">&quot;part&quot;</span><span class="p">:</span> <span class="n">BodyPart</span><span class="p">(</span><span class="s2">&quot;right_leg&quot;</span><span class="p">),</span> <span class="s2">&quot;displayed&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">},</span>
+        <span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">next_piece</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_last_displayed</span><span class="p">()</span> <span class="o">+</span> <span class="mi">1</span>
+
+    <span class="k">def</span> <span class="nf">draw</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot; Refreshes the associated grid with the latest noose representation &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">game_board</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">component</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">noose_components</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">component</span><span class="p">[</span><span class="s2">&quot;displayed&quot;</span><span class="p">]:</span>
+                <span class="k">continue</span>
+            <span class="n">part</span> <span class="o">=</span> <span class="n">component</span><span class="p">[</span><span class="s2">&quot;part&quot;</span><span class="p">]</span>
+            <span class="n">coordinate</span> <span class="o">=</span> <span class="p">(</span><span class="n">component</span><span class="p">[</span><span class="s2">&quot;x_index&quot;</span><span class="p">],</span> <span class="n">component</span><span class="p">[</span><span class="s2">&quot;y_index&quot;</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">game_board</span><span class="o">.</span><span class="n">refresh</span><span class="p">([</span><span class="n">coordinate</span><span class="p">],</span> <span class="nb">repr</span><span class="p">(</span><span class="n">part</span><span class="p">),</span> <span class="n">clear_board</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">is_complete</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot; Checks whether all components have been displayed, meaning the noose is complete</span>
+<span class="sd">        :returns True if the entire noose has been build during the course of the Hangman game; False otherwise</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">complete</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">for</span> <span class="n">component</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">noose_components</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">component</span><span class="p">[</span><span class="s2">&quot;displayed&quot;</span><span class="p">]:</span>
+                <span class="n">complete</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="n">complete</span>
+
+    <span class="k">def</span> <span class="nf">get_last_displayed</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot; Retrieves the last component of the Hangman noose that is currently displayed to the user</span>
+<span class="sd">        :returns an index to the last displayed component in the noose_components class attribute</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">complete_idx</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">noose_components</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">component</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">noose_components</span><span class="p">):</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">component</span><span class="p">[</span><span class="s2">&quot;displayed&quot;</span><span class="p">]:</span>
+                <span class="n">complete_idx</span> <span class="o">=</span> <span class="n">idx</span> <span class="o">-</span> <span class="mi">1</span>
+                <span class="k">break</span>
+        <span class="k">return</span> <span class="n">complete_idx</span>
+
+    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot; Updates the noose by displaying a new component &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_complete</span><span class="p">():</span>
+            <span class="n">component_to_update</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">noose_components</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">next_piece</span><span class="p">]</span>
+            <span class="n">component_to_update</span><span class="p">[</span><span class="s2">&quot;displayed&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">next_piece</span> <span class="o">+=</span> <span class="mi">1</span>
+</pre></div>
+<p>This contains a collection of different parts in a list of dictionaries. These dictionaries store information about
+where on a 2D grid each piece should be stored in to display the little noose + man figure via the UI. It's hard-coded
+here because the shape itself remains constant. This would need to be made more dynamic to accommodate different sizes or
+determine the number of parts passed on some parameter like the difficulty level.</p>
+<p>When the noose is first instantiated, it holds a pointer to the last displayed item. The update method will just increment
+this pointer and display the next item in line. This mechanism allows the game to display new parts of the man when
+letters are guessed incorrectly.The get_last_displayed method here just helps with finding that last displayed item when
+the noose is first instantiated.</p>
+<p>The draw method just updates the given 2D grid/board with each of the components' coordinates and how to represent each
+of the components. This will be called by the game loop before each turn to display the current status of the noose to the
+player.</p>
+<p>The is_complete method is used to check whether all of the components have been displayed or not. This will be used by the
+game to determine if the man has been hung, which is a game over condition.</p>
+<p>The NoosePart and BodyPart classes here are implemented below. All they do is define how to represent each part.</p>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">abc</span> <span class="kn">import</span> <span class="n">ABC</span>
+
+
+<span class="k">class</span> <span class="nc">Part</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; A base Part interface to be inherited by different types of concrete parts</span>
+<span class="sd">    Constructor parameters:</span>
+<span class="sd">    @param part - the name of the part</span>
+<span class="sd">    @param part_char_map - how the part will be represented to the user on a grid</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">part</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">part_char_map</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">part</span> <span class="o">=</span> <span class="n">part</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">part_char_map</span> <span class="o">=</span> <span class="n">part_char_map</span>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">part_char_map</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">part</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="fm">__repr__</span><span class="p">()</span>
+
+
+<span class="k">class</span> <span class="nc">BodyPart</span><span class="p">(</span><span class="n">Part</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Represents part of the man in Hangman</span>
+<span class="sd">    Constructor parameters:</span>
+<span class="sd">    @param part - the name of the part</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">PART_CHAR_MAP</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;head&quot;</span><span class="p">:</span> <span class="s2">&quot;O&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;left_arm&quot;</span><span class="p">:</span> <span class="s2">&quot;-&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;right_arm&quot;</span><span class="p">:</span> <span class="s2">&quot;-&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;left_leg&quot;</span><span class="p">:</span> <span class="s2">&quot;/&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;right_leg&quot;</span><span class="p">:</span> <span class="s2">&quot;</span><span class="se">\\</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;body&quot;</span><span class="p">:</span> <span class="s2">&quot;|&quot;</span>
+    <span class="p">}</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">part</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">part</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">PART_CHAR_MAP</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">NoosePart</span><span class="p">(</span><span class="n">Part</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Represents part of noose in Hangman</span>
+<span class="sd">    Constructor parameters:</span>
+<span class="sd">    @param part - the name of the part</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">PART_CHAR_MAP</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;base&quot;</span><span class="p">:</span> <span class="s2">&quot;_&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;top&quot;</span><span class="p">:</span> <span class="s2">&quot;_&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;pole&quot;</span><span class="p">:</span> <span class="s2">&quot;|&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;rope&quot;</span><span class="p">:</span> <span class="s2">&quot;|&quot;</span>
+    <span class="p">}</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">part</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">part</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">PART_CHAR_MAP</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="section" id="dictionary-implementation">
+<h2>Dictionary Implementation</h2>
+<p>Alright, alright, alright. The dictionary! So for this, I just found a list of words online and saved them as a text
+file in the data directory of the application <a class="reference external" href="https://github.com/adaros92/pygme/blob/main/pygme/data/dictionary.txt">here</a>.
+To accompany this I have a Dictionary class that reads the list in, converts the words into special objects of the Word
+class I mentioned before, and generates a random word from that list to be used in the game.</p>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">pkg_resources</span>
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+
+<span class="k">class</span> <span class="nc">Dictionary</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Represents a dictionary to get words from for word games</span>
+<span class="sd">    Constructor arguments:</span>
+<span class="sd">    :param config - a configuration dictionary containing the file packaged up with pygme containing all words</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dictionary_filename</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s2">&quot;dictionary_filename&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">words</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_load_dictionary</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_load_dictionary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Reads the dictionary file specified in the config assumed to be stored in data subdirectory &quot;&quot;&quot;</span>
+        <span class="n">directory_path</span> <span class="o">=</span> <span class="n">pkg_resources</span><span class="o">.</span><span class="n">resource_filename</span><span class="p">(</span><span class="s1">&#39;pygme&#39;</span><span class="p">,</span> <span class="s1">&#39;data/&#39;</span><span class="p">)</span>
+        <span class="n">full_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">directory_path</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dictionary_filename</span><span class="p">)</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">full_path</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">words</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">words</span> <span class="o">=</span> <span class="p">[</span><span class="n">Word</span><span class="p">(</span><span class="n">word</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">))</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">words</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">get_random_word</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">min_length</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">max_length</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">maxsize</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot; Retrieves a random word with length between the given minimum and max length arguments</span>
+<span class="sd">        :param min_length - the minimum length that the word should have</span>
+<span class="sd">        :param max_length - the maximum length that the word should have</span>
+<span class="sd">        :returns a random word from the dictionary matching the given length criteria</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">eligible_words</span> <span class="o">=</span> <span class="p">[</span><span class="n">word</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">words</span> <span class="k">if</span> <span class="n">min_length</span> <span class="o">&lt;=</span> <span class="nb">len</span><span class="p">(</span><span class="n">word</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">max_length</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">eligible_words</span><span class="p">)</span>
+</pre></div>
+<p>This takes a config dictionary with the name of the dictionary file as it's stored in the data directory within the
+application. It will then read this file with the _load_dictionary method and store each word in a words list. The
+get_random_word method just returns a random word from the current list matching the required min and max length limits.</p>
+<p>You'll notice that each word is stored as a Word object. This class is defined next.</p>
+<div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Word</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Represents a word in a dictionary. Used to provide supplements to existing str class by not taking into</span>
+<span class="sd">    account capitalization when comparing words and hiding certain characters when returning the word to a caller.</span>
+<span class="sd">    Constructor parameters:</span>
+<span class="sd">    @param word - a regular string word</span>
+<span class="sd">    @param show_only - an optional set containing characters to exclude from the word when repr or str are called</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">word</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">show_only</span><span class="p">:</span> <span class="nb">set</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="k">if</span> <span class="s2">&quot; &quot;</span> <span class="ow">in</span> <span class="n">word</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The given word </span><span class="si">{0}</span><span class="s2"> contains whitespace&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">word</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">word</span> <span class="o">=</span> <span class="n">word</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">show_only</span> <span class="o">=</span> <span class="n">show_only</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hide_all</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">show_only</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">show_only</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">word</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__contains__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">letter</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot; Checks whether the given letter is within the word without taking capitalization into account</span>
+<span class="sd">        For example:</span>
+<span class="sd">        &quot;a&quot; in action == True</span>
+<span class="sd">        &quot;A&quot; in action == True</span>
+<span class="sd">        &quot;p&quot; in action == False</span>
+<span class="sd">        :param letter - the letter to check</span>
+<span class="sd">        :returns True if the letter is in the word, False otherwise</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">letter</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">word</span>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot; When repr() is called on the string, exclude characters not in the self.show_only set if it&#39;s nonempty</span>
+<span class="sd">        :returns either the string as is or the string with excluded</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">return_str</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">word</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">show_only</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">hide_all</span><span class="p">:</span>
+            <span class="n">return_str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+            <span class="c1"># Only show characters that are in the given show_only set</span>
+            <span class="k">for</span> <span class="n">char</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">word</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">char</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">show_only</span> <span class="ow">or</span> <span class="n">char</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">show_only</span><span class="p">:</span>
+                    <span class="n">return_str</span> <span class="o">+=</span> <span class="n">char</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">return_str</span> <span class="o">+=</span> <span class="s2">&quot;_&quot;</span>
+        <span class="k">return</span> <span class="n">return_str</span>
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="fm">__repr__</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="fm">__setattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot; Overrides the set attribute functionality to always take the lowercase of a word</span>
+<span class="sd">        For example:</span>
+<span class="sd">        my_word = Word(&quot;hello&quot;)</span>
+<span class="sd">        my_word.word = &quot;Hi&quot;</span>
+<span class="sd">        my_word.word == &quot;hi&quot; # True</span>
+<span class="sd">        :param key - the object attribute to set</span>
+<span class="sd">        :param value - the value to assign to the attribute</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Any attribute other than word will be set normally and word will always be taken as lowercase</span>
+        <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="s2">&quot;word&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">yield from</span> <span class="bp">self</span><span class="o">.</span><span class="n">word</span>
+</pre></div>
+<p>This pretty much acts like a string but implements some specific functionality we need for Hangman. First when a word is
+stored, it's immediately converted to lowercase to ensure consistency. Second, the __contains__ magic method ensures that
+when we check for presence of a character in the word string (like 'a' in abacus), it will convert the letter being checked
+to lowercase. Third, when we call either str() or repr() on the string, only the characters present in the provided show_only
+set will be displayed.</p>
+<p>The __iter__ method here defines what behavior each word string should exhibit when the program iterates over it. For example,
+if we define word my_word = Word(&quot;someword&quot;), this will define what happens when we do for char in my_word. The yield from
+self.word will just provide each character in the word stored with the object so : s, o, m, e, w, ... ,d.</p>
+</div>
+<div class="section" id="board-implementation">
+<h2>Board Implementation</h2>
+<p>Now for the class to record each of the noose's components and print it out to the screen.</p>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pygme.utils.display</span> <span class="kn">import</span> <span class="n">clear_console</span>
+<span class="kn">from</span> <span class="nn">pygme.utils.validation</span> <span class="kn">import</span> <span class="n">validate_grid_index</span>
+<span class="kn">from</span> <span class="nn">pygme.utils.space</span> <span class="kn">import</span>
+
+
+<span class="k">class</span> <span class="nc">GameBoard</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Represents a base board to play a game on which may be extended by more specific types of boards</span>
+<span class="sd">    Constructor arguments:</span>
+<span class="sd">    :param length - the length of the board to create</span>
+<span class="sd">    :param width - the width of the board to create</span>
+<span class="sd">    :param empty_square - how to represent empty squares on the board</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">length</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">width</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">empty_square</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;_&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="n">length</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">width</span> <span class="o">&gt;</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">length</span> <span class="o">=</span> <span class="n">length</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">width</span> <span class="o">=</span> <span class="n">width</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">empty_square</span> <span class="o">=</span> <span class="n">empty_square</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">board</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_create_board</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">is_square_clear</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">coordinate</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot; Returns True if the square at a given coordinate is empty; False if it&#39;s not empty</span>
+<span class="sd">        :param coordinate - an x,y coordinate to check</span>
+<span class="sd">        :returns whether the given coordinate is empty in the board</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="n">are_coordinates_between_limits</span><span class="p">(</span><span class="n">coordinate</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">width</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">coordinate</span><span class="p">[</span><span class="mi">0</span><span class="p">]][</span><span class="n">coordinate</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">empty_square</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">return</span> <span class="kc">False</span>
+
+    <span class="k">def</span> <span class="nf">_create_board</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot; Creates an empty 2D list with the given board dimensions&quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">empty_square</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">width</span><span class="p">)])</span>
+
+    <span class="k">def</span> <span class="nf">print</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">include_reference</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">ignore_characters</span><span class="p">:</span> <span class="nb">set</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">join_char</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot; Prints out the board to stdout</span>
+<span class="sd">        :param include_reference - whether to include grid references when printing the board out in the console</span>
+<span class="sd">        :param ignore_characters - a collection of characters to replace with empty characters</span>
+<span class="sd">        :param join_char - how to join a row list together to produce a row on the terminl screen</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Clear the terminal</span>
+        <span class="n">clear_console</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">ignore_characters</span><span class="p">:</span>
+            <span class="n">ignore_characters</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+        <span class="c1"># Add an index before each column if applicable</span>
+        <span class="k">if</span> <span class="n">include_reference</span><span class="p">:</span>
+            <span class="n">header_items</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="p">)]</span>
+            <span class="n">header</span> <span class="o">=</span> <span class="s2">&quot;    &quot;</span>
+            <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">header_items</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="n">header</span> <span class="o">+=</span> <span class="n">item</span> <span class="o">+</span> <span class="s2">&quot;   &quot;</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">header</span> <span class="o">+=</span> <span class="n">item</span> <span class="o">+</span> <span class="s2">&quot;  &quot;</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">header</span><span class="p">)</span>
+        <span class="c1"># Print the board</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">width</span><span class="p">):</span>
+            <span class="c1"># Print an index before each row if applicable</span>
+            <span class="n">header</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+            <span class="n">space</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+            <span class="k">if</span> <span class="n">include_reference</span><span class="p">:</span>
+                <span class="n">header</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">header</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="n">space</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span> <span class="o">*</span> <span class="mi">3</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">space</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span> <span class="o">*</span> <span class="mi">2</span>
+                <span class="n">row_string</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+                <span class="k">for</span> <span class="n">square</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="p">):</span>
+                    <span class="n">column_spacing</span> <span class="o">=</span> <span class="s2">&quot;   &quot;</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">square</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">square</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">ignore_characters</span><span class="p">:</span>
+                        <span class="n">row_string</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">square</span><span class="p">][</span><span class="n">i</span><span class="p">]</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">row_string</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">empty_square</span>
+                    <span class="n">row_string</span> <span class="o">+=</span> <span class="n">column_spacing</span>
+                <span class="nb">print</span><span class="p">(</span><span class="n">header</span> <span class="o">+</span> <span class="n">space</span> <span class="o">+</span> <span class="n">row_string</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">row_string</span> <span class="o">=</span> <span class="n">join_char</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">empty_square</span> <span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">square</span><span class="p">][</span><span class="n">i</span><span class="p">]</span>
+                                                                   <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">square</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="ow">in</span> <span class="n">ignore_characters</span><span class="p">)</span>
+                                             <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">square</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">square</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="p">)])</span>
+                <span class="nb">print</span><span class="p">(</span><span class="n">row_string</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">clear</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot; Clears the current board by replacing every square with the given empty square character &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">width</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">empty_square</span>
+
+    <span class="k">def</span> <span class="nf">refresh</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                <span class="n">coordinates</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span> <span class="n">representation</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">clear_board</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot; Refreshes the board by adding the given representation character to the given coordinates</span>
+<span class="sd">        Example: representation = &#39;*&#39; at coordinates [(0, 1), (2, 1)] on a 3x3 board will result in the following:</span>
+<span class="sd">        _ _ _</span>
+<span class="sd">        * _ *</span>
+<span class="sd">        _ _ _</span>
+<span class="sd">        :param coordinates - a list of coordinate tuples to update</span>
+<span class="sd">        :param representation - the character to be placed in the given coordinates</span>
+<span class="sd">        :param clear_board - whether to first clear the current board before placing the new characters or not</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Clear the current board first if the provided argument is true</span>
+        <span class="k">if</span> <span class="n">clear_board</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">coordinate_tuple</span> <span class="ow">in</span> <span class="n">coordinates</span><span class="p">:</span>
+            <span class="n">x_coordinate</span><span class="p">,</span> <span class="n">y_coordinate</span> <span class="o">=</span> <span class="n">coordinate_tuple</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">coordinate_tuple</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="c1"># Only refresh the board with the coordinate if the coordinate is valid</span>
+            <span class="k">if</span> <span class="n">validate_grid_index</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">width</span><span class="p">,</span> <span class="n">x_coordinate</span><span class="p">,</span> <span class="n">y_coordinate</span><span class="p">):</span>
+                <span class="c1"># Refresh the board</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">x_coordinate</span><span class="p">][</span><span class="n">y_coordinate</span><span class="p">]</span> <span class="o">=</span> <span class="n">representation</span>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;GameBoard (</span><span class="si">{0}</span><span class="s2"> by </span><span class="si">{1}</span><span class="s2">)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">width</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="fm">__repr__</span><span class="p">()</span>
+</pre></div>
+<p>This is fairly self-explanatory so moving on. Also, if someone wants to work on that horrendous print method the code
+is <a class="reference external" href="https://github.com/adaros92/pygme/blob/main/pygme/game/board.py">on GitHub</a>.</p>
+</div>
+<div class="section" id="game-implementation">
+<h2>Game Implementation</h2>
+<p>Finally we have the class to glue all of the different components together and run the main game loop.</p>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">string</span>
+
+<span class="kn">from</span> <span class="nn">pygme.game.board</span> <span class="kn">import</span> <span class="n">GameBoard</span>
+<span class="kn">from</span> <span class="nn">pygme.game.game</span> <span class="kn">import</span> <span class="n">Game</span>
+<span class="kn">from</span> <span class="nn">pygme.hangman</span> <span class="kn">import</span> <span class="n">noose</span>
+<span class="kn">from</span> <span class="nn">pygme.utils</span> <span class="kn">import</span> <span class="n">dictionary</span>
+
+
+<span class="k">class</span> <span class="nc">HangmanGame</span><span class="p">(</span><span class="n">Game</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Contains the necessary logic to run a game of Hangman</span>
+<span class="sd">    Constructor parameters:</span>
+<span class="sd">    @param config - the configuration dictionary to use for the game (should be defined in data packaged with pygme)</span>
+<span class="sd">    @param name - the name of the game to feed to parent class</span>
+<span class="sd">    @param difficulty - a difficulty to assume (provided by user during initialization)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;hangman&quot;</span><span class="p">,</span> <span class="n">difficulty</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;normal&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">config</span><span class="p">,</span> <span class="n">difficulty</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dictionary</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">noose</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">min_word_length</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_word_length</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">guessed_characters</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">board</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">noose</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">word</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="nf">_validate_initialization</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">initialization_object</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot; Validates the initialization object to ensure a Hangman game can occur</span>
+<span class="sd">        :param initialization_object - required game parameters to follow</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_validate_base</span><span class="p">(</span><span class="n">initialization_object</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">initialization_object</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot; Initializes the game of Hangman</span>
+<span class="sd">        :param initialization_object - an optional dictionary containing the required game parameters to use</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">initialization_object</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_user_input</span><span class="p">(</span><span class="n">initialization_object</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">difficulty</span> <span class="o">=</span> <span class="n">initialization_object</span><span class="p">[</span><span class="s2">&quot;difficulty&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dictionary</span> <span class="o">=</span> <span class="n">dictionary</span><span class="o">.</span><span class="n">Dictionary</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">)</span>
+        <span class="n">word_sizes_by_difficulty</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;word_sizes_by_difficulty&quot;</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">difficulty</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">min_word_length</span> <span class="o">=</span> <span class="n">word_sizes_by_difficulty</span><span class="p">[</span><span class="s2">&quot;min_word_length&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_word_length</span> <span class="o">=</span> <span class="n">word_sizes_by_difficulty</span><span class="p">[</span><span class="s2">&quot;max_word_length&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">board</span> <span class="o">=</span> <span class="n">GameBoard</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;board_length&quot;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;board_width&quot;</span><span class="p">],</span> <span class="s2">&quot; &quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">noose</span> <span class="o">=</span> <span class="n">noose</span><span class="o">.</span><span class="n">Noose</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">noose</span><span class="o">.</span><span class="n">draw</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_has_won</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot; Checks whether the player has won the game by checking if all the letters in the word have been guessed</span>
+<span class="sd">        :returns True if the game has been won; False otherwise</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">letter</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">word</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">letter</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">guessed_characters</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="k">def</span> <span class="nf">_man_died</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot; Checks whether the man has died by checking if the noose is complete</span>
+<span class="sd">        :returns True if the man is dead; False otherwise</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">noose</span><span class="o">.</span><span class="n">is_complete</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_is_game_over</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot; Checks whether the game has finished from two possible options - the player has won (guessed all letters) or</span>
+<span class="sd">        the man has died</span>
+<span class="sd">        :returns True if the game is over; False otherwise</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_has_won</span><span class="p">()</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_man_died</span><span class="p">():</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">return</span> <span class="kc">False</span>
+
+    <span class="k">def</span> <span class="nf">_display_word</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot; Prints the current word to be guessed by hiding characters that have not been guessed yet when displaying</span>
+<span class="sd">        the word to the user &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">guessed_characters</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">word</span><span class="o">.</span><span class="n">hide_all</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">word</span><span class="o">.</span><span class="n">hide_all</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">word</span><span class="o">.</span><span class="n">show_only</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">guessed_characters</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Word to guess:</span><span class="se">\n</span><span class="si">{0}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">word</span><span class="p">)))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Guessed character: </span><span class="si">{0}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">guessed_characters</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">_display_final_status</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot; Displays a message to let the user know how they did after the game finishes &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">word</span><span class="o">.</span><span class="n">show_only</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">word</span><span class="o">.</span><span class="n">hide_all</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">The word was: </span><span class="si">{0}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">word</span><span class="p">)))</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_has_won</span><span class="p">():</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Congratulations, you won!&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Better luck next time!&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_guess_input</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot; Accepts string input from the user to be the next guess (for monkeypatching instead of built-in input func)</span>
+<span class="sd">        :returns the string input received from the user</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Enter a character to guess next:&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_guess</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot; Retrieves a letter guess from the user and validates it before returning it to be used in the game</span>
+<span class="sd">        :returns a single ASCII character to be the next letter guess in the game</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">guess_valid</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">guess</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">while</span> <span class="ow">not</span> <span class="n">guess_valid</span><span class="p">:</span>
+            <span class="n">guess</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_guess_input</span><span class="p">()</span>
+            <span class="c1"># Ensure the guess has not been already provided</span>
+            <span class="k">if</span> <span class="n">guess</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">guessed_characters</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;You already guessed that character. Try again.&quot;</span><span class="p">)</span>
+            <span class="c1"># There must be a guess</span>
+            <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">guess</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;You can only enter one character at a time&quot;</span><span class="p">)</span>
+            <span class="c1"># The guess must be either a lowercase or upper case letter</span>
+            <span class="k">elif</span> <span class="n">guess</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">string</span><span class="o">.</span><span class="n">ascii_letters</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Guesses must be one of </span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">string</span><span class="o">.</span><span class="n">ascii_letters</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">guess_valid</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">guessed_characters</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">guess</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">guess</span>
+
+    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">initialization_object</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot; Runs the game of Hangman</span>
+<span class="sd">        :param initialization_object - an optional dictionary containing the required game parameters to use</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_initialize</span><span class="p">(</span><span class="n">initialization_object</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">word</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dictionary</span><span class="o">.</span><span class="n">get_random_word</span><span class="p">(</span><span class="n">min_length</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">min_word_length</span><span class="p">,</span> <span class="n">max_length</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">max_word_length</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">word</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span>
+        <span class="k">while</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_game_over</span><span class="p">():</span>
+            <span class="c1"># Display noose and word on board</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="o">.</span><span class="n">print</span><span class="p">(</span><span class="n">join_char</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_display_word</span><span class="p">()</span>
+            <span class="n">guess</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_guess</span><span class="p">()</span>
+            <span class="c1"># Get the noose to display a new piece if the guess is wrong</span>
+            <span class="k">if</span> <span class="n">guess</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">word</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">noose</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+            <span class="c1"># Update the current noose on the board to be displayed to the user</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">noose</span><span class="o">.</span><span class="n">draw</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="o">.</span><span class="n">print</span><span class="p">(</span><span class="n">join_char</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_display_final_status</span><span class="p">()</span>
+        <span class="k">return</span> <span class="p">{}</span>
+</pre></div>
+<p>The game logic is found within the run method. All others are utility methods used by this run method. This is also pretty
+straightforward. We start out by initializing everything with the _initialize method. Then when generate a new random
+word for the player to guess. Next we begin iterating for as long as the game has not finished  and do the following:</p>
+<ol class="arabic simple">
+<li>Print the board, which has been drawn on by the noose object, to the user</li>
+<li>Display the word with all characters that have yet to be guessed displayed as underscores</li>
+<li>Ask for the player's next guess</li>
+<li>Check if the guessed letter is in the word and if not, update the noose with the next body part</li>
+<li>Draw the latest noose on the board</li>
+</ol>
+<p>Once the game finishes, the final board will be printed out along with a status message that tells the player whether
+they won or not.</p>
+</div>
+<div class="section" id="the-final-game">
+<h2>The Final Game</h2>
+<p>Check out this sweet play!</p>
+<img alt="A game of Hangman in the terminal" src="https://media.giphy.com/media/y4x68SYqJg2b9PdRF5/giphy.gif" style="width: 60%;" />
+<p>I'm going to tell my grand kids this was God of War.</p>
+</div>
+
+    </article>
+
+    <hr>
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-2">
+                    <!-- AddToAny BEGIN -->
+                <div class="a2a_kit a2a_kit_size_32 a2a_default_style">
+                    <a class="a2a_button_facebook"></a>
+                    <a class="a2a_button_twitter"></a>
+                    <a class="a2a_button_email"></a>
+                    <a class="a2a_button_reddit"></a>
+                    <a class="a2a_button_linkedin"></a>
+                    <a class="a2a_button_evernote"></a>
+                    <a class="a2a_dd" href="https://www.addtoany.com/share"></a>
+                </div>
+                <script async src="https://static.addtoany.com/menu/page.js"></script>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <!-- AddToAny END -->
+            <p class="copyright text-muted">Learn more about me at my <a href="https://www.linkedin.com/in/adamsr09/">LinkedIn</a> or <a href="https://github.com/adaros92">Github</a>.</p>
+        </div>
+    </footer>
+
+    <!-- jQuery -->
+    <script src="/theme/js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="/theme/js/bootstrap.min.js"></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script src="/theme/js/clean-blog.min.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+            <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="Adams Rosales' personal blog on everything data, software, and working in the tech industry">
+        <meta name="keywords" content="Data,Machine Learning,Data Science,Engineering,AI,Analytics,Big Data,Software">
+        <meta name="author" content="Adams Rosales">
+
+        <title>Deciphering Big Data</title>
+
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-DZPNKZL3NS"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', 'G-DZPNKZL3NS');
+        </script>
+
+
+        <!-- Bootstrap Core CSS -->
+        <link href="/theme/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- Custom CSS -->
+        <link href="/theme/css/clean-blog.min.css" rel="stylesheet">
+
+        <!-- Code highlight color scheme -->
+            <link href="/theme/css/code_blocks/darkly.css" rel="stylesheet">
+
+        <link rel="apple-touch-icon" sizes="180x180" href="extra/favicon/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="extra/favicon/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="extra/favicon/favicon-16x16.png">
+        <link rel="icon" sizes="16x16 24x24 32x32 48x48 64x64" href="extra/favicon/favicon.ico">
+        <link rel="manifest" href="extra/favicon/site.webmanifest">
+
+        <!-- Custom Fonts -->
+        <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+        
+
+
+
+
+        <meta name="tags" contents="Programming" />
+
+
+			<meta property="og:locale" content="en">
+		<meta property="og:site_name" content="Deciphering Big Data">
+
+	<meta property="og:type" content="article">
+	<meta property="article:author" content="">
+	<meta property="og:url" content="/i-see-you.html">
+	<meta property="og:title" content="I See You">
+	<meta property="og:description" content="">
+	<meta property="og:image" content="//static/post8/header.jpg">
+	<meta property="article:published_time" content="2020-12-19 00:00:00-08:00">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">Deciphering Big Data</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <!-- Page Header -->
+        <header class="intro-header" style="background-image: url('/static/post8/header.jpg');opacity: 0.9">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-heading">
+                        <h1>I See You</h1>
+                        <span class="meta">Posted by
+                                <a href="https://www.linkedin.com/in/adamsr09/">Adams Rosales</a>
+                             on Sat 19 December 2020
+                        </span>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+    <!-- Post Content -->
+    <article>
+        <div class="section" id="overview">
+<h2>Overview</h2>
+<p>The Observer software design pattern is a commonly used approach for decoupling subjects/events from observers of the
+subjects. The class diagram can be expressed like so:</p>
+<img alt="Observer design patter ULM" src="/static/post8/post8_observer_ulm.jpg" style="width: 100%;" />
+<p>There is one independent subject class which is coupled with an abstract observer class by way of an update method the
+subject calls when it needs to broadcast updates to all of its registered observers. Concrete observers that
+depend on the one subject implement this update method, which will typically pull the state they need from the subject
+and carry out their work based on changes in that state.</p>
+<p>When concrete objects are instantiated, they register themselves to the subject they need to observe via the subject's
+public register method. This will let the subject know to add the observer to its list of observers that need to be
+notified when the subject's state changes.</p>
+</div>
+<div class="section" id="applications">
+<h2>Applications</h2>
+<p>Most publisher/subscriber relationships you've come across can be modeled with the observer design pattern.</p>
+<ul class="simple">
+<li>A YouTube channel uploads a new video and the service updates all of that channel's subscribers</li>
+<li>New data becomes available in a table and downstream jobs that depend on the table are notified of the data being
+available</li>
+<li>A metrics aggregator collects a bunch of stats about a running system and notifies attached alarm objects about when
+new data is available; the alarmers check their respective metrics and send out an alarm if the metrics pass some
+threshold</li>
+<li>E-bay's bidding mechanism broadcasts the highest bid and whether the item has sold yet to all the watchers of an
+item</li>
+<li>A social media post sends out notifications of new activity on the post to people who have left a reaction and/or
+commented</li>
+</ul>
+</div>
+<div class="section" id="example-implementation">
+<h2>Example Implementation</h2>
+<p>As shown in the diagram above, the subject has an attach/register method that observers can call to register themselves
+as active observers of the subject. When this happens below, the subject will just add the observer object to a set of
+unique observers that need to be notified.</p>
+<p>The notification happens with the _notify method. This just iterates over each observer in the collection of registered
+observers and calls each one's update method. That's the only coupling of logic between the subject and its observers.</p>
+<p>Finally, the run method just keeps generating random integers from 0 to 100 and appending them to a list. The observers
+are notified as soon as a new number is appended. If the randomly generated integer is equal to 50 then the subject stops
+updating.</p>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">random</span>
+
+
+<span class="k">class</span> <span class="nc">Subject</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<span class="sd">&quot;&quot;&quot;The mutable subject that&#39;s being observed</span>
+
+<span class="sd">@param name - the name of the subject</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">observers</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">def</span> <span class="nf">attach</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">observer</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Adds the given observer to a set of unique observers that are interested in some</span>
+<span class="sd">    aspect of this subject&#39;s state</span>
+
+<span class="sd">    :param observer - an observer object that will want to be notified of changes in state</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">observers</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">observer</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">_notify</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Notifies every observer that something about the subject state has changed&quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">observer</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">observers</span><span class="p">:</span>
+        <span class="n">observer</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Run some business logic or process that updates the subject&#39;s state&quot;&quot;&quot;</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">random_int</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">random_int</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_notify</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">random_int</span> <span class="o">==</span> <span class="mi">50</span><span class="p">:</span>
+            <span class="k">break</span>
+</pre></div>
+<p>Now I implement one abstract observer that defines the interface between all observers and two concrete observers. The
+LengthObserver object just reports the length of the subject's data each time it's notified. The ValueObserver object
+will report if it finds that a new even number in the range of 0 to 98 has been added to the subject's data.</p>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">abc</span> <span class="kn">import</span> <span class="n">ABC</span><span class="p">,</span> <span class="n">abstractmethod</span>
+
+
+<span class="k">class</span> <span class="nc">Observer</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;An abstract observer class defining the common interface that all observers share</span>
+
+<span class="sd">    @param subject_to_observe - the subject the observer is interested in</span>
+<span class="sd">    @param name - the name of the observer</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subject_to_observe</span><span class="p">:</span> <span class="n">Subject</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">subject</span> <span class="o">=</span> <span class="n">subject_to_observe</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">subject_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">subject</span><span class="o">.</span><span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">subject</span><span class="o">.</span><span class="n">attach</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Defines what to do when the observer receives an update from the subject&quot;&quot;&quot;</span>
+        <span class="k">pass</span>
+
+
+<span class="k">class</span> <span class="nc">LengthObserver</span><span class="p">(</span><span class="n">Observer</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Checks for the length of the subject&#39;s data and reacts accordingly</span>
+
+<span class="sd">    @param subject_to_observe - the subject the observer is interested in</span>
+<span class="sd">    @param name - the name of the observer</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subject_to_observe</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;LengthObserver&quot;</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">subject_to_observe</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Emits an alert about the subject data length&quot;&quot;&quot;</span>
+        <span class="n">subject_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">subject</span><span class="o">.</span><span class="n">data</span>
+        <span class="n">subject_data_length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">subject_data</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Observer </span><span class="si">{0}</span><span class="s2"> noticed that </span><span class="si">{1}</span><span class="s2">&#39;s data contains </span><span class="si">{2}</span><span class="s2"> elements&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">subject_name</span><span class="p">,</span> <span class="n">subject_data_length</span>
+        <span class="p">))</span>
+
+
+<span class="k">class</span> <span class="nc">ValueObserver</span><span class="p">(</span><span class="n">Observer</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Checks that certain values are present in the subject it&#39;s observing</span>
+
+<span class="sd">    @param subject_to_observe - the subject the observer is interested in</span>
+<span class="sd">    @param name - the name of the observer</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subject_to_observe</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;ValueObserver&quot;</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">subject_to_observe</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">values_to_check</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span> <span class="k">if</span> <span class="n">x</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">values_seen</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Emits whether it finds certain values in the subject&#39;s data and keeps track of values</span>
+<span class="sd">        already seen&quot;&quot;&quot;</span>
+        <span class="n">subject_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">subject</span><span class="o">.</span><span class="n">data</span>
+        <span class="k">for</span> <span class="n">value_to_check</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">values_to_check</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">value_to_check</span> <span class="ow">in</span> <span class="n">subject_data</span> <span class="ow">and</span> <span class="n">value_to_check</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">values_seen</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">values_seen</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">value_to_check</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Observer </span><span class="si">{0}</span><span class="s2"> noticed that </span><span class="si">{1}</span><span class="s2">&#39;s data contains value </span><span class="si">{2}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">subject_name</span><span class="p">,</span> <span class="n">value_to_check</span>
+                <span class="p">))</span>
+</pre></div>
+<p>Running this below we can see the different observers doing their thing based on the subject's changes in state.</p>
+<div class="highlight"><pre><span></span><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">subject</span> <span class="o">=</span> <span class="n">Subject</span><span class="p">(</span><span class="s2">&quot;SomeSubject&quot;</span><span class="p">)</span>
+    <span class="n">length_observer</span> <span class="o">=</span> <span class="n">LengthObserver</span><span class="p">(</span><span class="n">subject</span><span class="p">)</span>
+    <span class="n">value_observer</span> <span class="o">=</span> <span class="n">ValueObserver</span><span class="p">(</span><span class="n">subject</span><span class="p">)</span>
+    <span class="n">subject</span><span class="o">.</span><span class="n">attach</span><span class="p">(</span><span class="n">length_observer</span><span class="p">)</span>
+    <span class="n">subject</span><span class="o">.</span><span class="n">attach</span><span class="p">(</span><span class="n">value_observer</span><span class="p">)</span>
+    <span class="n">subject</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+<img alt="Observer design patter ULM" src="/static/post8/post8_observer_example_run.jpg" style="width: 60%;" />
+</div>
+
+    </article>
+
+    <hr>
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-2">
+                    <!-- AddToAny BEGIN -->
+                <div class="a2a_kit a2a_kit_size_32 a2a_default_style">
+                    <a class="a2a_button_facebook"></a>
+                    <a class="a2a_button_twitter"></a>
+                    <a class="a2a_button_email"></a>
+                    <a class="a2a_button_reddit"></a>
+                    <a class="a2a_button_linkedin"></a>
+                    <a class="a2a_button_evernote"></a>
+                    <a class="a2a_dd" href="https://www.addtoany.com/share"></a>
+                </div>
+                <script async src="https://static.addtoany.com/menu/page.js"></script>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <!-- AddToAny END -->
+            <p class="copyright text-muted">Learn more about me at my <a href="https://www.linkedin.com/in/adamsr09/">LinkedIn</a> or <a href="https://github.com/adaros92">Github</a>.</p>
+        </div>
+    </footer>
+
+    <!-- jQuery -->
+    <script src="/theme/js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="/theme/js/bootstrap.min.js"></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script src="/theme/js/clean-blog.min.js"></script>
+
+</body>
+
+</html>

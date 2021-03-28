@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+            <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="Adams Rosales' personal blog on everything data, software, and working in the tech industry">
+        <meta name="keywords" content="Data,Machine Learning,Data Science,Engineering,AI,Analytics,Big Data,Software">
+        <meta name="author" content="Adams Rosales">
+
+        <title>Deciphering Big Data</title>
+
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-DZPNKZL3NS"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', 'G-DZPNKZL3NS');
+        </script>
+
+
+        <!-- Bootstrap Core CSS -->
+        <link href="/theme/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- Custom CSS -->
+        <link href="/theme/css/clean-blog.min.css" rel="stylesheet">
+
+        <!-- Code highlight color scheme -->
+            <link href="/theme/css/code_blocks/darkly.css" rel="stylesheet">
+
+        <link rel="apple-touch-icon" sizes="180x180" href="extra/favicon/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="extra/favicon/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="extra/favicon/favicon-16x16.png">
+        <link rel="icon" sizes="16x16 24x24 32x32 48x48 64x64" href="extra/favicon/favicon.ico">
+        <link rel="manifest" href="extra/favicon/site.webmanifest">
+
+        <!-- Custom Fonts -->
+        <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+        
+
+
+
+
+        <meta name="tags" contents="ML" />
+
+
+			<meta property="og:locale" content="en">
+		<meta property="og:site_name" content="Deciphering Big Data">
+
+	<meta property="og:type" content="article">
+	<meta property="article:author" content="">
+	<meta property="og:url" content="/ml-demystified-text-classification-with-naive-bayes.html">
+	<meta property="og:title" content="ML Demystified: Text Classification with Naive Bayes">
+	<meta property="og:description" content="">
+	<meta property="og:image" content="//static/post1/header.jpg">
+	<meta property="article:published_time" content="2020-12-01 19:54:00-08:00">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">Deciphering Big Data</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <!-- Page Header -->
+        <header class="intro-header" style="background-image: url('/static/post1/header.jpg');opacity: 0.9">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-heading">
+                        <h1>ML Demystified: Text Classification with Naive Bayes</h1>
+                        <span class="meta">Posted by
+                                <a href="https://www.linkedin.com/in/adamsr09/">Adams Rosales</a>
+                             on Tue 01 December 2020
+                        </span>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+    <!-- Post Content -->
+    <article>
+        <div class="section" id="enter-bayes">
+<h2>Enter Bayes</h2>
+<p>Say you have a collection of documents and some classes those documents belong to. You want to create some model to help
+you label other documents with the most likely class based on these data. For example, you have data on thousands of
+e-mails and whether those e-mails contain spam or not and want to use this information to filter future spam e-mails
+from ever reaching your inbox. Let's code a simple Naive Bayes algorithm in Python to help us do that!</p>
+</div>
+<div class="section" id="first-some-math">
+<h2>First Some Math</h2>
+<p>Naive Bayes is based on Bayes' Rule. This theorem provides a way to estimate the probability of some event A occurring
+when another event B has occurred when we know the likelihood of B occurring when A has occurred and the probability of
+A and B. The formula is P(A|B) = P(A) P(B|A)/P(B).</p>
+<p>As an example, say you have a standard deck of 52 cards.
+What is the probability of drawing a queen if you draw a face card (queen, king, or jack)? Let's use Bayes' Rule.
+The probability of drawing a queen given a face card = [(probability of drawing a queen) X (the probability of drawing a
+face card given that you drew a queen)] / (the probability of drawing a face card). Well the probability of drawing a
+face card given that you drew a queen is just 1 because queens are always considered a face card. The probability of
+drawing a queen is 4/52 (4 queens in a deck) and the probability of drawing a face card is 12/52 (4 jacks, 4 queens,
+and 4 kings in a deck) so ((4/52) X 1)/(12/52) = 4/12 or 1/3.</p>
+</div>
+<div class="section" id="naive-bayes-algorithm-for-text-classification">
+<h2>Naive Bayes Algorithm for Text Classification</h2>
+<p>Now that we've gotten that out of the way, let us dive into the algorithm with the spam filtering example!
+Suppose you have the following condensed e-mail: &quot;Dear sir, I am Dr. Tunde, brother of Nigerian Prince.&quot; We want to
+classify it as either spam or not spam. We can utilize Bayes' Rule here as follows.</p>
+<div class="highlight"><pre><span></span><span class="n">P</span><span class="p">(</span><span class="n">Spam</span> <span class="o">|</span> <span class="s2">&quot;Dear sir, I am...&quot;</span><span class="p">)</span> <span class="o">=</span>
+    <span class="p">[</span><span class="n">P</span><span class="p">(</span><span class="s2">&quot;Dear sir, I am...&quot;</span> <span class="o">|</span> <span class="n">Spam</span><span class="p">)</span> <span class="n">P</span><span class="p">(</span><span class="n">Spam</span><span class="p">)]</span> <span class="o">/</span> <span class="n">P</span><span class="p">(</span><span class="s2">&quot;Dear sir, I am...&quot;</span><span class="p">)</span> <span class="n">P</span><span class="p">(</span><span class="n">Not</span> <span class="n">Spam</span> <span class="o">|</span> <span class="s2">&quot;Dear sir, I am...&quot;</span><span class="p">)</span> <span class="o">=</span>
+        <span class="p">[</span><span class="n">P</span><span class="p">(</span><span class="s2">&quot;Dear sir, I am...&quot;</span> <span class="o">|</span> <span class="n">Not</span> <span class="n">Spam</span><span class="p">)</span> <span class="n">P</span><span class="p">(</span><span class="n">Not</span> <span class="n">Spam</span><span class="p">)]</span> <span class="o">/</span> <span class="n">P</span><span class="p">(</span><span class="s2">&quot;Dear sir, I am...&quot;</span><span class="p">)</span>
+</pre></div>
+<p>We will simply calculate these conditional probabilities and choose the class (spam or not spam) that gives us the
+highest one. Knowing this, we can remove the denominator since it's the same in both equations and we just want to
+determine which yields the highest probability.</p>
+<div class="highlight"><pre><span></span><span class="n">P</span><span class="p">(</span><span class="n">Spam</span> <span class="o">|</span> <span class="s2">&quot;Dear sir, I am...&quot;</span><span class="p">)</span> <span class="o">=</span> <span class="n">P</span><span class="p">(</span><span class="s2">&quot;Dear sir, I am...&quot;</span> <span class="o">|</span> <span class="n">Spam</span><span class="p">)</span> <span class="n">P</span><span class="p">(</span><span class="n">Spam</span><span class="p">)</span>
+
+<span class="n">P</span><span class="p">(</span><span class="n">Not</span> <span class="n">Spam</span> <span class="o">|</span> <span class="s2">&quot;Dear sir, I am...&quot;</span><span class="p">)</span> <span class="o">=</span> <span class="n">P</span><span class="p">(</span><span class="s2">&quot;Dear sir, I am...&quot;</span> <span class="o">|</span> <span class="n">Not</span> <span class="n">Spam</span><span class="p">)</span> <span class="n">P</span><span class="p">(</span><span class="n">Not</span> <span class="n">Spam</span><span class="p">)</span>
+</pre></div>
+<p>Okay so now we have a simple equation we can work with. Look at all your previous e-mails in your training data that
+were classified as spam and not spam. Then count the number of times &quot;Dear sir, I am Dr. Tunde, brother of Nigerian
+Prince&quot; appears in both sets of e-mails. Assuming an equal number of spam and not spam e-mails, the class with the
+highest count of this phrase will result in the highest probability and this is the class we'll choose for this
+particular e-mail.</p>
+<p>There is one major obstacle here. What if this phrase doesn't exist in our past e-mails data? We'll have a probability
+of zero for both spam and not spam, rendering the algorithm useless. Well instead of looking at whole phrases, let's
+consider the individual words that make up those phrases. We can rewrite the conditional probabilities as follows if we
+assume that words in a phrase are independent:</p>
+<div class="highlight"><pre><span></span><span class="p">(</span><span class="n">Spam</span> <span class="o">|</span> <span class="s2">&quot;Dear sir, I am...&quot;</span><span class="p">)</span> <span class="o">=</span> <span class="n">P</span><span class="p">(</span><span class="s2">&quot;Dear&quot;</span> <span class="o">|</span> <span class="n">Spam</span><span class="p">)</span> <span class="n">P</span><span class="p">(</span><span class="s2">&quot;sir&quot;</span> <span class="o">|</span> <span class="n">Spam</span><span class="p">)</span><span class="o">...</span><span class="n">P</span><span class="p">(</span><span class="s2">&quot;Prince&quot;</span> <span class="o">|</span> <span class="n">Spam</span><span class="p">)</span> <span class="n">P</span><span class="p">(</span><span class="n">Spam</span><span class="p">)</span>
+
+<span class="n">P</span><span class="p">(</span><span class="n">Not</span> <span class="n">Spam</span> <span class="o">|</span> <span class="s2">&quot;Dear sir, I am...&quot;</span><span class="p">)</span> <span class="o">=</span> <span class="n">P</span><span class="p">(</span><span class="s2">&quot;Dear&quot;</span> <span class="o">|</span> <span class="n">Not</span> <span class="n">Spam</span><span class="p">)</span> <span class="n">P</span><span class="p">(</span><span class="s2">&quot;sir&quot;</span> <span class="o">|</span> <span class="n">Not</span> <span class="n">Spam</span><span class="p">)</span><span class="o">...</span><span class="n">P</span><span class="p">(</span><span class="s2">&quot;Prince&quot;</span> <span class="o">|</span> <span class="n">Not</span> <span class="n">Spam</span><span class="p">)</span> <span class="n">P</span><span class="p">(</span><span class="n">Not</span> <span class="n">Spam</span><span class="p">)</span>
+</pre></div>
+<p>Now the algorithm shifts from counting whole phrases to counting individual words within the two types of e-mails in
+the data and multiplying the individual word counts or probabilities. This puts the &quot;Naive&quot; in Naive Bayes because
+we're making a big assumption that the words are independent of each other. That is what gives us the freedom to
+multiply the individual word probabilities. The tradeoff is that words in a phrase are not actually independent of
+each other. For example, the position of the word &quot;and&quot; depends on other words before and after it in a phrase.</p>
+<p>Back to the algorithm! All we need to do is calculate these probabilities. The probability of spam/not spam is simple
+to determine. Just count the number of spam and not spam e-mails and divide by the total number of e-mails. Let's say
+we have 100 spam e-mails and 200 not spam e-mails in our training data. The probability of spam is 1/3 and the
+probability of not spam is 2/3. The individual word probabilities are a little more nuanced. We count the number of times
+each word appears in the training data for each type of e-mail and divide by the total number of words in each type.
+Suppose &quot;Dear&quot; appears 50 times in all spam e-mails and 25 times in non-spam e-mails and there are 500 words in total
+across all spam e-mails and 600 across non-spam e-mails. The probability of &quot;Dear&quot; given spam is 50/500 or 1/10 and
+given not spam is 25/600 or 1/24.</p>
+<p>Let's consider the case where the word &quot;Dear&quot; does not appear in any of the spam e-mails in the training data. The
+probability of &quot;Dear&quot; would then be 0 and since we're multiplying probabilities, the total probability of all words
+multiplied together would be 0. The way to get around this is to add 1 to each word probability numerator. Then to
+ensure that we always have a number between 0 and 1 for our probabilities, we add a larger number to the denominator.</p>
+<p>Each individual word's probability is then [(number of times the word appears in a class of documents) + 1]/[(number of
+words in the class of documents) + vocabulary]. The vocabulary value is just the number of unique words in all documents
+of all classes in the training data. This procedure is termed additive or Laplace smoothing and it ensures that none of
+the individual word probabilities can be 0 or greater than 1.</p>
+</div>
+<div class="section" id="implementing-the-algorithm">
+<h2>Implementing the Algorithm</h2>
+<p>Now that we have a general understanding of how the Naive Bayes algorithm works, let's code it up in Python!</p>
+<p>Let's start by declaring the functions we will implement one by one.</p>
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">parse_training_data</span><span class="p">(</span><span class="n">data_obj</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Given an object of document sets per class this function extracts the vocabulary</span>
+<span class="sd">    across all documents, the count of unique words by class of document, and the count</span>
+<span class="sd">    of document types. It returns a tuple like the one below.</span>
+
+<span class="sd">    (</span>
+<span class="sd">        count of unique words across all documents (number),</span>
+<span class="sd">        count of words by class (dictionary - {cls_name:{word:count, total:total words}}),</span>
+<span class="sd">        count of documents of each class (dictionary - {cls_name:count, total:total_docs})</span>
+<span class="sd">    )</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">pass</span>
+
+
+<span class="k">def</span> <span class="nf">calculate_probability</span><span class="p">(</span><span class="n">word_counter</span><span class="p">,</span> <span class="n">vocab</span><span class="p">,</span> <span class="n">class_count</span><span class="p">,</span> <span class="n">test_documents</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; This function takes in a dictionary of word counts , the total</span>
+<span class="sd">    vocabulary across all documents in the training data, the of documents by class,</span>
+<span class="sd">    and documents we want to classify and calculates the probability of the test</span>
+<span class="sd">    documents to belonging each class. It returns a list of dictionaries containing</span>
+<span class="sd">    the class of document as the key and the probability of belonging to that</span>
+<span class="sd">    class as the value.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">pass</span>
+
+
+<span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="n">parsed_train_data</span><span class="p">,</span> <span class="n">test_data</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; This function takes in the parsed training data object from parse_training_data</span>
+<span class="sd">    above and the test data as a list of documents that we want to classify.</span>
+<span class="sd">    It then calls calculate_probability, which returns all the probabilities of belonging</span>
+<span class="sd">    to each class. It iterates over this list which will have one dictionary for each</span>
+<span class="sd">    test document and it chooses the class of document that has the largest probability</span>
+<span class="sd">    value. The function then returns a list of predicted document types for each test</span>
+<span class="sd">    document.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">pass</span>
+
+
+<span class="k">def</span> <span class="nf">naive_bayes_text</span><span class="p">(</span><span class="n">train_data</span><span class="p">,</span> <span class="n">test_data</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Takes in a training data object with the class of document as the key and a</span>
+<span class="sd">    list of documents as the value. Calls parse_training_data bove and predict to label</span>
+<span class="sd">    each document with a class based on the training data. Returns  a list of predicted</span>
+<span class="sd">    classes corresponding to each document in the test data.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">pass</span>
+</pre></div>
+<p>Now let's implement the parse_training_data function. This function takes a Python dictionary as input. The dictionary
+will be structured just like our toy training data at the bottom of this page (the class of document as the key and a
+list of documents as the value for each key). It will iterate over each key and value pair in this dictionary, iterate
+over each document in the list of documents for each class, and over each word in each document. As it does this, it
+will keep track of the unique words it encounters in the set called vocab_set, maintain a class counter dictionary which
+has the count of unique documents by type, and a word counter dictionary which has the count by word for each class. It
+will then return a tuple with the length of the vocab_set (unique words across all documents which acts as our
+vocabulary), the word counts by class of document, and the count of unique documents by class of document.</p>
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">parse_training_data</span><span class="p">(</span><span class="n">data_obj</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Given an object of document sets per class this function extracts the vocabulary</span>
+<span class="sd">    across all documents, the count of unique words by class of document, and the count</span>
+<span class="sd">    of document types. It returns a tuple like the one below.</span>
+<span class="sd">    (</span>
+<span class="sd">        count of unique words across all documents (number),</span>
+<span class="sd">        count of words by class (dictionary - {cls_name:{word:count, total:total words}}),</span>
+<span class="sd">        count of documents of each class (dictionary - {cls_name:count, total:total_docs})</span>
+<span class="sd">    )</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">vocab_set</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+    <span class="n">word_counts</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">class_counts</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">class_total</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="c1"># Break data object into class_name, documents</span>
+    <span class="k">for</span> <span class="n">cls_name</span><span class="p">,</span> <span class="n">docs</span> <span class="ow">in</span> <span class="n">data_obj</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">class_counts</span><span class="p">[</span><span class="n">cls_name</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">word_counts</span><span class="p">[</span><span class="n">cls_name</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">word_total</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="c1"># Iterate over each document in list of documents</span>
+        <span class="k">for</span> <span class="n">doc</span> <span class="ow">in</span> <span class="n">docs</span><span class="p">:</span>
+            <span class="c1"># Increment the count of document type</span>
+            <span class="n">class_counts</span><span class="p">[</span><span class="n">cls_name</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">class_total</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="c1"># Iterate over each word in the document</span>
+            <span class="k">for</span> <span class="n">word_orig</span> <span class="ow">in</span> <span class="n">doc</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">):</span>
+                <span class="c1"># Convert all words to same case</span>
+                <span class="n">word</span> <span class="o">=</span> <span class="n">word_orig</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+                <span class="c1"># Add the word to the vocabulary set</span>
+                <span class="n">vocab_set</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>
+                <span class="n">word_total</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="c1"># Increment the count of word in the current class</span>
+                <span class="k">if</span> <span class="n">word_counts</span><span class="p">[</span><span class="n">cls_name</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">word</span><span class="p">):</span>
+                    <span class="n">word_counts</span><span class="p">[</span><span class="n">cls_name</span><span class="p">][</span><span class="n">word</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">word_counts</span><span class="p">[</span><span class="n">cls_name</span><span class="p">][</span><span class="n">word</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="c1"># Add the count of total words in the class to word counts dict</span>
+        <span class="n">word_counts</span><span class="p">[</span><span class="s1">&#39;total&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">word_total</span>
+    <span class="c1"># Add the count of total classes to the class counts dict</span>
+    <span class="n">class_counts</span><span class="p">[</span><span class="s1">&#39;total&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">class_total</span>
+    <span class="c1"># Return (unique vocabulary, count of words by class, and count of docs by class)</span>
+    <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">vocab_set</span><span class="p">),</span> <span class="n">word_counts</span><span class="p">,</span> <span class="n">class_counts</span>
+</pre></div>
+<p>Next let's implement the calculate_probability function. Here we're going to take in a dictionary of word counts by
+document class, a vocabulary number (count of unique words in the training data),  a dictionary of document counts by
+document class, and a list of documents to calculate probabilities for. The probabilities will denote the likelihood of
+belonging to each document class by test document. The function will return a list of dictionaries where each dictionary
+corresponds to each document in the test document input list and contains key-value pairs with the class of document as
+the key and the probability of belonging to that document as the value.</p>
+<p>As defined in the algorithm section above, the total probability of belonging to a certain class of document is
+calculated by multiplying the individual word probabilities and the probability of the document class itself. However,
+when actually implementing this calculation, we need to be able to handle very small floating point numbers. Since we're
+multiplying probabilities between 0 and 1, we can get very small floats that may result in arithmetic underflow. This
+happens when the result of a calculation is a number that is too small for the computer to store in memory. A solution
+to this is to take the log of the individual word probabilities and add these log values (recall from math class long
+ago that log(xy) = log(x) + log(y)). Let's do it!</p>
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">calculate_probability</span><span class="p">(</span><span class="n">word_counter</span><span class="p">,</span> <span class="n">vocab</span><span class="p">,</span> <span class="n">class_count</span><span class="p">,</span> <span class="n">test_documents</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; This function takes in a dictionary of word counts , the total</span>
+<span class="sd">    vocabulary across all documents in the training data, the of documents by class,</span>
+<span class="sd">    and documents we want to classify and calculates the probability of the test</span>
+<span class="sd">    documents to belonging each class. It returns a list of dictionaries containing</span>
+<span class="sd">    the class of document as the key and the probability of belonging to that</span>
+<span class="sd">    class as the value.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">rslt</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="c1"># Iterate over each document in the list of test documents we want to classify</span>
+    <span class="k">for</span> <span class="n">doc</span> <span class="ow">in</span> <span class="n">test_documents</span><span class="p">:</span>
+        <span class="n">probabilities</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="c1"># Iterate over each document class in word_counter</span>
+        <span class="k">for</span> <span class="n">doc_cls</span><span class="p">,</span> <span class="n">word_counts</span> <span class="ow">in</span> <span class="n">word_counter</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="c1"># Skip if the class is total, which is the total count of words</span>
+            <span class="k">if</span> <span class="n">doc_cls</span> <span class="o">==</span> <span class="s1">&#39;total&#39;</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="c1"># Start with probability of that class based on training data</span>
+            <span class="n">probabilities</span><span class="p">[</span><span class="n">doc_cls</span><span class="p">]</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">class_count</span><span class="p">[</span><span class="n">doc_cls</span><span class="p">]</span><span class="o">/</span>
+                <span class="p">(</span><span class="n">class_count</span><span class="p">[</span><span class="s1">&#39;total&#39;</span><span class="p">]</span><span class="o">*</span><span class="mf">1.0</span><span class="p">))</span>
+            <span class="c1"># Iterate over each word in the document</span>
+            <span class="k">for</span> <span class="n">word_orig</span> <span class="ow">in</span> <span class="n">doc</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">):</span>
+                <span class="n">word</span> <span class="o">=</span> <span class="n">word_orig</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+                <span class="c1"># Get word count or 0 if not found in training data</span>
+                <span class="n">word_instance</span> <span class="o">=</span> <span class="n">word_counts</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">word_instance</span><span class="p">:</span>
+                    <span class="n">word_instance</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="c1"># Add in the log of (count of word + 1)/(total words + vocab) to probability</span>
+                <span class="n">probabilities</span><span class="p">[</span><span class="n">doc_cls</span><span class="p">]</span> <span class="o">+=</span> <span class="n">math</span><span class="o">.</span><span class="n">log</span><span class="p">((</span><span class="n">word_instance</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+                    <span class="o">/</span> <span class="p">((</span><span class="n">word_counter</span><span class="p">[</span><span class="s1">&#39;total&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">vocab</span><span class="p">)</span><span class="o">*</span><span class="mf">1.0</span><span class="p">))</span>
+        <span class="c1"># Add in the probability by document class to results list</span>
+        <span class="n">rslt</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">probabilities</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">rslt</span>
+</pre></div>
+<p>Next let's implement the predict function. This function is just tasked with taking the list of probabilities by class
+that we get from calculate_probability and choosing the document class corresponding to the largest probability for
+each document in the test list. The result of this function are the actual predicted values for each document we fed
+the algorithm.</p>
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="n">parsed_train_data</span><span class="p">,</span> <span class="n">test_data</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; This function takes in the parsed training data object from parse_training_data</span>
+<span class="sd">    above and the test data as a list of documents that we want to classify.</span>
+<span class="sd">    It then calls calculate_probability, which returns all the probabilities of belonging</span>
+<span class="sd">    to each class. It iterates over this list which will have one dictionary for each</span>
+<span class="sd">    test document and it chooses the class of document that has the largest probability</span>
+<span class="sd">    value. The function then returns a list of predicted document types for each test</span>
+<span class="sd">    document.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">vocab</span><span class="p">,</span> <span class="n">word_counts</span><span class="p">,</span> <span class="n">class_counts</span> <span class="o">=</span> <span class="n">parsed_train_data</span>
+    <span class="n">probabilities</span> <span class="o">=</span> <span class="n">calculate_probability</span><span class="p">(</span><span class="n">word_counts</span><span class="p">,</span> <span class="n">vocab</span><span class="p">,</span> <span class="n">class_counts</span><span class="p">,</span> <span class="n">test_data</span><span class="p">)</span>
+    <span class="n">rslt_classes</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="c1"># Iterate over each doc class : probability dictionary</span>
+    <span class="k">for</span> <span class="n">prob_obj</span> <span class="ow">in</span> <span class="n">probabilities</span><span class="p">:</span>
+        <span class="n">max_prob</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">max_cls</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="c1"># Select the class from the probability dictionary that has the largest probability</span>
+        <span class="k">for</span> <span class="n">cls_name</span><span class="p">,</span><span class="n">prob</span> <span class="ow">in</span> <span class="n">prob_obj</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">max_prob</span> <span class="o">==</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">prob</span> <span class="o">&gt;</span> <span class="n">max_prob</span><span class="p">:</span>
+                <span class="n">max_prob</span> <span class="o">=</span> <span class="n">prob</span>
+                <span class="n">max_cls</span> <span class="o">=</span> <span class="n">cls_name</span>
+        <span class="c1"># Add the document class corresponding to the largest probability to the result</span>
+        <span class="n">rslt_classes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">max_cls</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">rslt_classes</span>
+</pre></div>
+<p>Finally we implement the main interface function we can expose and call with our training and test data.</p>
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">naive_bayes_text</span><span class="p">(</span><span class="n">train_data</span><span class="p">,</span> <span class="n">test_data</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Takes in a training data object with the class of document as the key and a</span>
+<span class="sd">    list of documents as the value. Calls parse_training_data bove and predict to label</span>
+<span class="sd">    each document with a class based on the training data. Returns  a list of predicted</span>
+<span class="sd">    classes corresponding to each document in the test data.&quot;&quot;&quot;</span>
+    <span class="n">parsed_obj</span> <span class="o">=</span> <span class="n">parse_training_data</span><span class="p">(</span><span class="n">train_data</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">predict</span><span class="p">(</span><span class="n">parsed_obj</span><span class="p">,</span> <span class="n">test_data</span><span class="p">)</span>
+</pre></div>
+<p>Let's call our naive_bayes_text function with some toy training and test data.</p>
+<div class="highlight"><pre><span></span><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+
+    <span class="c1"># Create toy training data</span>
+    <span class="n">training_data</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;spam&#39;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="s2">&quot;Dear sir, I am Dr Tunde, brother of Nigerian Prince&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Win a million dollars today&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;48 hours clearance ends now 48 hours 48 hours Free stuff&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Private invite to exclusive event&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Discount inside 90 percent off everything&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;12 days of deals happening now Closeout sale Free giveaways and more&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;This is your last chance to register for the biggest giveaway of the year&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Your attention is needed for this very important message&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Tick-tock it&#39;s the last day for 30 percent off your purchase&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Final hours Mega mega mega mega mega free shipping on all items&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Checkout these last minute deals on all electronics&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Dear sir, please join me in this one of a lifetime opportunity&quot;</span>
+        <span class="p">],</span>
+        <span class="s1">&#39;not spam&#39;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="s2">&quot;It was great catching up with you yesterday give me a call anytime&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Please remember to bring the drink ingredients to the party&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;How did your final exam go yesterday&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Please give me a call back&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Thanks for inquiring about transferring the non-IRA assets from your personal account&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;You have a package to pick up at the lobby hub&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;You have a package to pick up at the lobby hub&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Thanks for reaching out, a member of our team will get back to you&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;You have a package to pick up at the lobby hub&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Payment successfully processed for account ending in&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;I am attaching mom&#39;s favorite mulled wine recipe that you can use for this weekend&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;How are the kids doing&quot;</span>
+        <span class="p">]</span>
+    <span class="p">}</span>
+
+    <span class="c1"># Train the naive bayes model and predict classes for some toy test data</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">naive_bayes_text</span><span class="p">(</span><span class="n">training_data</span><span class="p">,</span> <span class="p">[</span>
+        <span class="s2">&quot;How did your final exam go&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Last minute clearance discount&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Nigerian Prince&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Payment for your kids processed successfully&quot;</span>
+    <span class="p">]))</span>
+</pre></div>
+<p>We get the following result for our document list ([&quot;How did your final exam go&quot;, &quot;Last minute clearance discount&quot;,
+&quot;Nigerian Prince&quot;,&quot;Payment for your kids processed successfully&quot;]):</p>
+<p>['not spam', 'spam', 'spam', 'not spam']</p>
+<p>There you go. We have successfully implemented a basic Naive Bayes algorithm for text classification just by applying
+some simple counting. The final code can be retrieved from my
+<a class="reference external" href="https://github.com/adaros92/ml_demystified/blob/master/naive_bayes.py">Github repository</a> for this
+series. Try experimenting with it and running it on real world data. You can change it up so that you don't have to
+process the entire training data each time. You can also create the ability to feed the model new data and improve it
+incrementally. Have fun!</p>
+</div>
+
+    </article>
+
+    <hr>
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-2">
+                    <!-- AddToAny BEGIN -->
+                <div class="a2a_kit a2a_kit_size_32 a2a_default_style">
+                    <a class="a2a_button_facebook"></a>
+                    <a class="a2a_button_twitter"></a>
+                    <a class="a2a_button_email"></a>
+                    <a class="a2a_button_reddit"></a>
+                    <a class="a2a_button_linkedin"></a>
+                    <a class="a2a_button_evernote"></a>
+                    <a class="a2a_dd" href="https://www.addtoany.com/share"></a>
+                </div>
+                <script async src="https://static.addtoany.com/menu/page.js"></script>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <!-- AddToAny END -->
+            <p class="copyright text-muted">Learn more about me at my <a href="https://www.linkedin.com/in/adamsr09/">LinkedIn</a> or <a href="https://github.com/adaros92">Github</a>.</p>
+        </div>
+    </footer>
+
+    <!-- jQuery -->
+    <script src="/theme/js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="/theme/js/bootstrap.min.js"></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script src="/theme/js/clean-blog.min.js"></script>
+
+</body>
+
+</html>
