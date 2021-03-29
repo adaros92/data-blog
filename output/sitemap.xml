@@ -5,44 +5,37 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>/</loc>
-<lastmod>2021-03-28T16:07:35-00:00</lastmod>
+<lastmod>2021-03-28T18:04:20-00:00</lastmod>
 <changefreq>weekly</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>/tags.html</loc>
-<lastmod>2021-03-28T16:07:35-00:00</lastmod>
+<lastmod>2021-03-28T18:04:20-00:00</lastmod>
 <changefreq>weekly</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>/categories.html</loc>
-<lastmod>2021-03-28T16:07:35-00:00</lastmod>
+<lastmod>2021-03-28T18:04:20-00:00</lastmod>
 <changefreq>weekly</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>/authors.html</loc>
-<lastmod>2021-03-28T16:07:35-00:00</lastmod>
+<lastmod>2021-03-28T18:04:20-00:00</lastmod>
 <changefreq>weekly</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>/archives.html</loc>
-<lastmod>2021-03-28T16:07:35-00:00</lastmod>
+<lastmod>2021-03-28T18:04:20-00:00</lastmod>
 <changefreq>weekly</changefreq>
 <priority>0.5</priority>
-</url>
-
-<url>
-<loc>/data-engineering-at-faang.html</loc>
-<lastmod>2021-03-28T00:00:00-07:00</lastmod>
-<changefreq>weekly</changefreq>
-<priority>0.6</priority>
 </url>
 
 <url>
@@ -152,7 +145,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>/category/career.html</loc>
-<lastmod>2021-03-28T00:00:00-07:53</lastmod>
+<lastmod>2021-01-18T00:00:00-07:53</lastmod>
 <changefreq>weekly</changefreq>
 <priority>0.5</priority>
 </url>
@@ -200,15 +193,15 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
-<loc>/tag/career.html</loc>
-<lastmod>2021-03-28T00:00:00-07:53</lastmod>
+<loc>/tag/data-engineering.html</loc>
+<lastmod>2021-03-27T00:00:00-07:53</lastmod>
 <changefreq>weekly</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>/tag/data-engineering.html</loc>
-<lastmod>2021-03-27T00:00:00-07:53</lastmod>
+<loc>/tag/career.html</loc>
+<lastmod>2021-01-18T00:00:00-07:53</lastmod>
 <changefreq>weekly</changefreq>
 <priority>0.5</priority>
 </url>
@@ -257,7 +250,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>/author/adams-rosales.html</loc>
-<lastmod>2021-03-28T00:00:00-07:53</lastmod>
+<lastmod>2021-03-27T00:00:00-07:53</lastmod>
 <changefreq>weekly</changefreq>
 <priority>0.5</priority>
 </url>
