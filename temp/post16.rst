@@ -39,9 +39,32 @@ There is a lot of corporate red tape at FAANG companies.
 
 Easy to Get Stuck in Ops Hell
 #############################
+I've been in teams that very rarely write any new code or release incremental features. All they do is hit buttons on some
+UI to restart failed jobs, copy existing jobs to run in new regions, dig into tickets regarding those jobs, and answer
+e-mails about the jobs. Essentially just maintaining the same old pipelines that may add a lot of value to the company but
+are just plain boring to work with. Months go by and you realize you've been doing the same ops work over and over without
+learning anything. This isn't even unique to data engineering, which tends to be more ops-heavy at large companies. I've
+even been in software engineering teams that do the same thing.
 
-Too Much Focus on Levels and Promotions
-#######################################
+This is surprisingly common given how many things have been built at these companies. Rarely do you get to be in a team
+that's truly pushing the boundary and working in a completely greenfield environment. In other words, those truly
+innovative teams that everyone thinks they'll be a part of if they join a prestigious tech company are more of an
+exception than the norm. It's great if you can be a part of those teams, but it's unlikely that you will be from the start.
+
+Too Much Focus on Job Levels
+############################
+I don't know if it's selection bias with the types of candidates that FAANG attracts but there is an unhealthy obsession
+with levels, titles and total compensation at these companies. If you don't believe me, spend a few minutes reading
+through FAANG posts on https://www.teamblind.com/. Sometimes it feels like that's all people care about. I have definitely
+felt that sometimes people prioritize the projects that will get them noticed by some leaders with fancy titles over anything
+else, even if those projects will not help them learn anything, grow in any other way, or add the most value in the long run.
+I've even had managers insinuate that the work their reports are doing is not as important as pleasing some director or VP,
+even if that work is pushing buttons on some UI and you have 4 talented software engineers wasting their time hitting those buttons.
+
+My first job out of college was in banking where brown-nosing and kissing your superior's ass is the norm. People make
+entire careers out of that alone. It's one of the reasons why I left that industry. I felt like it didn't matter what I knew
+as long as I impressed the right people one way or another. I thought that big tech would be different and to some extent
+it is, but there is still a lot of that unhealthy obsession with pleasing authority figures at all costs.
 
 Too Many Cooks in the Kitchen
 #############################
@@ -54,13 +77,20 @@ Is It Worth It?
 I am grateful for the opportunities that I've had and wouldn't do anything different if given the chance to do it all
 over again. So, yes I do think it's worth it and I recommend these companies to any new grad looking to gain valuable
 real world experience and make good money while doing so. However, I do not recommend getting stuck in dead-end roles
-or forgoing opportunities to learn just because you've made it to FAANG.
+or forgoing opportunities to learn just because you've made it to FAANG. Don't be afraid to leave and search for roles
+that will make you a better engineer in the long run, even if you have to take a pay cut.
 
 While start ups or lesser known companies may not offer the same level of compensation as FAANG, you may end up learning
 a lot more in a shorter amount of time, which will ultimately lead to better opportunities and more compensation down
 the line. This is because younger and/or smaller companies may not suffer from the same issues that plague larger more
-established corporations like FAANG. No matter what the recruiters or kool-aid drinkers at these companies say, the truth
+established corporations like FAANG. No matter what the recruiters or Kool-Aid drinkers at these companies say, the truth
 is that they face the same issues that exist in other non-tech bloated corporations.
+
+So to summarize, don't chase the brand name. Look for the roles that will teach you the most and give you plenty of
+opportunity to build new things. Also, do your due diligence before accepting a role. Talk to members of the team and
+ask them what they do every day and if they enjoy their jobs. Pretty much all of them will say they do because they're
+trying to get you to join but you can often times read between the lines and deduce from their daily tasks what
+the job will be like.
 
 There Is No Substitute for Self-Learning
 ########################################

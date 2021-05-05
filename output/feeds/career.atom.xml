@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Deciphering Big Data - Career</title><link href="https://decipheringbigdata.net/" rel="alternate"></link><link href="https://decipheringbigdata.net/feeds/career.atom.xml" rel="self"></link><id>https://decipheringbigdata.net/</id><updated>2021-01-18T00:00:00-08:00</updated><entry><title>Tech Interviews Are Broken</title><link href="https://decipheringbigdata.net/tech-interviews-are-broken.html" rel="alternate"></link><published>2021-01-18T00:00:00-08:00</published><updated>2021-01-18T00:00:00-08:00</updated><author><name>Adams Rosales</name></author><id>tag:decipheringbigdata.net,2021-01-18:/tech-interviews-are-broken.html</id><summary type="html">&lt;p class="first last"&gt;Do you even LeetCode bro?&lt;/p&gt;
+</summary><content type="html">&lt;div class="section" id="exhibit-a"&gt;
+&lt;h2&gt;Exhibit A&lt;/h2&gt;
+&lt;p&gt;Did you know that there are companies out there dedicated to nothing more than helping you prepare to pass a tech
+interview? Below are some of the ones I've heard of recently.&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;a class="reference external" href="https://www.interviewkickstart.com/guide/interview-kickstart-cost/"&gt;Interview Kickstart&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference external" href="https://www.outco.io/"&gt;Outco&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference external" href="https://www.algoexpert.io/purchase"&gt;AlgoExpert&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Look I understand that data structures and algorithms are an important foundation to any job that requires serious
+system design and development. I am a huge advocate for truly understanding the concepts at their core rather than
+focusing on the superficial surface-level frameworks and such. However, there has to be something wrong with your process
+when there is a whole industry dedicated to helping people answer your interview questions.&lt;/p&gt;
+&lt;p&gt;Tech companies are signaling that being able to answer coding puzzles that require you to spend weeks to months reading
+interview prep books and spending thousands of dollars on classes from the institutions above is more important than
+actually being a good developer. I say this as both someone who has been rejected from roles that I would have been able to
+add value in and who has interviewed candidates for tech roles at big tech but had to turn them down despite
+their valuable levels of experience.&lt;/p&gt;
+&lt;p&gt;LeetCode trumps experience every time. You could have literally created an application that is used by most of the people
+in the prospective company. It doesn't matter if you can't also reverse a linked list from muscle memory. Case and point
+with this Tweet by the creator of Homebrew.&lt;/p&gt;
+&lt;img alt="Max Howell on Google's interviewing methodology" src="/static/post12/post12_homebrew.png" style="width: 100%;" /&gt;
+&lt;/div&gt;
+&lt;div class="section" id="so-should-we-just-suck-it-up"&gt;
+&lt;h2&gt;So Should We Just Suck It Up?&lt;/h2&gt;
+&lt;p&gt;While it's relatively easy to spend a few weeks or months reviewing old concepts you never have to implement from
+scratch on the job like binary trees, heaps, tries, etc. I think it adds absolutely no value whatsoever and it detracts
+from what's really important. These are my reasons:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;1. A full-time software engineering job should be enough to get another engineering job that requires the same level
+of experience&lt;/strong&gt;, especially if the person you're interviewing has actual code to demonstrate and designs to walk through.
+I don't know about you but I have other shit to do outside of work than prepare for interviews. I could be playing an instrument,
+exercising, bonding with my family, walking my dog, hell, even building actual software products just like I would be doing
+on the job. All of these are much better uses of my time than reviewing tricky concepts that are hardly ever used in
+practice like dynamic programming.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;2. We should incentivize candidates to build solutions to actual real world problems rather than solving toy whiteboard
+puzzles.&lt;/strong&gt; Imagine if instead of grinding through LeetCode questions to become more cogs in the big tech machine,
+all of those talented and passionate kids were building real world applications. I think the industry would be much better
+off and there would be more helpful resources out there to judge candidates' talents and experience levels with.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;3. Proponents of the current interviewing system insist that the process measures problem solving skills, but from my
+experience the problem solving done on the job is nothing like what is measured by the puzzle-like DS/Algo interview
+questions.&lt;/strong&gt; The problem solving on the job involves researching new libraries and technologies, dealing with ambiguity,
+collaborating with other people, deep diving data to root cause issues, being able to unblock yourself, and managing time
+effectively. That's literally 95-99% of what's required. I have never found myself stuck on some mind-bending algorithm
+that needs to be implemented right away (and preferably on a whiteboard without referencing any resources). I have never
+been stuck on any coding issue unless it's related to not fully understanding how a library or system works. The current
+interviews don't measure a candidate's ability to get through those types of problems.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;4. Having a good foundational understanding of algorithms and data structures is not enough to pass whiteboard tech
+interview problems.&lt;/strong&gt; There is a large &amp;quot;gotcha&amp;quot; component to these questions where simply understanding the foundation
+(which data structure to use for what and how to optimize runtime/space complexity given the problem at hand) is not
+enough. Given the amount of time that you're allotted to solve those tricky questions it's not possible for most good
+engineers to solve them optimally without going through a bunch of similar questions beforehand, including the interviewers
+themselves. I know this because I am okay at my job (haven't been fired yet in the 4 or so years of technical
+experience under my belt) and I can't consistently solve those tricky questions without extensive review beforehand. The majority of
+engineers I work with are also not super geniuses who can take a difficult LeetCode question and solve it on a whiteboard
+within 30 minutes without reviewing beforehand. That review requirement is a problem because of reasons 1-3 above.&lt;/p&gt;
+&lt;p&gt;So no, we should change the process.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="a-better-solution"&gt;
+&lt;h2&gt;A Better Solution&lt;/h2&gt;
+&lt;p&gt;Have the candidates implement a short coding project and write a design doc explaining why they structured it the way they
+did and how they would deploy the application and maintain it going forward. Instead of having interviewers give whiteboard
+interviews, have them review the code and designs beforehand and ask them relevant questions about it when they speak to
+them in person. Ask questions like what metrics they would collect to measure the state of the application, how would
+they scale it to X amount of users, how would they troubleshoot a particular issue, etc.&lt;/p&gt;
+&lt;p&gt;The complexity of these projects and related questions will vary depending on how much experience the candidate has.
+Obviously if it's an experienced candidate the interview should mostly focus on previous projects they have worked on.
+It's quite easy to tell whether someone knows what they're talking about just by having a technical conversation with them
+in person.&lt;/p&gt;
+&lt;p&gt;The in-person interviews should also involve peer coding questions in a similar environment the candidate would find themselves
+in on the job. That means with an IDE and full access to Internet resources, wikis, documentation, etc. If they get stuck
+they should be able to look for help online because let's face it, that's one of the most valuable skills a developer could
+have. The questions themselves should be relevant to the job. If the job requires the candidate to glue a bunch of API
+endpoints together then ask them to do that. If a job requires building a frontend then have them build a frontend UI.
+If the job requires writing Spark applications and orchestrating big data jobs then let them show what they got by doing
+just that. When they're finished have them explain their code and ask probing questions about how it would be
+deployed as part of a scalable system.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="it-won-t-change-anytime-soon"&gt;
+&lt;h2&gt;It Won't Change Anytime Soon&lt;/h2&gt;
+&lt;p&gt;At least not at big tech companies like FAANG. They just have way too much demand and from their perspective, it's better
+to turn away a good candidate that didn't review DS/Algorithms beforehand than bring in a bad candidate who doesn't
+actually know what they're doing. That's why they choose to focus on these types of questions. Not so much because they're
+good measures of problem solving ability but because they're effective weed-out tools to narrow down the applicant pool
+to manageable levels. I understand if we're talking about interviewing fresh college grads who haven't done anything.
+It makes absolutely no sense to me when it comes to experienced candidates, but alas that's how it is.&lt;/p&gt;
+&lt;p&gt;The engineers doing all of the hiring in these companies also tend to give in to industry standards and think it's just
+the way it has always been so there's no point in changing. Some even wear their LeetCode ability like
+a badge of honor, looking down upon anyone not willing to put in the dedication to solve those questions themselves. It's
+quite toxic actually. I've interviewed super qualified candidates before that would have been great assets but my peers
+didn't think so because the candidates struggled with esoteric DS questions. I've literally read in the feedback
+comments for candidates with years of software experience, &amp;quot;struggled with [insert hard LeetCode question here], not good
+at coding,&amp;quot; which just boggles my mind. How can you make such a determination from not being able to answer those types of
+questions on a whiteboard? Did you even talk to the candidate about their many years of relevant experience and obvious
+actual engineering ability?&lt;/p&gt;
+&lt;p&gt;It's a shame because I think those companies would certainly be better off if their interview process
+were more like the actual jobs the candidates need to do once they join. Anyway, hit me up on LeetCode fam -
+&lt;a class="reference external" href="https://leetcode.com/adaros92/"&gt;https://leetcode.com/adaros92/&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+</content><category term="Career"></category><category term="Career"></category></entry><entry><title>The Role of the Data Engineer</title><link href="https://decipheringbigdata.net/the-role-of-the-data-engineer.html" rel="alternate"></link><published>2021-01-03T00:00:00-08:00</published><updated>2021-01-03T00:00:00-08:00</updated><author><name>Adams Rosales</name></author><id>tag:decipheringbigdata.net,2021-01-03:/the-role-of-the-data-engineer.html</id><summary type="html">&lt;p class="first last"&gt;Data engineers should do more than just build and maintain ETL jobs&lt;/p&gt;
+</summary><content type="html">&lt;div class="section" id="what-data-engineers-actually-do"&gt;
+&lt;h2&gt;What Data Engineers Actually Do&lt;/h2&gt;
+&lt;p&gt;The textbook definition of a data engineer is a person who builds pipelines that prepares data for scientists to consume.
+This is true to some extent but in the real world, the role varies widely.&lt;/p&gt;
+&lt;p&gt;From my experience, the data engineering crowd is composed of the following members.&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Old school BI/ETL engineers&lt;/li&gt;
+&lt;li&gt;Younger professionals who sought out the role lured by the shiny big data frameworks and DS hype&lt;/li&gt;
+&lt;li&gt;Seasoned software engineers who chose to specialize in big data (or were tasked with a problem and had no other choice)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Just like the crowd, the roles are mixed as well.&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Traditional data warehousing with drag and drop ETL tools like Informatica&lt;/li&gt;
+&lt;li&gt;Writing SQL queries to extract data from a data warehouse&lt;/li&gt;
+&lt;li&gt;Building custom ETL orchestration with programmatic frameworks like Airflow in languages like Python/Java/Scala&lt;/li&gt;
+&lt;li&gt;Big data processing and storage using Spark/MapReduce with languages like Python/Java/Scala on cloud technologies/on-prem Hadoop clusters&lt;/li&gt;
+&lt;li&gt;Building scalable data processing systems and infrastructure to automate the above and/or enable self-service access to data&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;What you end up doing largely depends on the team you're on and what the needs are. However, I think we can all agree
+on which roles are the most interesting to engineers if engineers are what companies actually want when they hire DEs.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="moving-data-from-point-a-to-b-is-not-fun"&gt;
+&lt;h2&gt;Moving Data From Point A to B Is Not Fun&lt;/h2&gt;
+&lt;p&gt;If you think the textbook definition of a data engineer sounds boring it's because it is. People don't go into data
+engineering because they like to set up an ETL to join a few tables, aggregate some columns, and spit the result out to
+the analysts. Certainly not good engineers anyway.&lt;/p&gt;
+&lt;p&gt;Yet the expectation from most of my customers assumes that we enjoy building ETLs and solely exist to hand over the
+precious data upon request. This is a silly expectation for a few reasons.&lt;/p&gt;
+&lt;ol class="arabic simple"&gt;
+&lt;li&gt;If you can get a Master's or PhD in Math/Econ/Stats/whatever and be a fancy data scientist you can also write SQL&lt;/li&gt;
+&lt;li&gt;Given that the process of transforming data is tedious, it will never be the end goal for talented engineers and they will most likely get bored and leave&lt;/li&gt;
+&lt;li&gt;Enforcing a contract where data engineers provide and data scientists receive sets up the system so that no one is building anything end-to-end, which is not rewarding to anyone involved&lt;/li&gt;
+&lt;li&gt;Enforcing this contract also leads to increased latency from scientists sitting around waiting for data engineers to prioritize their work&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+&lt;div class="section" id="data-engineers-should-focus-on-the-infra"&gt;
+&lt;h2&gt;Data Engineers Should Focus on the Infra&lt;/h2&gt;
+&lt;p&gt;Instead of building and maintaining the ETL, engineers should instead focus on enabling self-service and building sound infrastructure. There
+is no reason why scientists can't structure and pull their own data. They should be empowered to own the entire analytics
+process end-to-end and engineers should be given the time to make this as easy and fool-proof as possible.&lt;/p&gt;
+&lt;p&gt;This means cataloguing the data, building automatic alarming and outlier detection systems, optimizing bottleneck pipelines,
+improving data quality, enforcing data governance processes, building self-service tools to remove friction, and implementing
+complex data pipelines that require more than just SQL.&lt;/p&gt;
+&lt;p&gt;Unless the data is in a super raw format or needs to be processed with very little latency, specialized knowledge in
+data processing and modeling is not required. The tools exist so that data does not really need to be structured in a data warehouse
+to be useful to analysts. If you want to query those JSON logs in S3 you can. The same is true for denormalized parquet files or
+raw CSVs. Data engineers should build the right abstractions that leverage these tools and make new ones available instead of
+being stuck maintaining a bunch of ETL jobs that the scientists can own themselves.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="the-future-of-the-role"&gt;
+&lt;h2&gt;The Future of the Role&lt;/h2&gt;
+&lt;p&gt;With third-party ETL tools becoming more sophisticated and cloud computing providers making more automation and data discovery
+services available, data engineers will be taking on more engineering and infrastructure heavy roles. The role of a data engineer
+should be seen as another branch of software engineering requiring the same fundamental way of thinking. They will need to
+adopt the same software and system design practices as software engineers but use them to build scalable and intuitive
+data infrastructures.&lt;/p&gt;
+&lt;/div&gt;
+</content><category term="Career"></category><category term="Career"></category></entry></feed>

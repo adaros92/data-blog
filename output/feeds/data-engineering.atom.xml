@@ -1,0 +1,449 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Deciphering Big Data - Data Engineering</title><link href="https://decipheringbigdata.net/" rel="alternate"></link><link href="https://decipheringbigdata.net/feeds/data-engineering.atom.xml" rel="self"></link><id>https://decipheringbigdata.net/</id><updated>2021-03-27T00:00:00-07:00</updated><entry><title>Scala Spark Hello World</title><link href="https://decipheringbigdata.net/scala-spark-hello-world.html" rel="alternate"></link><published>2021-03-27T00:00:00-07:00</published><updated>2021-03-27T00:00:00-07:00</updated><author><name>Adams Rosales</name></author><id>tag:decipheringbigdata.net,2021-03-27:/scala-spark-hello-world.html</id><summary type="html">&lt;p class="first last"&gt;A basic template for a Scala Spark project using SBT&lt;/p&gt;
+</summary><content type="html">&lt;div class="section" id="motivation"&gt;
+&lt;h2&gt;Motivation&lt;/h2&gt;
+&lt;p&gt;Spark is a hot skill these days! There are so many tutorials out there on it but I find that most of them miss the mark
+on how you actually get started with a Spark project from scratch. Unless you've worked in a professional environment
+with Spark pipelines written from scratch it's unlikely that you've been introduced to how to properly structure
+a project, set up build dependencies, and write unit tests. In this post I go through a bare-bones SBT template as an
+example of how to do just that.&lt;/p&gt;
+&lt;p&gt;I'm assuming you already have Scala, SBT, and Apache Spark installed. If not, you can follow &lt;a class="reference external" href="https://docs.scala-lang.org/getting-started/sbt-track/getting-started-with-scala-and-sbt-on-the-command-line.html"&gt;the scala docs&lt;/a&gt;
+to install SBT and Scala and &lt;a class="reference external" href="https://www.freecodecamp.org/news/installing-scala-and-apache-spark-on-mac-os-837ae57d283f/"&gt;this from freecodecamp&lt;/a&gt; to
+install Spark.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="create-sbt-project"&gt;
+&lt;h2&gt;Create SBT Project&lt;/h2&gt;
+&lt;p&gt;We start by creating an empty directory, changing to it, and creating a hello world SBT project.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&amp;gt; mkdir scala-spark-hello-world
+&amp;gt; &lt;span class="nb"&gt;cd&lt;/span&gt; scala-spark-hello-world
+&amp;gt; sbt new scala/hello-world.g8
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;This creates the following directory structure in the scala-spark-hello-world directory.&lt;/p&gt;
+&lt;img alt="Step 1 in creating a Spark Hello World project" src="/static/post15/post15_step1.png" style="width: 100%;" /&gt;
+&lt;p&gt;We don't need the top level project or target directories so let's just delete them and cd into cala-spark-hello-world.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&amp;gt; rm -rf project target
+&amp;gt; &lt;span class="nb"&gt;cd&lt;/span&gt; cala-spark-hello-world
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;In cala-spark-hellow-world we are left with this structure.&lt;/p&gt;
+&lt;img alt="Step 2 in creating a Spark Hello World project" src="/static/post15/post15_step2.png" style="width: 100%;" /&gt;
+&lt;/div&gt;
+&lt;div class="section" id="add-dependencies"&gt;
+&lt;h2&gt;Add Dependencies&lt;/h2&gt;
+&lt;p&gt;The dependencies are specified in the build.sbt file. Spark needs to be listed as a dependency along with a compatible
+Scala version to use according to the Spark version you choose. Here I'm using Spark 3.0.1, which requires Scala 2.12.
+I'm also adding some additional dependencies like Scalactic and ScalaTest for unit testing and scopt for command line
+parsing. We can also specify the assembly merge strategy for handling deduplication when building an uber/fat jar with
+all of our dependencies.&lt;/p&gt;
+&lt;p&gt;We can go ahead and delete the existing build.sbt file and replace it with the code snippet below.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;scalaVersion&lt;/span&gt; &lt;span class="o"&gt;:=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;2.12.1&amp;quot;&lt;/span&gt;
+
+&lt;span class="n"&gt;name&lt;/span&gt; &lt;span class="o"&gt;:=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;spark-hello-world&amp;quot;&lt;/span&gt;
+&lt;span class="n"&gt;organization&lt;/span&gt; &lt;span class="o"&gt;:=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;ch.epfl.scala&amp;quot;&lt;/span&gt;
+&lt;span class="n"&gt;version&lt;/span&gt; &lt;span class="o"&gt;:=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;1.0&amp;quot;&lt;/span&gt;
+
+&lt;span class="n"&gt;libraryDependencies&lt;/span&gt; &lt;span class="o"&gt;++=&lt;/span&gt; &lt;span class="nc"&gt;Seq&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;
+  &lt;span class="s"&gt;&amp;quot;org.apache.spark&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;%%&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;spark-core&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;%&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;3.0.1&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt;
+  &lt;span class="s"&gt;&amp;quot;org.apache.spark&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;%%&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;spark-sql&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;%&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;3.0.1&amp;quot;&lt;/span&gt;
+&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;libraryDependencies&lt;/span&gt; &lt;span class="o"&gt;+=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;com.github.scopt&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;%&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;scopt_native0.2_2.11&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;%&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;3.6.0&amp;quot;&lt;/span&gt;
+&lt;span class="n"&gt;libraryDependencies&lt;/span&gt; &lt;span class="o"&gt;+=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;org.scalactic&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;%%&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;scalactic&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;%&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;3.2.5&amp;quot;&lt;/span&gt;
+&lt;span class="n"&gt;libraryDependencies&lt;/span&gt; &lt;span class="o"&gt;+=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;org.scalatest&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;%%&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;scalatest&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;%&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;3.2.5&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;%&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;test&amp;quot;&lt;/span&gt;
+
+&lt;span class="n"&gt;assemblyMergeStrategy&lt;/span&gt; &lt;span class="n"&gt;in&lt;/span&gt; &lt;span class="n"&gt;assembly&lt;/span&gt; &lt;span class="o"&gt;:=&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+  &lt;span class="k"&gt;case&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;reference.conf&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="nc"&gt;MergeStrategy&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;concat&lt;/span&gt;
+  &lt;span class="k"&gt;case&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;application.conf&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="nc"&gt;MergeStrategy&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;concat&lt;/span&gt;
+  &lt;span class="k"&gt;case&lt;/span&gt; &lt;span class="nc"&gt;PathList&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;META-INF&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;xs&lt;/span&gt; &lt;span class="o"&gt;@&lt;/span&gt; &lt;span class="k"&gt;_&lt;/span&gt;&lt;span class="o"&gt;*)&lt;/span&gt; &lt;span class="o"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="nc"&gt;MergeStrategy&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;discard&lt;/span&gt;
+  &lt;span class="k"&gt;case&lt;/span&gt; &lt;span class="k"&gt;_&lt;/span&gt; &lt;span class="o"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="nc"&gt;MergeStrategy&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;first&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Next we have to add the &lt;a class="reference external" href="https://github.com/sbt/sbt-assembly"&gt;assembly plugin&lt;/a&gt; within the project directory in a
+plugins.sbt file.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&amp;gt; &lt;span class="nb"&gt;cd&lt;/span&gt; project
+&amp;gt; touch plugins.sbt
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Here is the one line to add to this plugins.sbt file.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;addSbtPlugin&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;com.eed3si9n&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;%&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;sbt-assembly&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;%&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;0.15.0&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="edit-src-packages"&gt;
+&lt;h2&gt;Edit src Packages&lt;/h2&gt;
+&lt;p&gt;Now we're ready to start implementing the Spark logic. To do so let's reorganize the existing project a bit by creating
+packages that will contain different components of our code and associated test packages for unit testing later on.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&amp;gt; &lt;span class="nb"&gt;cd&lt;/span&gt; src
+&lt;span class="c1"&gt;# Create test directory&lt;/span&gt;
+&amp;gt; mkdir &lt;span class="nb"&gt;test&lt;/span&gt;
+&lt;span class="c1"&gt;# Create scala directory to mirror main&lt;/span&gt;
+&amp;gt; mkdir test/scala
+&lt;span class="c1"&gt;# Remove existing Main file that&amp;#39;s not needed&lt;/span&gt;
+&amp;gt; rm main/scala/Main.scala
+&lt;span class="c1"&gt;# Create common package main and test directories&lt;/span&gt;
+&amp;gt; mkdir main/scala/common test/scala/common
+&lt;span class="c1"&gt;# Create apps package in main and test directories&lt;/span&gt;
+&amp;gt; mkdir main/scala/apps test/scala/apps
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;After all of that, the src directory will look like this.&lt;/p&gt;
+&lt;img alt="Step 3 in creating a Spark Hello World project" src="/static/post15/post15_step3.png" style="width: 100%;" /&gt;
+&lt;p&gt;The common package will hold components that are common across all of the codebase and the apps package will just hold
+our simple Spark applications for now. This is just a bare-bones structure that can be edited to fit your use case.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="add-spark-session-wrappers"&gt;
+&lt;h2&gt;Add Spark Session Wrappers&lt;/h2&gt;
+&lt;p&gt;When working with Spark you'll typically interact with the Spark session and context objects. Instead of instantiating
+a bunch of these in different parts of the code base, you can define a single Spark session to be used across your
+code. The way to do that naturally with Scala is with a trait that can be extended by objects and classes. Let's put
+this wrapper in the common package.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;package&lt;/span&gt; &lt;span class="nn"&gt;common&lt;/span&gt;
+
+&lt;span class="k"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;org.apache.spark.sql.SparkSession&lt;/span&gt;
+&lt;span class="k"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;org.apache.spark.&lt;/span&gt;&lt;span class="o"&gt;{&lt;/span&gt;&lt;span class="nc"&gt;SparkConf&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nc"&gt;SparkContext&lt;/span&gt;&lt;span class="o"&gt;}&lt;/span&gt;
+
+&lt;span class="k"&gt;trait&lt;/span&gt; &lt;span class="nc"&gt;SparkWrapper&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+
+  &lt;span class="c1"&gt;// Set config&lt;/span&gt;
+  &lt;span class="k"&gt;protected&lt;/span&gt; &lt;span class="k"&gt;val&lt;/span&gt; &lt;span class="n"&gt;sparkConf&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt; &lt;span class="kt"&gt;SparkConf&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nc"&gt;SparkConf&lt;/span&gt;&lt;span class="o"&gt;()&lt;/span&gt;
+  &lt;span class="k"&gt;protected&lt;/span&gt; &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;config&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;key&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt; &lt;span class="kt"&gt;String&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;value&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt; &lt;span class="kt"&gt;String&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt; &lt;span class="kt"&gt;Unit&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+    &lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sparkConf&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;set&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;key&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;value&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+  &lt;span class="o"&gt;}&lt;/span&gt;
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;conf&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt; &lt;span class="kt"&gt;SparkConf&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sparkConf&lt;/span&gt;
+
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;appName&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt; &lt;span class="kt"&gt;String&lt;/span&gt;
+
+  &lt;span class="c1"&gt;// Build the spark session and retrieve spark context&lt;/span&gt;
+  &lt;span class="k"&gt;protected&lt;/span&gt; &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;builder&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt; &lt;span class="kt"&gt;SparkSession.Builder&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+    &lt;span class="nc"&gt;SparkSession&lt;/span&gt;
+      &lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;builder&lt;/span&gt;&lt;span class="o"&gt;()&lt;/span&gt;
+      &lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;appName&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;appName&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+      &lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;config&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;conf&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+  &lt;span class="o"&gt;}&lt;/span&gt;
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;spark&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt; &lt;span class="kt"&gt;SparkSession&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;builder&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;getOrCreate&lt;/span&gt;&lt;span class="o"&gt;()&lt;/span&gt;
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;sc&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt; &lt;span class="kt"&gt;SparkContext&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;spark&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sparkContext&lt;/span&gt;
+
+&lt;span class="o"&gt;}&lt;/span&gt;
+
+&lt;span class="k"&gt;trait&lt;/span&gt; &lt;span class="nc"&gt;SparkLocalWrapper&lt;/span&gt; &lt;span class="k"&gt;extends&lt;/span&gt; &lt;span class="nc"&gt;SparkWrapper&lt;/span&gt;&lt;span class="o"&gt;{&lt;/span&gt;
+  &lt;span class="k"&gt;override&lt;/span&gt; &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;builder&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt; &lt;span class="kt"&gt;SparkSession.Builder&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+    &lt;span class="k"&gt;super&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;builder&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;master&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;local&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+  &lt;span class="o"&gt;}&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;The components that extend these SparkWrapper and SparkLocalWrapper traits will be able to use the single session (spark)
+and context (sc) instances instead of defining their own. It also allows us to set the common configuration settings in
+one place in the code base, which is generally good practice.&lt;/p&gt;
+&lt;p&gt;Notice also how we have two traits - SparkWrapper and SparkLocalWrapper. The former is meant to be used in cluster mode
+when the application is run on something like EMR or a Hadoop cluster. The latter is used when running Spark on a local
+machine like your computer. If you try to run the former on your computer you will typically run into an exception that
+a host is not provided or something like that.&lt;/p&gt;
+&lt;p&gt;We will want to use the SparkLocalWrapper while running unit tests on our local machines. We will also want to turn off
+some Spark logs and add some additional configurations so that Spark knows which local host/port to use and to only use
+one partition. A good way to do this is with an additional wrapper in the test directory called SparkTestWrapper, which
+extends from the SparkLocalWrapper available in main/scala/common.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;package&lt;/span&gt; &lt;span class="nn"&gt;testutils&lt;/span&gt;
+
+&lt;span class="k"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;common.SparkLocalWrapper&lt;/span&gt;
+
+&lt;span class="k"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;org.apache.log4j.Level&lt;/span&gt;
+&lt;span class="k"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;org.apache.spark.SparkConf&lt;/span&gt;
+
+&lt;span class="k"&gt;object&lt;/span&gt; &lt;span class="nc"&gt;SparkTestWrapper&lt;/span&gt; &lt;span class="k"&gt;extends&lt;/span&gt; &lt;span class="nc"&gt;SparkLocalWrapper&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+  &lt;span class="o"&gt;{&lt;/span&gt;
+    &lt;span class="n"&gt;org&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;apache&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;log4j&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="nc"&gt;Logger&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;getLogger&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;org.apache.spark&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;).&lt;/span&gt;&lt;span class="n"&gt;setLevel&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nc"&gt;Level&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="nc"&gt;WARN&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;org&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;apache&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;log4j&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="nc"&gt;Logger&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;getLogger&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;org.apache.hadoop.input.LineRecordReader&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;).&lt;/span&gt;&lt;span class="n"&gt;setLevel&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nc"&gt;Level&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="nc"&gt;ERROR&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;org&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;apache&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;log4j&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="nc"&gt;Logger&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;getLogger&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;
+      &lt;span class="s"&gt;&amp;quot;org.apache.hadoop.mapreduce.lib.output.FileOutputCommitter&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;).&lt;/span&gt;&lt;span class="n"&gt;setLevel&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nc"&gt;Level&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="nc"&gt;ERROR&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;org&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;apache&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;log4j&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="nc"&gt;Logger&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;getLogger&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;org.apache.hadoop.output.FileOutputCommitter&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;).&lt;/span&gt;&lt;span class="n"&gt;setLevel&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nc"&gt;Level&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="nc"&gt;ERROR&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;org&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;apache&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;log4j&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="nc"&gt;Logger&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;getLogger&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;
+      &lt;span class="s"&gt;&amp;quot;org.apache.hadoop.mapreduce.lib.input.LineRecordReader&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;).&lt;/span&gt;&lt;span class="n"&gt;setLevel&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nc"&gt;Level&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="nc"&gt;ERROR&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+  &lt;span class="o"&gt;}&lt;/span&gt;
+
+  &lt;span class="k"&gt;override&lt;/span&gt; &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;appName&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt; &lt;span class="kt"&gt;String&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;SparkTestWrapper&amp;quot;&lt;/span&gt;
+
+  &lt;span class="k"&gt;override&lt;/span&gt; &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;conf&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt; &lt;span class="kt"&gt;SparkConf&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+    &lt;span class="n"&gt;config&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;spark.sql.shuffle.partitions&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;1&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;config&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;spark.ui.enabled&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;false&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;config&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;spark.driver.bindAddress&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;127.0.0.1&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;config&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;spark.driver.host&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;localhost&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;config&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;spark.sql.catalogImplementation&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;in-memory&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;config&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;spark.driver.port&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;8888&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;config&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;spark.sql.autoBroadcastJoinThreshold&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;-1&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+    &lt;span class="k"&gt;super&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;conf&lt;/span&gt;
+  &lt;span class="o"&gt;}&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;I have placed this in a separate test package called testutils (test/scala/testutils). The updated file tree looks like
+this.&lt;/p&gt;
+&lt;img alt="Step 4 in creating a Spark Hello World project" src="/static/post15/post15_step4.png" style="width: 100%;" /&gt;
+&lt;/div&gt;
+&lt;div class="section" id="add-spark-applications"&gt;
+&lt;h2&gt;Add Spark Applications&lt;/h2&gt;
+&lt;p&gt;To add a Spark application we can create a new entry point in the apps package. Below is just a simple application to
+count the words in a given block of text. It just parses the text using the scopt library and calls the countWords method
+on it to perform the word counting. Notice how it extends the SparkWrapper from the common package and overrides the
+appName. The spark object referenced here is defined in the SparkWrapper.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;package&lt;/span&gt; &lt;span class="nn"&gt;apps&lt;/span&gt;
+
+&lt;span class="k"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;common.SparkWrapper&lt;/span&gt;
+&lt;span class="k"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;org.apache.spark.rdd.RDD&lt;/span&gt;
+
+&lt;span class="k"&gt;object&lt;/span&gt; &lt;span class="nc"&gt;SparkWordCount&lt;/span&gt; &lt;span class="k"&gt;extends&lt;/span&gt; &lt;span class="nc"&gt;SparkWrapper&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+
+  &lt;span class="k"&gt;override&lt;/span&gt; &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;appName&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;Spark Word Count&amp;quot;&lt;/span&gt;
+
+  &lt;span class="k"&gt;case&lt;/span&gt; &lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;CliArgs&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;textToCount&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt; &lt;span class="kt"&gt;String&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;parseCli&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt; &lt;span class="kt"&gt;Seq&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="kt"&gt;String&lt;/span&gt;&lt;span class="o"&gt;])&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt; &lt;span class="kt"&gt;CliArgs&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+    &lt;span class="k"&gt;val&lt;/span&gt; &lt;span class="n"&gt;parser&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;scopt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="nc"&gt;OptionParser&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="kt"&gt;CliArgs&lt;/span&gt;&lt;span class="o"&gt;](&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;SparkWordCountApp&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+      &lt;span class="n"&gt;head&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Spark word count app&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+      &lt;span class="n"&gt;opt&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="kt"&gt;String&lt;/span&gt;&lt;span class="o"&gt;](&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;textToCount&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+        &lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;required&lt;/span&gt;&lt;span class="o"&gt;()&lt;/span&gt;
+        &lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;text&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;The text to count words with&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+        &lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;action&lt;/span&gt;&lt;span class="o"&gt;((&lt;/span&gt;&lt;span class="n"&gt;param&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;copy&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;textToCount&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;param&lt;/span&gt;&lt;span class="o"&gt;))&lt;/span&gt;
+    &lt;span class="o"&gt;}&lt;/span&gt;
+    &lt;span class="n"&gt;parser&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;parse&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nc"&gt;CliArgs&lt;/span&gt;&lt;span class="o"&gt;()).&lt;/span&gt;&lt;span class="n"&gt;getOrElse&lt;/span&gt;&lt;span class="o"&gt;({&lt;/span&gt;
+      &lt;span class="n"&gt;parser&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;showUsage&lt;/span&gt;
+      &lt;span class="k"&gt;throw&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nc"&gt;Exception&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;could not parse command&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+    &lt;span class="o"&gt;})&lt;/span&gt;
+  &lt;span class="o"&gt;}&lt;/span&gt;
+
+  &lt;span class="cm"&gt;/**&lt;/span&gt;
+&lt;span class="cm"&gt;   * Calculates the count of unique words in a collection of strings&lt;/span&gt;
+&lt;span class="cm"&gt;   * @param text a sequence of individual strings to count words from&lt;/span&gt;
+&lt;span class="cm"&gt;   * @return an RDD of word to count tuples&lt;/span&gt;
+&lt;span class="cm"&gt;   */&lt;/span&gt;
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;countWords&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;text&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt; &lt;span class="kt"&gt;Seq&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="kt"&gt;String&lt;/span&gt;&lt;span class="o"&gt;])&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt; &lt;span class="kt"&gt;RDD&lt;/span&gt;&lt;span class="o"&gt;[(&lt;/span&gt;&lt;span class="kt"&gt;String&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kt"&gt;Int&lt;/span&gt;&lt;span class="o"&gt;)]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+    &lt;span class="k"&gt;val&lt;/span&gt; &lt;span class="n"&gt;lines&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;spark&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sparkContext&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;parallelize&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;text&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;lines&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;flatMap&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;line&lt;/span&gt; &lt;span class="o"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;line&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;split&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot; &amp;quot;&lt;/span&gt;&lt;span class="o"&gt;)).&lt;/span&gt;&lt;span class="n"&gt;map&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;word&lt;/span&gt; &lt;span class="o"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;word&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="o"&gt;))&lt;/span&gt;
+      &lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;reduceByKey&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="k"&gt;_&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="k"&gt;_&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+  &lt;span class="o"&gt;}&lt;/span&gt;
+
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;main&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt; &lt;span class="kt"&gt;Array&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="kt"&gt;String&lt;/span&gt;&lt;span class="o"&gt;])&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt; &lt;span class="kt"&gt;Unit&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+    &lt;span class="k"&gt;val&lt;/span&gt; &lt;span class="n"&gt;cliArgs&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;parseCli&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+    &lt;span class="k"&gt;val&lt;/span&gt; &lt;span class="n"&gt;textToCount&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;cliArgs&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;textToCount&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;split&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;,&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;).&lt;/span&gt;&lt;span class="n"&gt;toSeq&lt;/span&gt;
+
+    &lt;span class="k"&gt;val&lt;/span&gt; &lt;span class="n"&gt;counts&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;countWords&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;textToCount&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;counts&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;foreach&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;println&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+  &lt;span class="o"&gt;}&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="add-unit-tests"&gt;
+&lt;h2&gt;Add Unit Tests&lt;/h2&gt;
+&lt;p&gt;To run unit tests on our Spark applications we can use the ScalaTest library. We'll just create corresponding files
+in the test directory with the same name as the classes/objects defined in the main directory but suffixed with the word &amp;quot;Test.&amp;quot;
+Below is a sample unit test for the countWords method in the SparkWordCount object defined above.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;package&lt;/span&gt; &lt;span class="nn"&gt;apps&lt;/span&gt;
+
+&lt;span class="k"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;org.scalatest.funsuite.AnyFunSuite&lt;/span&gt;
+&lt;span class="k"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;org.apache.spark.sql.SparkSession&lt;/span&gt;
+
+&lt;span class="k"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;testutils.SparkTestWrapper&lt;/span&gt;
+
+&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;SparkWordCountTest&lt;/span&gt; &lt;span class="k"&gt;extends&lt;/span&gt; &lt;span class="nc"&gt;AnyFunSuite&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+
+  &lt;span class="k"&gt;implicit&lt;/span&gt; &lt;span class="k"&gt;val&lt;/span&gt; &lt;span class="n"&gt;spark&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt; &lt;span class="kt"&gt;SparkSession&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nc"&gt;SparkTestWrapper&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;spark&lt;/span&gt;
+
+  &lt;span class="n"&gt;test&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;testing that countWords can correctly generate a count of words from a block of text&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;){&lt;/span&gt;
+    &lt;span class="k"&gt;val&lt;/span&gt; &lt;span class="n"&gt;wordsToCount&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nc"&gt;Seq&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;some words to count&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;some other words to count&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+    &lt;span class="k"&gt;val&lt;/span&gt; &lt;span class="n"&gt;countsOne&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nc"&gt;SparkWordCount&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;countWords&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;wordsToCount&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+    &lt;span class="k"&gt;val&lt;/span&gt; &lt;span class="n"&gt;expectedCount&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nc"&gt;Set&lt;/span&gt;&lt;span class="o"&gt;((&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;some&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="o"&gt;),&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;words&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="o"&gt;),&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;count&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="o"&gt;),&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;other&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="o"&gt;),&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;to&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="o"&gt;))&lt;/span&gt;
+    &lt;span class="n"&gt;assert&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;countsOne&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;collect&lt;/span&gt;&lt;span class="o"&gt;().&lt;/span&gt;&lt;span class="n"&gt;toSet&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="n"&gt;expectedCount&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+  &lt;span class="o"&gt;}&lt;/span&gt;
+
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;The final tree from the root project directory looks like this.&lt;/p&gt;
+&lt;img alt="Step 5 in creating a Spark Hello World project" src="/static/post15/post15_step5.png" style="width: 100%;" /&gt;
+&lt;/div&gt;
+&lt;div class="section" id="build-it"&gt;
+&lt;h2&gt;Build It&lt;/h2&gt;
+&lt;p&gt;To build our project we can simply run the SBT assembly process with the following command.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&amp;gt; sbt assembly
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;This should download the required dependencies, compile your code, and package all the necessary files into a fat or uber
+jar that can be executed on your cluster of choice. This should also run your tests, which you will see in the terminal
+as shown below.&lt;/p&gt;
+&lt;img alt="Step 6 in creating a Spark Hello World project" src="/static/post15/post15_step6.png" style="width: 100%;" /&gt;
+&lt;/div&gt;
+&lt;div class="section" id="run-it"&gt;
+&lt;h2&gt;Run It!&lt;/h2&gt;
+&lt;p&gt;To run your application you first need to find the uber jar created by sbt assembly. After running sbt assembly, you will
+notice that a target directory was created in your root project directory. Travel there and into the scala-2.x subdirectory.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&amp;gt; &lt;span class="nb"&gt;cd&lt;/span&gt; target/scala-*
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Here you will find an assembly jar as shown in the screenshot below.&lt;/p&gt;
+&lt;img alt="Step 7 in creating a Spark Hello World project" src="/static/post15/post15_step7.png" style="width: 100%;" /&gt;
+&lt;p&gt;You can then deploy this jar to wherever your cluster needs it to be. For example, if you're using EMR, you can deploy to
+some S3 bucket. Then your spark-submit command can be something like the following. Notice the S3 path, which points to
+the bucket I deployed my jar to.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;spark-submit --deploy-mode cluster --executor-memory 1g --class apps.SparkWordCount
+s3://sparkjarsar/sparkflow-sparkapps-assembly-1.0.jar --textToCount &lt;span class="s2"&gt;&amp;quot;some words to count&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;An example of all of this can be found in my &lt;a class="reference external" href="https://github.com/adaros92/sparkflow-sparkapps"&gt;Github&lt;/a&gt;. Happy coding!&lt;/p&gt;
+&lt;/div&gt;
+</content><category term="Data Engineering"></category><category term="Data Engineering"></category></entry><entry><title>SparkFlow: Intro</title><link href="https://decipheringbigdata.net/sparkflow-intro.html" rel="alternate"></link><published>2021-02-28T00:00:00-08:00</published><updated>2021-02-28T00:00:00-08:00</updated><author><name>Adams Rosales</name></author><id>tag:decipheringbigdata.net,2021-02-28:/sparkflow-intro.html</id><summary type="html">&lt;p class="first last"&gt;Building an EMR orchestration and ETL tool for distributed jobs&lt;/p&gt;
+</summary><content type="html">&lt;div class="section" id="motivation"&gt;
+&lt;h2&gt;Motivation&lt;/h2&gt;
+&lt;p&gt;I have been working with Spark jobs on AWS EMR for a few years now and have found myself implementing the same pieces of
+code to manage EMR clusters and submit applications on them each time I've switched teams. I have also had the pleasure
+(and displeasure) of working with several internal tools that abstract away this process behind custom built UIs.&lt;/p&gt;
+&lt;p&gt;I've learned what works well and what doesn't work so well with these tools so I figured I would create something that
+mixes all the best qualities from them to create a lightweight orchestration tool I can use in the future.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="background"&gt;
+&lt;h2&gt;Background&lt;/h2&gt;
+&lt;p&gt;AWS EMR is service that allows users to deploy clusters of EC2 instances to run distributed data processing applications.
+You can launch the compute power you need to run these applications when you need it and tear it down when you don't,
+which provides a lot more flexibility and is much cheaper for transient workloads than maintaining an always-on on-premise
+Hadoop cluster.&lt;/p&gt;
+&lt;p&gt;Managing clusters and submitting applications on them can be done in three ways: manually through the AWS console,
+programmatically through the AWS API with the various SDKs made available by Amazon, and through CloudFormation or a
+similar infrastructure as code tool. The manual way is obviously not suited for production pipelines and scaling
+infrastructure automatically. Writing scripts to interact with the AWS API is easy enough but requires a lot of boiler
+plate code and there are many configs to tweak. Designing something that works generally for different use cases is quite
+time consuming. Finally, CloudFormation is more suited for always-on clusters or a fixed fleet that just gets restarted
+without any inputs from users or applications.&lt;/p&gt;
+&lt;p&gt;Unfortunately, there is no open source tool (that I know of) as of the end of 2020 that provides an easy to set up and
+use interface for running these EMR workflows. It would be nice if AWS offered a higher level abstraction on top of the
+EMR API that would give users a full-featured ETL tool for Spark, Hive, Flink, etc. applications. I guess they sort of
+have that with AWS Glue and the new managed AirFlow service but these are not quite there yet as more established ETL
+and orchestration tools we've seen in the traditional data warehousing space.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="design"&gt;
+&lt;h2&gt;Design&lt;/h2&gt;
+&lt;p&gt;The system consists of three main components: the UI, Flask server, and AWS Lambdas that call various AWS API endpoints
+to create and manage EMR clusters and steps on those clusters. A high level diagram is below.&lt;/p&gt;
+&lt;img alt="SparkFlow design diagram" src="/static/post13/post13_design.png" style="width: 100%;" /&gt;
+&lt;p&gt;The cluster manager Lambda receives input from the Flask server on how many clusters to create along with the types of
+clusters and other configurations expected by EMR, launches those clusters, and stores their information in a DynamoDB
+table. This Lambda is also tasked with deleting specific clusters by terminating them in EMR and deleting the records
+from DynamoDB. When this Lambda is invoked, individual EMRs are created under a logical grouping based on compute
+requirements (tiny, small, medium, large, extra large). These are easier to understand groups so the user doesn't have
+to worry about the specific instance types and amounts to launch. Additionally, when a Spark application is submitted,
+it will be launched within a group of clusters. Any available cluster within that group can pick up the work, which acts
+as a simple load-balancing system.&lt;/p&gt;
+&lt;p&gt;The cluster poller Lambda is tasked with periodically polling the active clusters in EMR and updating their status in
+Dynamo. These statuses will contain information about the current state of the cluster (running, launching, terminating, etc.)
+as well as how many steps are running or pending on that cluster. It will also record the statuses of those steps so that
+the Flask app can show the users the latest status of their jobs.&lt;/p&gt;
+&lt;p&gt;Finally, the step manager Lambda will just submit job runs of transforms executed by the user through the Flask app. It
+will first check the status of clusters within the cluster pool that the transform to be executed is tied to and pick
+the cluster that is most available. For now this will be based on having the fewer number of steps, but given that
+individual steps may be more taxing than others, the availability metric will have to be improved in the long run.
+However, once it does pick a cluster, the Lambda will submit the step and create a record in DynamoDB for the Flask app
+to reference.&lt;/p&gt;
+&lt;p&gt;The user interface will be split into three main sections: Clusters, Transforms, and Job Runs. Users will be able to
+create the cluster pools/logical groups mentioned above and delete them from the Clusters page. They will create
+transforms or job profiles and assign them to specific pools of clusters in the Transforms page. Finally, the Job Runs
+page will just show the status of transform executions. This will look something like the below working version.&lt;/p&gt;
+&lt;img alt="SparkFlow user interface" src="/static/post13/post13_sparkflow_ui.png" style="width: 100%;" /&gt;
+&lt;/div&gt;
+&lt;div class="section" id="follow-along"&gt;
+&lt;h2&gt;Follow Along&lt;/h2&gt;
+&lt;p&gt;The repos containing the code for this project are the following.&lt;/p&gt;
+&lt;p&gt;&lt;a class="reference external" href="https://github.com/adaros92/sparkflow-awstools/"&gt;sparkflow-awstools&lt;/a&gt; - contains Python AWS API wrappers using boto3
+and logical models for EMR clusters, EMR steps, and Dynamo tables&lt;/p&gt;
+&lt;p&gt;&lt;a class="reference external" href="https://github.com/adaros92/sparkflow-backend/"&gt;sparkflow-backend&lt;/a&gt; - Flask app code defining the server routes and UI&lt;/p&gt;
+&lt;p&gt;&lt;a class="reference external" href="https://github.com/adaros92/sparkflow-lambdas/"&gt;sparkflow-lambdas&lt;/a&gt; - implementation of the cluster manager, cluster
+poller, and step manager Lambdas&lt;/p&gt;
+&lt;p&gt;I'll be updating these repos as I work on the project and posting more detailed write-ups of the various components as
+they're built on this page. Stay tuned!&lt;/p&gt;
+&lt;/div&gt;
+</content><category term="Data Engineering"></category><category term="Data Engineering"></category></entry><entry><title>MySQL, YourSQL, OurSQL, NoSQL</title><link href="https://decipheringbigdata.net/mysql-yoursql-oursql-nosql.html" rel="alternate"></link><published>2021-01-17T00:00:00-08:00</published><updated>2021-01-17T00:00:00-08:00</updated><author><name>Adams Rosales</name></author><id>tag:decipheringbigdata.net,2021-01-17:/mysql-yoursql-oursql-nosql.html</id><summary type="html">&lt;p class="first last"&gt;One node, two node, Redshift, Blueshift&lt;/p&gt;
+</summary><content type="html">&lt;div class="section" id="what-does-it-all-mean"&gt;
+&lt;h2&gt;What Does It All Mean?&lt;/h2&gt;
+&lt;p&gt;Learning about data storage solutions can be a daunting processing. There are so many technologies out there that
+it's hard to keep track of everything. Behind all the buzzwords and branding though, the concepts underpinning these
+technologies are actually quite easy to grasp. They can help us choose which databases to use for different problems and
+really just make us better members of society. So be awesome, know your databases!&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="oltp-or-olap"&gt;
+&lt;h2&gt;OLTP or OLAP&lt;/h2&gt;
+&lt;p&gt;Online Transactional Processing and Online Analytical Processing are the two broad categories of data storage systems. Do
+you need a database to handle lightning quick atomic transactions (OLTP) to support the systems powering your application
+or do you want to answer complex business questions from your data (OLAP)? Answering this question is the quickest way
+to narrow down the list to the right family of technologies, but it's surprisingly easy to get wrong.&lt;/p&gt;
+&lt;p&gt;OLTP queries typically involve entire collections of data around a certain subject. When data are stored and retrieved,
+entire records need to be inserted or selected from the database. The queries don't typically need to do anything complex
+beyond just recording data and retrieving information to serve up to the application and there is minimal joining and
+aggregating of individual records. Because OLTP systems often impact the customer experience these insertion/retrieval
+processes need to be as quick as possible (no one likes a slow website or app).&lt;/p&gt;
+&lt;p&gt;OLAP queries on the other hand are more for like that time that your boss asked you to get all of the orders that
+were split into multiple boxes and contained at least one red item weighing 5 lbs or more. You know, oddly specific and
+complex questions like that to support a statement in a doc or to be included in the 10th appendix page of next
+week's business review meeting. These are the queries that populate all of the business reports and cutting edge analytics
+to inform strategic decisions, budgeting, and big brain stuff like that. They don't need to be particularly quick and
+it doesn't really matter much if the result is a bit off (unlike say displaying someone's account balance to them in an OLTP
+system).&lt;/p&gt;
+&lt;p&gt;Below I've listed some of the popular OLTP and OLAP technologies.&lt;/p&gt;
+&lt;img alt="A list of OLTP and OLAP technologies" src="/static/post11/post11_olapoltp.png" style="width: 100%;" /&gt;
+&lt;p&gt;Of course it's not so black and white in the real world. Just like you could technically row a boat with a spatula, you
+could also execute that complex analytical query on highly normalized tables in MySQL that takes 4 hours to run. But, yes
+there's probably a better way of storing the data to support queries like that.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="acid-or-base"&gt;
+&lt;h2&gt;ACID or BASE&lt;/h2&gt;
+&lt;p&gt;Another important factor to take into consideration is whether the system is ACID or BASE compliant. ACID stands for:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;strong&gt;Atomicity&lt;/strong&gt;: transactions either do all of the work they're meant to or nothing at all&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Consistency&lt;/strong&gt;: all tables in the system contain the same view of the data as it was committed by a transaction&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Isolation&lt;/strong&gt;: concurrent transactions run independently of each other&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Durability&lt;/strong&gt;: the data committed by transactions will remain in the database even after system failures&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;BASE on the other hand stands for:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;strong&gt;Basically available&lt;/strong&gt;: the system will do its best to return data most of the time but the data may not be consistent&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Soft state&lt;/strong&gt;: the state of the system may not be final because of the lack of a strong consistency model&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Eventual consistency&lt;/strong&gt;: the system will eventually be consistent after any inputs but until then, reads may not
+receive the latest state available&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;A bank will want to ensure that when a user withdraws money, either both the user receives the money and the account is
+debited for the change or neither of the two occur. There cannot be cases where the user receives money that still appears
+in their account after the withdrawal. For these types applications companies will need to stick with ACID compliant
+relational databases like MySQL, PostgreSQL, SQL Server, etc.&lt;/p&gt;
+&lt;p&gt;A profile page on a web application however does not need such a strict atomicity and consistency guarantee. Sections of
+the page may be retrieved out of order and updates made by the user to their profile may be eventually consistent because
+it's more important to guarantee super quick retrieval of data to ensure a smooth user experience. It may also be more
+important to scale out horizontally with cheap commodity hardware and be able to handle larger volumes of data. BASE
+systems like MongoDB, DynamoDB, Redis, Cassandra, Hbase, CouchDB, etc. are all great for these types of applications but
+it would be risky to use them to support financial transactions.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="sql-or-nosql"&gt;
+&lt;h2&gt;SQL or NoSQL&lt;/h2&gt;
+&lt;p&gt;NoSQL refers to a wide array of different data storage solutions that deviate away from the traditional relational database
+model. The schemas in these systems are a lot more flexible than their relational counterparts and insertion/reads tend to
+be faster as long as you query them using specific known keys corresponding to the records you want.&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;strong&gt;Document stores&lt;/strong&gt;: store data in schema-less objects that look a lot like JSON or XML. You can pretty much store your
+data however you want and individual records in any one table can have their own schemas independent of other records in
+the table.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Graph stores&lt;/strong&gt;: store data in graph-like objects consisting of nodes and relationship between those nodes. They excel
+at providing efficient lookups of how objects are related to each other, which is why they're great for social networking
+applications.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Key-value stores&lt;/strong&gt;: store data in the same way as hash tables where you have keys and values tied to those keys. These
+provide exceptional lookup and writing speed as long as you're searching for specific keys. Many document and key-value
+stores are quite similar in that records are identified by particular keys so they offer similar performance relative to
+relational databases but key-value stores are typically more optimized for fast reads and updates of single key-value pairs
+than document stores. This makes them great for caching.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="cold-or-hot"&gt;
+&lt;h2&gt;Cold or Hot&lt;/h2&gt;
+&lt;p&gt;The temperature metaphor in this context is more relevant to OLAP systems. It refers to how frequently the data need to
+be accessed. Nowadays you can store petabytes of data in a system like HDFS and S3 quite cheaply. However, storing that
+amount of data in data warehouse clusters like Redshift, Vertica, or BigQuery would be a lot more expensive but much
+faster to retrieve because the data would be more readily accessible. So in the context of a temperature spectrum we say
+that efficient columnar data warehousing solutions like Redshift are hotter than object stores like S3/HDFS.&lt;/p&gt;
+&lt;p&gt;This is an important dimension to think about when you're choosing where to store each data. There is no use in taking up
+valuable cluster space with logs that are not important to consumers of the data but may be important one day for audit
+purposes or what have you. These logs should be stored in a cold location that will be a lot cheaper but provide
+expensive and slower retrievals of the data when you do need it. On the other hand you should ensure that data accessed
+every day is modeled and stored behind enough computing power to enable efficient access to it. You do not want important
+business reports to be delayed because it's taking a long time to process all of that unstructured data somewhere in HDFS
+or S3 (this not much of a problem today with all of the flexible compute options we have available but it's still a useful
+framework to keep in mind).&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="so-how-do-you-choose"&gt;
+&lt;h2&gt;So How Do You Choose?&lt;/h2&gt;
+&lt;p&gt;Follow the flow chart below as a general guide.&lt;/p&gt;
+&lt;img alt="A flowchart of different data store technologies" src="/static/post11/post11_flowchart.jpeg" style="width: 100%;" /&gt;
+&lt;/div&gt;
+</content><category term="Data Engineering"></category><category term="Data Engineering"></category></entry></feed>

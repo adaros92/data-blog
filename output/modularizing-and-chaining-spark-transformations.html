@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-        <meta charset="utf-8">
+            <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="Adams Rosales' personal blog on everything data, software, and working in the tech industry">
@@ -50,8 +50,22 @@
         <![endif]-->
         
 
-		<meta property="og:locale" content="en">
+
+
+
+        <meta name="tags" contents="Data Engineering" />
+
+
+			<meta property="og:locale" content="en">
 		<meta property="og:site_name" content="Deciphering Big Data">
+
+	<meta property="og:type" content="article">
+	<meta property="article:author" content="">
+	<meta property="og:url" content="/modularizing-and-chaining-spark-transformations.html">
+	<meta property="og:title" content="Modularizing and Chaining Spark Transformations">
+	<meta property="og:description" content="">
+	<meta property="og:image" content="//static/post17/header.jpg">
+	<meta property="article:published_time" content="2021-05-04 00:00:00-07:00">
 </head>
 
 <body>
@@ -69,15 +83,17 @@
     </nav>
 
     <!-- Page Header -->
-    <!-- Set your background image for this header on the line below. -->
-        <header class="intro-header" style="background-image: url('static/masthead.jpg')">
+        <header class="intro-header" style="background-image: url('/static/post17/header.jpg');opacity: 0.9">
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                    <div class="page-heading">
-                        <h1>Deciphering Big Data</h1>
-                        <hr class="small">
-                        <span class="subheading"></span>
+                    <div class="post-heading">
+                        <h1>Modularizing and Chaining Spark Transformations</h1>
+                        <span class="meta">Posted by
+                                <a href="https://www.linkedin.com/in/adamsr09/">Adams Rosales</a>
+                             on Tue 04 May 2021
+                        </span>
+                        
                     </div>
                 </div>
             </div>
@@ -88,127 +104,22 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-sm-10 col-xs-10">
-        <div class="post-preview">
-            <a href="/modularizing-and-chaining-scala-spark-transformations.html" rel="bookmark" title="Permalink to Modularizing and Chaining Scala Spark Transformations">
-                <h2 class="post-title">
-                    Modularizing and Chaining Scala Spark Transformations
-                </h2>
-            </a>
-                <p class="first last">How to use existing Data Frame functionality and extend it to cut down on Spark boiler plate</p>
+    <!-- Post Content -->
+    <article>
+        <div class="section" id="the-base-approach">
+<h2>The Base Approach</h2>
+</div>
+<div class="section" id="using-the-data-frame-s-transform-method">
+<h2>Using the Data Frame's Transform Method</h2>
+</div>
+<div class="section" id="extending-the-data-frame-class">
+<h2>Extending the Data Frame Class</h2>
+</div>
 
-            <p class="post-meta">Posted by
-                    <a href="https://www.linkedin.com/in/adamsr09/">Adams Rosales</a>
-                 on Tue 04 May 2021
-            </p>
-        </div>
-        <hr>
-        <div class="post-preview">
-            <a href="/scala-spark-hello-world.html" rel="bookmark" title="Permalink to Scala Spark Hello World">
-                <h2 class="post-title">
-                    Scala Spark Hello World
-                </h2>
-            </a>
-                <p class="first last">A basic template for a Scala Spark project using SBT</p>
+    </article>
 
-            <p class="post-meta">Posted by
-                    <a href="https://www.linkedin.com/in/adamsr09/">Adams Rosales</a>
-                 on Sat 27 March 2021
-            </p>
-        </div>
-        <hr>
-        <div class="post-preview">
-            <a href="/sparkflow-intro.html" rel="bookmark" title="Permalink to SparkFlow: Intro">
-                <h2 class="post-title">
-                    SparkFlow: Intro
-                </h2>
-            </a>
-                <p class="first last">Building an EMR orchestration and ETL tool for distributed jobs</p>
-
-            <p class="post-meta">Posted by
-                    <a href="https://www.linkedin.com/in/adamsr09/">Adams Rosales</a>
-                 on Sun 28 February 2021
-            </p>
-        </div>
-        <hr>
-        <div class="post-preview">
-            <a href="/tech-interviews-are-broken.html" rel="bookmark" title="Permalink to Tech Interviews Are Broken">
-                <h2 class="post-title">
-                    Tech Interviews Are Broken
-                </h2>
-            </a>
-                <p class="first last">Do you even LeetCode bro?</p>
-
-            <p class="post-meta">Posted by
-                    <a href="https://www.linkedin.com/in/adamsr09/">Adams Rosales</a>
-                 on Mon 18 January 2021
-            </p>
-        </div>
-        <hr>
-        <div class="post-preview">
-            <a href="/mysql-yoursql-oursql-nosql.html" rel="bookmark" title="Permalink to MySQL, YourSQL, OurSQL, NoSQL">
-                <h2 class="post-title">
-                    MySQL, YourSQL, OurSQL, NoSQL
-                </h2>
-            </a>
-                <p class="first last">One node, two node, Redshift, Blueshift</p>
-
-            <p class="post-meta">Posted by
-                    <a href="https://www.linkedin.com/in/adamsr09/">Adams Rosales</a>
-                 on Sun 17 January 2021
-            </p>
-        </div>
-        <hr>
-        <div class="post-preview">
-            <a href="/the-role-of-the-data-engineer.html" rel="bookmark" title="Permalink to The Role of the Data Engineer">
-                <h2 class="post-title">
-                    The Role of the Data Engineer
-                </h2>
-            </a>
-                <p class="first last">Data engineers should do more than just build and maintain ETL jobs</p>
-
-            <p class="post-meta">Posted by
-                    <a href="https://www.linkedin.com/in/adamsr09/">Adams Rosales</a>
-                 on Sun 03 January 2021
-            </p>
-        </div>
-        <hr>
-        <div class="post-preview">
-            <a href="/useless-but-fun-command-line-hangman.html" rel="bookmark" title="Permalink to Useless but Fun: Command Line Hangman">
-                <h2 class="post-title">
-                    Useless but Fun: Command Line Hangman
-                </h2>
-            </a>
-                <p class="first last">Building a Hangman game to play in the terminal</p>
-
-            <p class="post-meta">Posted by
-                    <a href="https://www.linkedin.com/in/adamsr09/">Adams Rosales</a>
-                 on Tue 29 December 2020
-            </p>
-        </div>
-        <hr>
-        <div class="post-preview">
-            <a href="/i-see-you.html" rel="bookmark" title="Permalink to I See You">
-                <h2 class="post-title">
-                    I See You
-                </h2>
-            </a>
-                <p class="first last">The Observer design pattern</p>
-
-            <p class="post-meta">Posted by
-                    <a href="https://www.linkedin.com/in/adamsr09/">Adams Rosales</a>
-                 on Sat 19 December 2020
-            </p>
-        </div>
-        <hr>
-
-    <!-- Pager -->
-    <ul class="pager">
-        <li class="next">
-                <a href="/index2.html">Older Posts &rarr;</a>
-        </li>
-    </ul>
-    Page 1 / 2
     <hr>
+
             </div>
         </div>
         <div class="row">

@@ -5,37 +5,44 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>/</loc>
-<lastmod>2021-03-28T18:04:20-00:00</lastmod>
+<lastmod>2021-05-04T19:37:49-00:00</lastmod>
 <changefreq>weekly</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>/tags.html</loc>
-<lastmod>2021-03-28T18:04:20-00:00</lastmod>
+<lastmod>2021-05-04T19:37:49-00:00</lastmod>
 <changefreq>weekly</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>/categories.html</loc>
-<lastmod>2021-03-28T18:04:20-00:00</lastmod>
+<lastmod>2021-05-04T19:37:49-00:00</lastmod>
 <changefreq>weekly</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>/authors.html</loc>
-<lastmod>2021-03-28T18:04:20-00:00</lastmod>
+<lastmod>2021-05-04T19:37:49-00:00</lastmod>
 <changefreq>weekly</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>/archives.html</loc>
-<lastmod>2021-03-28T18:04:20-00:00</lastmod>
+<lastmod>2021-05-04T19:37:49-00:00</lastmod>
 <changefreq>weekly</changefreq>
 <priority>0.5</priority>
+</url>
+
+<url>
+<loc>/modularizing-and-chaining-scala-spark-transformations.html</loc>
+<lastmod>2021-05-04T00:00:00-07:00</lastmod>
+<changefreq>weekly</changefreq>
+<priority>0.6</priority>
 </url>
 
 <url>
@@ -152,7 +159,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>/category/data-engineering.html</loc>
-<lastmod>2021-03-27T00:00:00-07:53</lastmod>
+<lastmod>2021-05-04T00:00:00-07:53</lastmod>
 <changefreq>weekly</changefreq>
 <priority>0.5</priority>
 </url>
@@ -194,7 +201,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>/tag/data-engineering.html</loc>
-<lastmod>2021-03-27T00:00:00-07:53</lastmod>
+<lastmod>2021-05-04T00:00:00-07:53</lastmod>
 <changefreq>weekly</changefreq>
 <priority>0.5</priority>
 </url>
@@ -250,7 +257,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>/author/adams-rosales.html</loc>
-<lastmod>2021-03-27T00:00:00-07:53</lastmod>
+<lastmod>2021-05-04T00:00:00-07:53</lastmod>
 <changefreq>weekly</changefreq>
 <priority>0.5</priority>
 </url>
