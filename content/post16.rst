@@ -17,10 +17,10 @@ of achievement among engineering graduates. The top of top for career opportunit
 to these companies looking to be challenged, build cutting edge products, and add the prestigious brand names to their
 resumes. But are roles in these companies really as great as they sound?
 
-I've worked at Amazon in the Seattle area for about 3-4 years, rotating between 4 different teams at the company and
+I've worked at these types of companies in the Seattle area for about 3-4 years, rotating between 4 different teams and
 leaving to work at a start up only to return 7 months later. I've also had the opportunity to work in different industries
-including banking, ad-tech, and manufacturing in both small companies and large corporations and I've interviewed at other
-FAANG companies like Facebook. I will share with you what I've observed.
+including banking, ad-tech, and manufacturing in both small companies and large corporations. I will share with you what
+I've observed.
 
 Internal Tools Galore
 #####################
@@ -35,7 +35,16 @@ to learn valuable skills on the job.
 
 Rampant Bureaucracy
 ###################
-There is a lot of corporate red tape at FAANG companies.
+There is a lot of corporate red tape at FAANG companies. Teams like to build walls around their work and decisions are
+made at a very slow pace. Often any meaningful change involves dealing with strong personalities and defensive leaders of different
+teams. That may be interesting to you if you enjoy the challenge of dealing with different types of people and working
+through the bullshit to drive change or whatever. However, if you just want to work on interesting projects as an engineer,
+often times the bureaucracy can be a real pain. It means unnecessary meetings, ego-stroking, way too much planning without
+any execution, the necessity to constantly update others on your progress, product managers over-promising on your behalf
+to impress the leaders, etc. Worst of all it can also mean that sometimes you just can't touch what you really want to
+gain more exposure to because some other team owns it. Whether it's getting access to some code or contributing to a certain
+pipeline, the red tape can make it so difficult to do anything beyond your immediate job responsibilities that it can
+seriously hamper your growth as an engineer.
 
 Easy to Get Stuck in Ops Hell
 #############################
@@ -51,9 +60,9 @@ that's truly pushing the boundary and working in a completely greenfield environ
 innovative teams that everyone thinks they'll be a part of if they join a prestigious tech company are more of an
 exception than the norm. It's great if you can be a part of those teams, but it's unlikely that you will be from the start.
 
-Too Much Focus on Job Levels
-############################
-I don't know if it's selection bias with the types of candidates that FAANG attracts but there is an unhealthy obsession
+An Unhealthy Focus on Job Levels
+################################
+I don't know if it's selection bias with the types of candidates that FAANG attracts but there is a questionable obsession
 with levels, titles and total compensation at these companies. If you don't believe me, spend a few minutes reading
 through FAANG posts on https://www.teamblind.com/. Sometimes it feels like that's all people care about. I have definitely
 felt that sometimes people prioritize the projects that will get them noticed by some leaders with fancy titles over anything
@@ -66,18 +75,26 @@ entire careers out of that alone. It's one of the reasons why I left that indust
 as long as I impressed the right people one way or another. I thought that big tech would be different and to some extent
 it is, but there is still a lot of that unhealthy obsession with pleasing authority figures at all costs.
 
-Too Many Cooks in the Kitchen
-#############################
-
 Projects Lacking in Scope
 #########################
+Most of the cool data engineering stuff you learn about in school or in your spare time outside of work has already
+been done at FAANG companies. They pioneered the application of that fancy machine learning algorithm or way to process
+data. Odds are that you will not be working on any of that because it simply has already been done. What does need to get done
+is system maintenance and super downstream work of slicing and dicing some datasets that have already been curated by
+a different team long ago. It's common to come across long chains of teams doing work that's frankly not that interesting
+from a technical perspective. You depend on that work from a different team and some other team depends on your small piece
+of the puzzle to inform their business decisions. There is a lot of simple SQL writing and very little system design work.
+
+If you care more about the business or doing your job well and getting promoted, then that type of work can be great.
+However, if you're looking for a technical challenge after learning all about the latest in streaming data, artificial intelligence,
+data modeling, or some other hot topic, you may be disappointed in the types of projects you actually end up working on.
 
 Is It Worth It?
 ###############
 I am grateful for the opportunities that I've had and wouldn't do anything different if given the chance to do it all
 over again. So, yes I do think it's worth it and I recommend these companies to any new grad looking to gain valuable
 real world experience and make good money while doing so. However, I do not recommend getting stuck in dead-end roles
-or forgoing opportunities to learn just because you've made it to FAANG. Don't be afraid to leave and search for roles
+or forgoing opportunities to learn just because you've made it to FAANG. Don't be afraid to job hop and search for roles
 that will make you a better engineer in the long run, even if you have to take a pay cut.
 
 While start ups or lesser known companies may not offer the same level of compensation as FAANG, you may end up learning
@@ -98,4 +115,4 @@ In my opinion the most important thing an engineer could do in their early caree
 I think that younger companies offer better opportunities to learn than FAANG, ultimately no company will provide you
 with the same growth as self-learning will. When you take the initiative to learn new things as a result of your own
 passion and curiosity you can learn a lot more in a shorter amount of time than you can at work. This is because you won't
-be hindered by formal procedures, company priorities, operational load, your title or level, etc.
+be hindered by formal procedures, company priorities, operational load, or your official title.
