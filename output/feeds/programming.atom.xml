@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Deciphering Big Data - Programming</title><link href="https://decipheringbigdata.net/" rel="alternate"></link><link href="https://decipheringbigdata.net/feeds/programming.atom.xml" rel="self"></link><id>https://decipheringbigdata.net/</id><updated>2020-12-29T00:00:00-08:00</updated><entry><title>Useless but Fun: Command Line Hangman</title><link href="https://decipheringbigdata.net/useless-but-fun-command-line-hangman.html" rel="alternate"></link><published>2020-12-29T00:00:00-08:00</published><updated>2020-12-29T00:00:00-08:00</updated><author><name>Adams Rosales</name></author><id>tag:decipheringbigdata.net,2020-12-29:/useless-but-fun-command-line-hangman.html</id><summary type="html">&lt;p class="first last"&gt;Building a Hangman game to play in the terminal&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Deciphering Big Data - Programming</title><link href="https://decipheringbigdata.com/" rel="alternate"></link><link href="https://decipheringbigdata.com/feeds/programming.atom.xml" rel="self"></link><id>https://decipheringbigdata.com/</id><updated>2020-12-29T00:00:00-08:00</updated><subtitle>Description of the site</subtitle><entry><title>Useless but Fun: Command Line Hangman</title><link href="https://decipheringbigdata.com/useless-but-fun-command-line-hangman.html" rel="alternate"></link><published>2020-12-29T00:00:00-08:00</published><updated>2020-12-29T00:00:00-08:00</updated><author><name>Adams Rosales</name></author><id>tag:decipheringbigdata.com,2020-12-29:/useless-but-fun-command-line-hangman.html</id><summary type="html">&lt;p class="first last"&gt;Building a Hangman game to play in the terminal&lt;/p&gt;
 </summary><content type="html">&lt;div class="section" id="interesting-tell-me-more"&gt;
 &lt;h2&gt;Interesting...Tell Me More&lt;/h2&gt;
 &lt;p&gt;I'm building a Python package called &lt;a class="reference external" href="https://github.com/adaros92/pygme"&gt;pygme&lt;/a&gt; for playing simple games on your
@@ -587,7 +587,7 @@ they won or not.&lt;/p&gt;
 &lt;img alt="A game of Hangman in the terminal" src="https://media.giphy.com/media/y4x68SYqJg2b9PdRF5/giphy.gif" style="width: 60%;" /&gt;
 &lt;p&gt;I'm going to tell my grand kids this was God of War.&lt;/p&gt;
 &lt;/div&gt;
-</content><category term="Programming"></category><category term="Programming"></category></entry><entry><title>I See You</title><link href="https://decipheringbigdata.net/i-see-you.html" rel="alternate"></link><published>2020-12-19T00:00:00-08:00</published><updated>2020-12-19T00:00:00-08:00</updated><author><name>Adams Rosales</name></author><id>tag:decipheringbigdata.net,2020-12-19:/i-see-you.html</id><summary type="html">&lt;p class="first last"&gt;The Observer design pattern&lt;/p&gt;
+</content><category term="Programming"></category><category term="Programming"></category></entry><entry><title>I See You</title><link href="https://decipheringbigdata.com/i-see-you.html" rel="alternate"></link><published>2020-12-19T00:00:00-08:00</published><updated>2020-12-19T00:00:00-08:00</updated><author><name>Adams Rosales</name></author><id>tag:decipheringbigdata.com,2020-12-19:/i-see-you.html</id><summary type="html">&lt;p class="first last"&gt;The Observer design pattern&lt;/p&gt;
 </summary><content type="html">&lt;div class="section" id="overview"&gt;
 &lt;h2&gt;Overview&lt;/h2&gt;
 &lt;p&gt;The Observer software design pattern is a commonly used approach for decoupling subjects/events from observers of the
@@ -741,7 +741,7 @@ will report if it finds that a new even number in the range of 0 to 98 has been 
 &lt;/pre&gt;&lt;/div&gt;
 &lt;img alt="Observer design patter ULM" src="/static/post8/post8_observer_example_run.jpg" style="width: 60%;" /&gt;
 &lt;/div&gt;
-</content><category term="Programming"></category><category term="Programming"></category></entry><entry><title>Useless but Fun: Command Line Snake</title><link href="https://decipheringbigdata.net/useless-but-fun-command-line-snake.html" rel="alternate"></link><published>2020-12-14T00:00:00-08:00</published><updated>2020-12-14T00:00:00-08:00</updated><author><name>Adams Rosales</name></author><id>tag:decipheringbigdata.net,2020-12-14:/useless-but-fun-command-line-snake.html</id><summary type="html">&lt;p class="first last"&gt;Building a really bad CLI Snake game from start to finish for the lols&lt;/p&gt;
+</content><category term="Programming"></category><category term="Programming"></category></entry><entry><title>Useless but Fun: Command Line Snake</title><link href="https://decipheringbigdata.com/useless-but-fun-command-line-snake.html" rel="alternate"></link><published>2020-12-14T00:00:00-08:00</published><updated>2020-12-14T00:00:00-08:00</updated><author><name>Adams Rosales</name></author><id>tag:decipheringbigdata.com,2020-12-14:/useless-but-fun-command-line-snake.html</id><summary type="html">&lt;p class="first last"&gt;Building a really bad CLI Snake game from start to finish for the lols&lt;/p&gt;
 </summary><content type="html">&lt;div class="section" id="design"&gt;
 &lt;h2&gt;Design&lt;/h2&gt;
 &lt;p&gt;Nobody: ...&lt;/p&gt;
@@ -1540,7 +1540,7 @@ board.&lt;/p&gt;
                 &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;_finish_game&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
                 &lt;span class="k"&gt;break&lt;/span&gt;
             &lt;span class="k"&gt;else&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
-                &lt;span class="n"&gt;time&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sleep&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;25&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+                &lt;span class="n"&gt;time&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sleep&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mf"&gt;.25&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
         &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="p"&gt;{}&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/div&gt;

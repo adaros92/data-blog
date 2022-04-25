@@ -5,14 +5,14 @@ Parameters:
   # SSL certificate created by CertificateManager
   AwsCertificateArn:
     Type:         String
-    Default:      arn:aws:acm:us-east-1:146066720211:certificate/c681b862-cbdc-4d52-9029-13cc15a4c87f
+    Default:      arn:aws:acm:us-east-1:146066720211:certificate/a778f762-4a49-432d-a75b-1bae4eac4fd7
     Description:  Certificate must be created before CloudFormation stack so the value is fixed
   AwsRoute53CloudFrontHostedZoneId:
     Type:         String
-    Default:      Z2FDTNDATAQYW2
+    Default:      Z0950617Z2OYSDIAB2O8
     Description:  CloudFront resources HostedZoneId
-  # decipheringbigdata.net
   RootDomainName:
+    Default: decipheringbigdata.com
     Description: Domain name for your website (example.com)
     Type: String
 

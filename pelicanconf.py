@@ -5,12 +5,14 @@ AUTHOR = 'Adams Rosales'
 SITENAME = 'Deciphering Big Data'
 SITEURL = ''
 
+SITESUBTITLE = 'Description of the site'
+
 PATH = 'content'
 
 TIMEZONE = 'America/Los_Angeles'
 
 DEFAULT_LANG = 'en'
-
+DEFAULT_DATE_FORMAT = ('%b %d, %Y')
 # Feed generation is usually not desired when developing
 FEED_ALL_ATOM = None
 CATEGORY_FEED_ATOM = None
@@ -39,7 +41,7 @@ SITEMAP = {
 STATIC_PATHS = ['static', "extra"]
 
 EXTRA_PATH_METADATA = {
-    'extra/favicon.ico': {'path': 'favicon.ico'},
+    'extra/favicon/favicon.ico': {'path': 'favicon.ico'},
     'extra/robots.txt': {'path': 'robots.txt'}
 }
 
@@ -52,4 +54,5 @@ HEADER_COVER = 'static/masthead.jpg'
 
 DEFAULT_PAGINATION = 8
 
-THEME = "/Users/adamsrosales/pelican-addon-clones/pelican-themes/clean-blog"
+THEME = "/Users/adamsrosales/pelican-addon-clones/pelican-themes/pelican-svbtle/"
+AUTHOR_BIO = "has some opinions about data engineering"
