@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<link rel="stylesheet" type="text/css" href="https://decipheringbigdata.com/theme/css/style.css">
+	<!--<link rel="stylesheet/less" type="text/css" href="/theme/css/style.less">-->
+	<!--<script src="/theme/js/less.js" type="text/javascript"></script>-->
+	<link rel="stylesheet" type="text/css" href="https://decipheringbigdata.com/theme/css/pygments.css">
+	<link href='//fonts.googleapis.com/css?family=Open+Sans:800,400,300|Inconsolata' rel='stylesheet' type='text/css'>
+
+
+
+		<title>Deciphering Big Data</title>
+		<meta charset="utf-8" />
+</head>
+<body>
+	<section id="sidebar">
+		<figure id="user_logo">
+            <a href="https://decipheringbigdata.com"><div class="logo">&nbsp;</div></a>
+		</figure>
+
+		<div class="user_meta">
+            <h1 id="user"><a href="https://decipheringbigdata.com" class="">Adams Rosales</a></h1>
+			<h2></h2>
+			<p class="bio">has some opinions about data engineering</p>
+			<ul>
+					<a href="https://www.linkedin.com/in/adamsr09/">LinkedIn</a>
+			</ul>
+		</div>
+		<footer>
+			<address>
+				Powered by <a href="https://blog.getpelican.com/">Pelican</a>
+			</address>
+		</footer>
+	</section>
+
+	<section id="posts">
+	<header>
+		<h1>Adams Rosales's blog</h1>
+		<h3>Posted Apr 25, 2022</h3>
+	</header>
+	<article>
+		<h1 id="title">
+			<a href="https://decipheringbigdata.com/ml-demystified-k-nearest-neighbors.html" rel="bookmark"
+				title="Permalink to ML Demystified: K Nearest Neighbors">ML Demystified: K Nearest Neighbors</a>
+		</h1>
+		<div class="section" id="say-hi-to-your-neighbor">
+<h2>Say Hi to Your Neighbor!</h2>
+<p>KNN is a simple approach to classify data points based on some information that you have
+about them and how other data has been classified before. For any new entity that needs classification,
+KNN simply has us calculate some similarity score based on the variables being measured to previously
+classified data. We then take the K values with the highest similarities and simply choose the resulting
+class that comes up the most in that set of most similar items.</p>
+<p>For example, say you want to predict who someone voted for. You happen to have the results of a random survey
+that gives you who people plan to vote for along with two critical pieces of information: their age and distance to
+the nearest Whole Foods. You then calculate some similarity score (you'll see how to in a second) based on these
+two variables between all of the points in your data and the entity you're trying to classify and choose K of the most
+similar. Say for example, you come up with 5 most similar candidates based on age and distance to Whole Foods:
+(John Smith, John Smith, John Smith, Jane Doe, Jane Doe). What's the result? John Smith! Why? Because it appears the
+most in this &quot;most similar&quot; set of values.</p>
+</div>
+<div class="section" id="calculating-a-similarity-score">
+<h2>Calculating a Similarity Score</h2>
+<p>One way to calculate a data point's similarity to another data point is by measuring the distance of those
+two points in Euclidean space. Simply put, some N-dimensional space where points are designated by coordinates.
+For example, in a 2D space we have x and y coordinates. Say one point at coordinate (0, 1) and another at (2, 3).</p>
+<p>You can calculate this distance with a simple formula:</p>
+<img alt="The Euclidean distance formula" src="/static/post18/euclidean_distance.png" style="width: 60%;" />
+<p>So in our example, that would be Sqrt( (x1 - x0)^2 + (y1 - y0)^2) ) = Sqrt( (2 - 0)^2 + (3 - 1)^2 ) = Sqrt( 8 ) = 2.83.</p>
+<p>This distance can represent how similar two points are to each other. Basically the smaller the distance, the more
+similar the points are to each other.</p>
+</div>
+<div class="section" id="implementation">
+<h2>Implementation</h2>
+<p>Let's jump right in! So all we have to do is for each value in our data, calculate the Euclidean distance
+between data points, keep these distances along with the resulting labels in a list, sort the list in ascending order,
+pick the top K labels that pop up in that sorted list, and choose the label that occurs the most.</p>
+<p>Let's start with implementing the piece that calculates our similarity score</p>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="k">def</span> <span class="nf">euclidean_distance</span><span class="p">(</span><span class="n">point_a</span><span class="p">,</span> <span class="n">point_b</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Calculates the Euclidean distance between two points</span>
+<span class="sd">    :param point_a - a numpy array representing a coordinate</span>
+<span class="sd">    :param point_b - another numpy coordinate array</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">assert</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">point_a</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">point_b</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">point_b</span> <span class="o">-</span> <span class="n">point_a</span><span class="p">)</span>
+</pre></div>
+<p>Easy peasy numpy implementation that does just what we spoke about in the similarity score section above.</p>
+<p>Now let's implement the component that picks the resulting classes.</p>
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">classify</span><span class="p">(</span><span class="n">similarity_array</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Picks the class based on the largest frequency</span>
+<span class="sd">    in K most similar list</span>
+<span class="sd">    :param similarity_array - array containing classes and distances</span>
+<span class="sd">    :param k - the K most similar items to filter to</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Sort and pick the top K items with smallest distances</span>
+    <span class="n">sorted_result</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span>
+        <span class="n">similarity_array</span><span class="p">,</span>
+        <span class="n">order</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;distance&#39;</span><span class="p">]</span>
+    <span class="p">)</span>
+    <span class="n">most_similar</span> <span class="o">=</span> <span class="n">sorted_result</span><span class="p">[:</span><span class="n">k</span><span class="p">]</span>
+    <span class="c1"># Get the counts of classes in the most similar list</span>
+    <span class="n">classes</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="s1">&#39;class&#39;</span><span class="p">],</span> <span class="n">most_similar</span><span class="p">))</span>
+    <span class="n">unique</span><span class="p">,</span> <span class="n">counts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">classes</span><span class="p">,</span> <span class="n">return_counts</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="c1"># Get the index of the class that appears the most</span>
+    <span class="n">max_index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">counts</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">unique</span><span class="p">[</span><span class="n">max_index</span><span class="p">]</span>
+</pre></div>
+<p>Here we simply sort the given similarity array that contains the distance of the point
+being classified to each of the individual data points that are already classified along
+with their classes. Then we pick the K most similar values from that list and choose the
+class in the resulting list with the highest occurrence.</p>
+<p>Next let's write the code to iterate over every data point and calculate the distances.</p>
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_similarity_scores</span><span class="p">(</span><span class="n">point_to_classify</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Calculates an array of the class and the given point</span>
+<span class="sd">    to classify&#39;s distance to the variables corresponding to</span>
+<span class="sd">    each class in the data</span>
+<span class="sd">    :param point_to_classify - NP array of point to classify</span>
+<span class="sd">    :param data - NP array of classified data</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">dtype</span> <span class="o">=</span> <span class="p">[(</span><span class="s1">&#39;class&#39;</span><span class="p">,</span> <span class="s1">&#39;S10&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;distance&#39;</span><span class="p">,</span> <span class="nb">float</span><span class="p">)]</span>
+    <span class="c1"># Create list of class to distance of two points for each point in data</span>
+    <span class="n">values</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">(</span><span class="n">point</span><span class="p">[</span><span class="s1">&#39;class&#39;</span><span class="p">],</span>
+        <span class="n">euclidean_distance</span><span class="p">(</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+                <span class="p">[</span><span class="n">point_to_classify</span><span class="p">[</span><span class="s1">&#39;age&#39;</span><span class="p">],</span>
+                <span class="n">point_to_classify</span><span class="p">[</span><span class="s1">&#39;whole_foods_distance&#39;</span><span class="p">]]</span>
+            <span class="p">),</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+                <span class="p">[</span><span class="n">point</span><span class="p">[</span><span class="s1">&#39;age&#39;</span><span class="p">],</span>
+                <span class="n">point</span><span class="p">[</span><span class="s1">&#39;whole_foods_distance&#39;</span><span class="p">]]</span>
+            <span class="p">))</span>
+        <span class="p">)</span> <span class="k">for</span> <span class="n">point</span> <span class="ow">in</span> <span class="n">data</span>
+    <span class="p">]</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">)</span>
+</pre></div>
+<p>Finally, we put it all together with some dummy data.</p>
+<div class="highlight"><pre><span></span><span class="c1"># Our fictitious candidate to age and Whole Foods distance data</span>
+<span class="n">dtype</span> <span class="o">=</span> <span class="p">[(</span><span class="s1">&#39;class&#39;</span><span class="p">,</span> <span class="s1">&#39;S10&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;age&#39;</span><span class="p">,</span> <span class="nb">int</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;whole_foods_distance&#39;</span><span class="p">,</span> <span class="nb">float</span><span class="p">)]</span>
+<span class="n">values</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">(</span><span class="s1">&#39;Jane Doe&#39;</span><span class="p">,</span> <span class="mi">27</span><span class="p">,</span> <span class="mf">3.4</span><span class="p">),</span>
+    <span class="p">(</span><span class="s1">&#39;John Smith&#39;</span><span class="p">,</span> <span class="mi">45</span><span class="p">,</span> <span class="mf">20.3</span><span class="p">),</span>
+    <span class="p">(</span><span class="s1">&#39;Jane Doe&#39;</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mf">6.8</span><span class="p">),</span>
+    <span class="p">(</span><span class="s1">&#39;John Smith&#39;</span><span class="p">,</span> <span class="mi">51</span><span class="p">,</span> <span class="mf">32.4</span><span class="p">),</span>
+    <span class="p">(</span><span class="s1">&#39;Jane Doe&#39;</span><span class="p">,</span> <span class="mi">19</span><span class="p">,</span> <span class="mf">2.3</span><span class="p">),</span>
+    <span class="p">(</span><span class="s1">&#39;John Smith&#39;</span><span class="p">,</span> <span class="mi">63</span><span class="p">,</span> <span class="mf">23.2</span><span class="p">),</span>
+    <span class="p">(</span><span class="s1">&#39;Jane Doe&#39;</span><span class="p">,</span> <span class="mi">29</span><span class="p">,</span> <span class="mf">10.1</span><span class="p">),</span>
+    <span class="p">(</span><span class="s1">&#39;John Smith&#39;</span><span class="p">,</span> <span class="mi">71</span><span class="p">,</span> <span class="mf">50.6</span><span class="p">),</span>
+    <span class="p">(</span><span class="s1">&#39;John Smith&#39;</span><span class="p">,</span> <span class="mi">43</span><span class="p">,</span> <span class="mf">10.5</span><span class="p">),</span>
+    <span class="p">(</span><span class="s1">&#39;Jane Doe&#39;</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mf">32.4</span><span class="p">),</span>
+    <span class="p">(</span><span class="s1">&#39;John Smith&#39;</span><span class="p">,</span> <span class="mi">51</span><span class="p">,</span> <span class="mf">9.3</span><span class="p">),</span>
+    <span class="p">(</span><span class="s1">&#39;Jane Doe&#39;</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mf">6.1</span><span class="p">),</span>
+    <span class="p">(</span><span class="s1">&#39;John Smith&#39;</span><span class="p">,</span> <span class="mi">54</span><span class="p">,</span> <span class="mf">32.1</span><span class="p">),</span>
+    <span class="p">(</span><span class="s1">&#39;Jane Doe&#39;</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mf">4.5</span><span class="p">)</span>
+    <span class="p">]</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">)</span>
+
+<span class="c1"># Value that needs classification</span>
+<span class="n">dtype</span> <span class="o">=</span> <span class="p">[(</span><span class="s1">&#39;age&#39;</span><span class="p">,</span> <span class="nb">int</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;whole_foods_distance&#39;</span><span class="p">,</span> <span class="nb">float</span><span class="p">)]</span>
+<span class="n">value</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">29</span><span class="p">,</span> <span class="mf">10.1</span><span class="p">)]</span>
+<span class="n">point_to_classify</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">)</span>
+
+<span class="c1"># Get distances to each point in the data</span>
+<span class="n">similarity_array</span> <span class="o">=</span> <span class="n">get_similarity_scores</span><span class="p">(</span><span class="n">point_to_classify</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+
+<span class="c1"># Start with some arbitrary K</span>
+<span class="n">k</span> <span class="o">=</span> <span class="mi">4</span>
+
+<span class="c1"># Classify</span>
+<span class="n">classify</span><span class="p">(</span><span class="n">similarity_array</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span>
+</pre></div>
+<p>And who will our 29 year-old person whole lives 10.1 miles from a Whole Foods vote for?...Jane Doe!</p>
+</div>
+<div class="section" id="determining-k">
+<h2>Determining K</h2>
+<p>You may have noticed that our choice of K matters. If we choose K = to the number of data points we have
+then it's not difficult to see that the resulting classification is just the candidate that
+appears the most in our data. On the other hand, if we choose a small K like 1 then our results
+can be pretty wrong because we're basing the entire decision on just one other data point.</p>
+<p>This actually comes up quite a lot with these non-parametric modeling techniques. It's called
+hyperparameter tuning. Sounds fancy but in this case it's nothing more than choosing a K
+value that will lead to the best classification (i.e. best model).</p>
+<p>So how do we go about this? Well one way is by randomly splitting our already labeled data into
+training and test cohorts. We already know what the labels are so we can compare what our model tells us
+that we should choose for each data point with the &quot;correct&quot; answer that's available for each point. For
+each point, we predict what the label should be based on the model run on the training split of the data. If
+the prediction matches the correct label then hurray, we get a 1 for that pair. If the prediction doesn't match
+then we get a 0. You sum up the 1s and divide by the number of elements in your test set to get an accuracy %.
+You can repeat this process for each K value starting at 1 and make your way up. You will most likely find
+that the accuracy % is maximized by some K value and this is what you choose! It's the K value that minimizes
+the test error.</p>
+<p>What I just described is called cross-validation and it's a common technique used to choose hyperparameters like K.</p>
+</div>
+
+
+		<div id="article_meta">
+				Category:
+					<a href="https://decipheringbigdata.com/category/machine-learning.html">Machine Learning</a>
+				<br />Tags:
+					<a href="https://decipheringbigdata.com/tag/ml.html">ML</a>
+		</div>
+	</article>
+
+	<footer>
+		<a href="https://decipheringbigdata.com/" class="button_accent">&larr;&nbsp;&nbsp;&nbsp;Back to blog</a>
+	</footer>
+
+
+	</section>
+
+</body>
+</html>
