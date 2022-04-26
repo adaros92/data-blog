@@ -23,12 +23,12 @@
 			<h2></h2>
 			<p class="bio">has some opinions about data engineering</p>
 			<ul>
+					<a href="https://www.linkedin.com/in/adamsr09/">LinkedIn</a>
 			</ul>
 		</div>
 		<footer>
 			<address>
-				Powered by <a href="http://pelican.notmyidea.org/">Pelican</a>,
-		                theme by <a href="https://github.com/wting/pelican-svbtle">wting</a>.
+				Powered by <a href="https://blog.getpelican.com/">Pelican</a>
 			</address>
 		</footer>
 	</section>
@@ -45,7 +45,7 @@
 		</h1>
 		<div class="section" id="requirements-in-an-olap-system">
 <h2>Requirements in an OLAP System</h2>
-<p>In my previous <a class="reference external" href="https://decipheringbigdata.net/be-normal.html">Be Normal</a> post I mentioned that normalization is good
+<p>In my previous <a class="reference external" href="https://decipheringbigdata.com/be-normal.html">Be Normal</a> post I mentioned that normalization is good
 for OLTP but not so much for OLAP systems. The way you adapt data models for OLAP purposes is by de-normalizing tables in
 a normalized data model. At a high level this process involves precomputing certain features and joining tables together
 for our analyst customers.</p>
@@ -68,7 +68,7 @@ dimensions and commonly deal with locations, time, products, organizations, and 
 <p>This gives us a central denormalized location where the crucial measures are stored so that we don't have to join a
 bunch of system tables together to derive those measures and some lookup tables that we can easily join to segment the
 data depending on the task at hand.</p>
-<p>Take the following normalized set of tables from the <a class="reference external" href="https://decipheringbigdata.net/be-normal.html">previous post</a>.</p>
+<p>Take the following normalized set of tables from the <a class="reference external" href="https://decipheringbigdata.com/be-normal.html">previous post</a>.</p>
 <img alt="Complex OLTP diagram" src="/static/post4/post4_complexdiagram.jpg" style="width: 90%;" />
 <p>Some of the business questions we may want to ask about these data are:</p>
 <ul class="simple">

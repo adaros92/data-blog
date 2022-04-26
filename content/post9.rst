@@ -15,7 +15,7 @@ Interesting...Tell Me More
 I'm building a Python package called `pygme <https://github.com/adaros92/pygme>`_ for playing simple games on your
 terminal. It's purely because this is how I enjoy spending my time :).
 
-Last time I wrote about implementing `Snake <https://decipheringbigdata.net/useless-but-fun-command-line-snake.html>`_.
+Last time I wrote about implementing `Snake <https://decipheringbigdata.com/useless-but-fun-command-line-snake.html>`_.
 That was okay but it was missing some of that edge. Some of that spice that makes a game *really* fun. Well, don't fret
 because today I am implementing Hangman!
 

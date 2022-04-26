@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom"><title>Deciphering Big Data - Data Modeling</title><link href="https://decipheringbigdata.com/" rel="alternate"></link><link href="https://decipheringbigdata.com/feeds/data-modeling.atom.xml" rel="self"></link><id>https://decipheringbigdata.com/</id><updated>2020-12-13T00:00:00-08:00</updated><subtitle>Description of the site</subtitle><entry><title>Stars and Snowflakes</title><link href="https://decipheringbigdata.com/stars-and-snowflakes.html" rel="alternate"></link><published>2020-12-13T00:00:00-08:00</published><updated>2020-12-13T00:00:00-08:00</updated><author><name>Adams Rosales</name></author><id>tag:decipheringbigdata.com,2020-12-13:/stars-and-snowflakes.html</id><summary type="html">&lt;p class="first last"&gt;Structuring data in OLAP systems&lt;/p&gt;
 </summary><content type="html">&lt;div class="section" id="requirements-in-an-olap-system"&gt;
 &lt;h2&gt;Requirements in an OLAP System&lt;/h2&gt;
-&lt;p&gt;In my previous &lt;a class="reference external" href="https://decipheringbigdata.net/be-normal.html"&gt;Be Normal&lt;/a&gt; post I mentioned that normalization is good
+&lt;p&gt;In my previous &lt;a class="reference external" href="https://decipheringbigdata.com/be-normal.html"&gt;Be Normal&lt;/a&gt; post I mentioned that normalization is good
 for OLTP but not so much for OLAP systems. The way you adapt data models for OLAP purposes is by de-normalizing tables in
 a normalized data model. At a high level this process involves precomputing certain features and joining tables together
 for our analyst customers.&lt;/p&gt;
@@ -25,7 +25,7 @@ dimensions and commonly deal with locations, time, products, organizations, and 
 &lt;p&gt;This gives us a central denormalized location where the crucial measures are stored so that we don't have to join a
 bunch of system tables together to derive those measures and some lookup tables that we can easily join to segment the
 data depending on the task at hand.&lt;/p&gt;
-&lt;p&gt;Take the following normalized set of tables from the &lt;a class="reference external" href="https://decipheringbigdata.net/be-normal.html"&gt;previous post&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Take the following normalized set of tables from the &lt;a class="reference external" href="https://decipheringbigdata.com/be-normal.html"&gt;previous post&lt;/a&gt;.&lt;/p&gt;
 &lt;img alt="Complex OLTP diagram" src="/static/post4/post4_complexdiagram.jpg" style="width: 90%;" /&gt;
 &lt;p&gt;Some of the business questions we may want to ask about these data are:&lt;/p&gt;
 &lt;ul class="simple"&gt;

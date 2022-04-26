@@ -328,7 +328,7 @@ the last key pressed only. There cannot be multiple keys pressed at one time sin
 of snake.
 
 The monitor_key_presses method just launches a new thread that runs the _detect_key_pressed method. The thread here is
-not an actual thread because of the GIL (check out my `previous post <https://decipheringbigdata.net/python-parallelism.html>`_)
+not an actual thread because of the GIL (check out my `previous post <https://decipheringbigdata.com/python-parallelism.html>`_)
 but it works well enough for our purposes.
 
 Food Implementation

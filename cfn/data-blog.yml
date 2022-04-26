@@ -9,7 +9,7 @@ Parameters:
     Description:  Certificate must be created before CloudFormation stack so the value is fixed
   AwsRoute53CloudFrontHostedZoneId:
     Type:         String
-    Default:      Z0950617Z2OYSDIAB2O8
+    Default:      Z2FDTNDATAQYW2
     Description:  CloudFront resources HostedZoneId
   RootDomainName:
     Default: decipheringbigdata.com

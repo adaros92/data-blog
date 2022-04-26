@@ -890,7 +890,7 @@ data infrastructures.&lt;/p&gt;
 &lt;h2&gt;Interesting...Tell Me More&lt;/h2&gt;
 &lt;p&gt;I'm building a Python package called &lt;a class="reference external" href="https://github.com/adaros92/pygme"&gt;pygme&lt;/a&gt; for playing simple games on your
 terminal. It's purely because this is how I enjoy spending my time :).&lt;/p&gt;
-&lt;p&gt;Last time I wrote about implementing &lt;a class="reference external" href="https://decipheringbigdata.net/useless-but-fun-command-line-snake.html"&gt;Snake&lt;/a&gt;.
+&lt;p&gt;Last time I wrote about implementing &lt;a class="reference external" href="https://decipheringbigdata.com/useless-but-fun-command-line-snake.html"&gt;Snake&lt;/a&gt;.
 That was okay but it was missing some of that edge. Some of that spice that makes a game &lt;em&gt;really&lt;/em&gt; fun. Well, don't fret
 because today I am implementing Hangman!&lt;/p&gt;
 &lt;img alt="Excited elf" src="https://media.giphy.com/media/LNE01Z89j9gis/giphy.gif" style="width: 50%;" /&gt;
@@ -2290,7 +2290,7 @@ method will simply iterate over each generated key and update the map of pressed
 the last key pressed only. There cannot be multiple keys pressed at one time since that doesn't make sense in the context
 of snake.&lt;/p&gt;
 &lt;p&gt;The monitor_key_presses method just launches a new thread that runs the _detect_key_pressed method. The thread here is
-not an actual thread because of the GIL (check out my &lt;a class="reference external" href="https://decipheringbigdata.net/python-parallelism.html"&gt;previous post&lt;/a&gt;)
+not an actual thread because of the GIL (check out my &lt;a class="reference external" href="https://decipheringbigdata.com/python-parallelism.html"&gt;previous post&lt;/a&gt;)
 but it works well enough for our purposes.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class="section" id="food-implementation"&gt;
@@ -2810,7 +2810,7 @@ nothing better to do with your time!&lt;/p&gt;
 </content><category term="Programming"></category><category term="Programming"></category></entry><entry><title>Stars and Snowflakes</title><link href="https://decipheringbigdata.com/stars-and-snowflakes.html" rel="alternate"></link><published>2020-12-13T00:00:00-08:00</published><updated>2020-12-13T00:00:00-08:00</updated><author><name>Adams Rosales</name></author><id>tag:decipheringbigdata.com,2020-12-13:/stars-and-snowflakes.html</id><summary type="html">&lt;p class="first last"&gt;Structuring data in OLAP systems&lt;/p&gt;
 </summary><content type="html">&lt;div class="section" id="requirements-in-an-olap-system"&gt;
 &lt;h2&gt;Requirements in an OLAP System&lt;/h2&gt;
-&lt;p&gt;In my previous &lt;a class="reference external" href="https://decipheringbigdata.net/be-normal.html"&gt;Be Normal&lt;/a&gt; post I mentioned that normalization is good
+&lt;p&gt;In my previous &lt;a class="reference external" href="https://decipheringbigdata.com/be-normal.html"&gt;Be Normal&lt;/a&gt; post I mentioned that normalization is good
 for OLTP but not so much for OLAP systems. The way you adapt data models for OLAP purposes is by de-normalizing tables in
 a normalized data model. At a high level this process involves precomputing certain features and joining tables together
 for our analyst customers.&lt;/p&gt;
@@ -2833,7 +2833,7 @@ dimensions and commonly deal with locations, time, products, organizations, and 
 &lt;p&gt;This gives us a central denormalized location where the crucial measures are stored so that we don't have to join a
 bunch of system tables together to derive those measures and some lookup tables that we can easily join to segment the
 data depending on the task at hand.&lt;/p&gt;
-&lt;p&gt;Take the following normalized set of tables from the &lt;a class="reference external" href="https://decipheringbigdata.net/be-normal.html"&gt;previous post&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Take the following normalized set of tables from the &lt;a class="reference external" href="https://decipheringbigdata.com/be-normal.html"&gt;previous post&lt;/a&gt;.&lt;/p&gt;
 &lt;img alt="Complex OLTP diagram" src="/static/post4/post4_complexdiagram.jpg" style="width: 90%;" /&gt;
 &lt;p&gt;Some of the business questions we may want to ask about these data are:&lt;/p&gt;
 &lt;ul class="simple"&gt;

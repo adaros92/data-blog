@@ -8,7 +8,7 @@ OUTPUTDIR=$(BASEDIR)/output
 CONFFILE=$(BASEDIR)/pelicanconf.py
 PUBLISHCONF=$(BASEDIR)/publishconf.py
 
-S3_BUCKET=decipheringbigdata.net
+S3_BUCKET=decipheringbigdata.com
 
 
 DEBUG ?= 0
