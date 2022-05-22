@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<link rel="stylesheet" type="text/css" href="https://decipheringbigdata.com/theme/css/style.css">
+	<!--<link rel="stylesheet/less" type="text/css" href="/theme/css/style.less">-->
+	<!--<script src="/theme/js/less.js" type="text/javascript"></script>-->
+	<link rel="stylesheet" type="text/css" href="https://decipheringbigdata.com/theme/css/pygments.css">
+	<link href='//fonts.googleapis.com/css?family=Open+Sans:800,400,300|Inconsolata' rel='stylesheet' type='text/css'>
+
+
+
+		<title>Deciphering Big Data</title>
+		<meta charset="utf-8" />
+</head>
+<body>
+	<section id="sidebar">
+		<figure id="user_logo">
+            <a href="https://decipheringbigdata.com"><div class="logo">&nbsp;</div></a>
+		</figure>
+
+		<div class="user_meta">
+            <h1 id="user"><a href="https://decipheringbigdata.com" class="">Adams Rosales</a></h1>
+			<h2></h2>
+			<p class="bio">has some opinions about data engineering</p>
+			<ul>
+					<a href="https://decipheringbigdata.com/pages/about-me.html">About Me</a><br><br>
+					<a href="https://www.linkedin.com/in/adamsr09/">LinkedIn</a>
+			</ul>
+		</div>
+		<footer>
+			<address>
+				Powered by <a href="https://blog.getpelican.com/">Pelican</a>
+			</address>
+		</footer>
+	</section>
+
+	<section id="posts">
+	<header>
+		<h1>Adams Rosales's blog</h1>
+		<h3>Posted May 21, 2022</h3>
+	</header>
+	<article>
+		<h1 id="title">
+			<a href="https://decipheringbigdata.com/creating-a-gradle-scala-project.html" rel="bookmark"
+				title="Permalink to Creating a Gradle Scala Project">Creating a Gradle Scala Project</a>
+		</h1>
+		<div class="section" id="why-gradle">
+<h2>Why Gradle?</h2>
+<p>There are three main build tools out there for Scala projects: SBT, Maven, and Gradle. SBT is typically preferred when you're starting out with Scala and your project will purely be Scala based. I find that it's the most documented when learning how to write Scala online and has the most build plugins contributed by the Scala community. On the other hand, I haven't come across SBT-backed projects in the professional world. They tend to use either Maven or Gradle. I'm not quite sure why this is the case but my hunch is that these build tools play better with other JVM languages like Java, which is still a lot more popular than Scala at most companies, and most of the developers working on Scala codebases come from Java backgrounds. They started out building their projects with Maven or Gradle and since they're familiar with those tools, that's just what ends up being used. Then between Maven and Gradle, the latter is typically faster and offers a simpler way to control dependencies in your project than the XML-based format of Maven.</p>
+<p>There's no shortage of opinions on what's best online! Whatever the reasons why people choose the build tools they do, I think it's important to be familiar with what's used most in the industry so here is an easy guide on how to get started!</p>
+</div>
+<div class="section" id="install-prerequsites">
+<h2>Install Prerequsites</h2>
+<p>The first thing you want to do is have an IDE, Scala, and Gradle installed. I recommend using the <a class="reference external" href="https://www.jetbrains.com/idea/download/#section=mac">Intellij</a> Community edition IDE. It will handle a lot of things for you and ensure a smoother development experience when working on the JVM.</p>
+<p>To install Scala simply follow the instructions <a class="reference external" href="https://www.scala-lang.org/download/">on their site</a> and Gradle <a class="reference external" href="https://gradle.org/install/">here</a>. If you have a Mac, you can use Homebrew to install these pretty easily</p>
+<div class="highlight"><pre><span></span>brew install gradle
+</pre></div>
+<p>You will also want to enable Scala support on Intellij by following <a class="reference external" href="https://www.jetbrains.com/help/idea/discover-intellij-idea-for-scala.html#UserInterface">these</a> directions.</p>
+</div>
+<div class="section" id="create-scala-project-on-intellij">
+<h2>Create Scala Project on Intellij</h2>
+<p>Once you have everything installed, you should be able to create a project on Intellij by selecting a Scala new project using IDEA like so.</p>
+<img alt="Intellij new project setup" src="/static/post19/post19_1.png" style="width: 100%;" />
+<img alt="Intellij new project setup" src="/static/post19/post19_2.png" style="width: 100%;" />
+<p>Name it whatever you want and choose the lestest Java JDK on your system.</p>
+<img alt="Intellij new project setup" src="/static/post19/post19_3.png" style="width: 100%;" />
+</div>
+<div class="section" id="initialize-the-gradle-project">
+<h2>Initialize the Gradle Project</h2>
+<p>Once you have your Intellij Scala project created all you need to do to pair it with Gradle is run the Gradle init command in your terminal.</p>
+<p>In Intellij, click on Terminal at the bottom of your IDE and run the following. Choose Groovy as the build script DSL.</p>
+<div class="highlight"><pre><span></span>gradle init --type scala-library
+</pre></div>
+<p>This should create all of the necessary artifacts you need to use Gradle with your Scala project.</p>
+<img alt="Gradle initialization" src="/static/post19/post19_4.png" style="width: 100%;" />
+<p>You can then get a list of available tasks by running:</p>
+<div class="highlight"><pre><span></span>./gradlew tasks
+</pre></div>
+<p>If you want to run your tests for example, you can run:</p>
+<div class="highlight"><pre><span></span>./gradlew <span class="nb">test</span>
+</pre></div>
+</div>
+<div class="section" id="adding-dependencies">
+<h2>Adding Dependencies</h2>
+<p>To add dependencies to your project, you simply have to edit the build.gradle file inside of your lib folder.</p>
+<img alt="Gradle dependencies" src="/static/post19/post19_5.png" style="width: 50%;" />
+<p>Typically, Maven is the default repository used to install dependencies with Gradle (this can be specified in build.gradle using the repositories struct). You can find all of the available artifacts <a class="reference external" href="https://mvnrepository.com/">on the Maven Repository site</a>.</p>
+<p>Clicking on any artifact on Maven will reveal the different ways to add it to your project.</p>
+<img alt="Maven repositories" src="/static/post19/post19_6.png" style="width: 100%;" />
+<p>So to add a dependency, we just need to copy the Gradle (Short) specification here and add it to our build.gradle file. Once you do, Intellij should show a little elephant pop-up that you can then click on to update your project with that dependency. It should then not scream at you when you reference the respective libraries in your code.</p>
+<img alt="Maven repositories" src="/static/post19/post19_7.png" style="width: 100%;" />
+<p>Of course, it is A LOT more complicated than that. It's super overwhelming, but I recommend reading through the official <a class="reference external" href="https://docs.gradle.org/current/userguide/dependency_management.html">Gradle dependency documentation</a> to really understand how dependency management works.</p>
+</div>
+
+
+		<div id="article_meta">
+				Category:
+					<a href="https://decipheringbigdata.com/category/programming.html">Programming</a>
+				<br />Tags:
+					<a href="https://decipheringbigdata.com/tag/programming.html">Programming</a>
+		</div>
+	</article>
+
+	<footer>
+		<a href="https://decipheringbigdata.com/" class="button_accent">&larr;&nbsp;&nbsp;&nbsp;Back to blog</a>
+	</footer>
+
+
+	</section>
+
+</body>
+</html>

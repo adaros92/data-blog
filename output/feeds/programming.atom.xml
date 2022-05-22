@@ -1,5 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Deciphering Big Data - Programming</title><link href="https://decipheringbigdata.com/" rel="alternate"></link><link href="https://decipheringbigdata.com/feeds/programming.atom.xml" rel="self"></link><id>https://decipheringbigdata.com/</id><updated>2020-12-29T00:00:00-08:00</updated><subtitle>Description of the site</subtitle><entry><title>Useless but Fun: Command Line Hangman</title><link href="https://decipheringbigdata.com/useless-but-fun-command-line-hangman.html" rel="alternate"></link><published>2020-12-29T00:00:00-08:00</published><updated>2020-12-29T00:00:00-08:00</updated><author><name>Adams Rosales</name></author><id>tag:decipheringbigdata.com,2020-12-29:/useless-but-fun-command-line-hangman.html</id><summary type="html">&lt;p class="first last"&gt;Building a Hangman game to play in the terminal&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Deciphering Big Data - Programming</title><link href="https://decipheringbigdata.com/" rel="alternate"></link><link href="https://decipheringbigdata.com/feeds/programming.atom.xml" rel="self"></link><id>https://decipheringbigdata.com/</id><updated>2022-05-21T19:15:00-07:00</updated><subtitle>Description of the site</subtitle><entry><title>Creating a Gradle Scala Project</title><link href="https://decipheringbigdata.com/creating-a-gradle-scala-project.html" rel="alternate"></link><published>2022-05-21T19:15:00-07:00</published><updated>2022-05-21T19:15:00-07:00</updated><author><name>Adams Rosales</name></author><id>tag:decipheringbigdata.com,2022-05-21:/creating-a-gradle-scala-project.html</id><summary type="html">&lt;p class="first last"&gt;Setting up a Scala project with the Gradle build tool&lt;/p&gt;
+</summary><content type="html">&lt;div class="section" id="why-gradle"&gt;
+&lt;h2&gt;Why Gradle?&lt;/h2&gt;
+&lt;p&gt;There are three main build tools out there for Scala projects: SBT, Maven, and Gradle. SBT is typically preferred when you're starting out with Scala and your project will purely be Scala based. I find that it's the most documented when learning how to write Scala online and has the most build plugins contributed by the Scala community. On the other hand, I haven't come across SBT-backed projects in the professional world. They tend to use either Maven or Gradle. I'm not quite sure why this is the case but my hunch is that these build tools play better with other JVM languages like Java, which is still a lot more popular than Scala at most companies, and most of the developers working on Scala codebases come from Java backgrounds. They started out building their projects with Maven or Gradle and since they're familiar with those tools, that's just what ends up being used. Then between Maven and Gradle, the latter is typically faster and offers a simpler way to control dependencies in your project than the XML-based format of Maven.&lt;/p&gt;
+&lt;p&gt;There's no shortage of opinions on what's best online! Whatever the reasons why people choose the build tools they do, I think it's important to be familiar with what's used most in the industry so here is an easy guide on how to get started!&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="install-prerequsites"&gt;
+&lt;h2&gt;Install Prerequsites&lt;/h2&gt;
+&lt;p&gt;The first thing you want to do is have an IDE, Scala, and Gradle installed. I recommend using the &lt;a class="reference external" href="https://www.jetbrains.com/idea/download/#section=mac"&gt;Intellij&lt;/a&gt; Community edition IDE. It will handle a lot of things for you and ensure a smoother development experience when working on the JVM.&lt;/p&gt;
+&lt;p&gt;To install Scala simply follow the instructions &lt;a class="reference external" href="https://www.scala-lang.org/download/"&gt;on their site&lt;/a&gt; and Gradle &lt;a class="reference external" href="https://gradle.org/install/"&gt;here&lt;/a&gt;. If you have a Mac, you can use Homebrew to install these pretty easily&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;brew install gradle
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;You will also want to enable Scala support on Intellij by following &lt;a class="reference external" href="https://www.jetbrains.com/help/idea/discover-intellij-idea-for-scala.html#UserInterface"&gt;these&lt;/a&gt; directions.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="create-scala-project-on-intellij"&gt;
+&lt;h2&gt;Create Scala Project on Intellij&lt;/h2&gt;
+&lt;p&gt;Once you have everything installed, you should be able to create a project on Intellij by selecting a Scala new project using IDEA like so.&lt;/p&gt;
+&lt;img alt="Intellij new project setup" src="/static/post19/post19_1.png" style="width: 100%;" /&gt;
+&lt;img alt="Intellij new project setup" src="/static/post19/post19_2.png" style="width: 100%;" /&gt;
+&lt;p&gt;Name it whatever you want and choose the lestest Java JDK on your system.&lt;/p&gt;
+&lt;img alt="Intellij new project setup" src="/static/post19/post19_3.png" style="width: 100%;" /&gt;
+&lt;/div&gt;
+&lt;div class="section" id="initialize-the-gradle-project"&gt;
+&lt;h2&gt;Initialize the Gradle Project&lt;/h2&gt;
+&lt;p&gt;Once you have your Intellij Scala project created all you need to do to pair it with Gradle is run the Gradle init command in your terminal.&lt;/p&gt;
+&lt;p&gt;In Intellij, click on Terminal at the bottom of your IDE and run the following. Choose Groovy as the build script DSL.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;gradle init --type scala-library
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;This should create all of the necessary artifacts you need to use Gradle with your Scala project.&lt;/p&gt;
+&lt;img alt="Gradle initialization" src="/static/post19/post19_4.png" style="width: 100%;" /&gt;
+&lt;p&gt;You can then get a list of available tasks by running:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;./gradlew tasks
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;If you want to run your tests for example, you can run:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;./gradlew &lt;span class="nb"&gt;test&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="adding-dependencies"&gt;
+&lt;h2&gt;Adding Dependencies&lt;/h2&gt;
+&lt;p&gt;To add dependencies to your project, you simply have to edit the build.gradle file inside of your lib folder.&lt;/p&gt;
+&lt;img alt="Gradle dependencies" src="/static/post19/post19_5.png" style="width: 50%;" /&gt;
+&lt;p&gt;Typically, Maven is the default repository used to install dependencies with Gradle (this can be specified in build.gradle using the repositories struct). You can find all of the available artifacts &lt;a class="reference external" href="https://mvnrepository.com/"&gt;on the Maven Repository site&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Clicking on any artifact on Maven will reveal the different ways to add it to your project.&lt;/p&gt;
+&lt;img alt="Maven repositories" src="/static/post19/post19_6.png" style="width: 100%;" /&gt;
+&lt;p&gt;So to add a dependency, we just need to copy the Gradle (Short) specification here and add it to our build.gradle file. Once you do, Intellij should show a little elephant pop-up that you can then click on to update your project with that dependency. It should then not scream at you when you reference the respective libraries in your code.&lt;/p&gt;
+&lt;img alt="Maven repositories" src="/static/post19/post19_7.png" style="width: 100%;" /&gt;
+&lt;p&gt;Of course, it is A LOT more complicated than that. It's super overwhelming, but I recommend reading through the official &lt;a class="reference external" href="https://docs.gradle.org/current/userguide/dependency_management.html"&gt;Gradle dependency documentation&lt;/a&gt; to really understand how dependency management works.&lt;/p&gt;
+&lt;/div&gt;
+</content><category term="Programming"></category><category term="Programming"></category></entry><entry><title>Useless but Fun: Command Line Hangman</title><link href="https://decipheringbigdata.com/useless-but-fun-command-line-hangman.html" rel="alternate"></link><published>2020-12-29T00:00:00-08:00</published><updated>2020-12-29T00:00:00-08:00</updated><author><name>Adams Rosales</name></author><id>tag:decipheringbigdata.com,2020-12-29:/useless-but-fun-command-line-hangman.html</id><summary type="html">&lt;p class="first last"&gt;Building a Hangman game to play in the terminal&lt;/p&gt;
 </summary><content type="html">&lt;div class="section" id="interesting-tell-me-more"&gt;
 &lt;h2&gt;Interesting...Tell Me More&lt;/h2&gt;
 &lt;p&gt;I'm building a Python package called &lt;a class="reference external" href="https://github.com/adaros92/pygme"&gt;pygme&lt;/a&gt; for playing simple games on your
