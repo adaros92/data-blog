@@ -98,7 +98,7 @@ Next let's write the code to iterate over every data point and calculate the dis
 
     def get_similarity_scores(point_to_classify, data):
         """Calculates an array of the class and the given point
-        to classify's distance to the variables corresponding to
+        to classify distance to the variables corresponding to
         each class in the data
         :param point_to_classify - NP array of point to classify
         :param data - NP array of classified data

@@ -5,35 +5,35 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>https://decipheringbigdata.com/</loc>
-<lastmod>2022-05-22T14:33:03-00:00</lastmod>
+<lastmod>2022-06-06T21:57:39-00:00</lastmod>
 <changefreq>weekly</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>https://decipheringbigdata.com/tags.html</loc>
-<lastmod>2022-05-22T14:33:03-00:00</lastmod>
+<lastmod>2022-06-06T21:57:39-00:00</lastmod>
 <changefreq>weekly</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>https://decipheringbigdata.com/categories.html</loc>
-<lastmod>2022-05-22T14:33:03-00:00</lastmod>
+<lastmod>2022-06-06T21:57:39-00:00</lastmod>
 <changefreq>weekly</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>https://decipheringbigdata.com/authors.html</loc>
-<lastmod>2022-05-22T14:33:03-00:00</lastmod>
+<lastmod>2022-06-06T21:57:39-00:00</lastmod>
 <changefreq>weekly</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>https://decipheringbigdata.com/archives.html</loc>
-<lastmod>2022-05-22T14:33:03-00:00</lastmod>
+<lastmod>2022-06-06T21:57:39-00:00</lastmod>
 <changefreq>weekly</changefreq>
 <priority>0.5</priority>
 </url>
@@ -43,6 +43,13 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <lastmod>2022-05-22T13:59:00-07:00</lastmod>
 <changefreq>monthly</changefreq>
 <priority>0.4</priority>
+</url>
+
+<url>
+<loc>https://decipheringbigdata.com/what-to-learn-to-become-a-data-engineer.html</loc>
+<lastmod>2022-05-22T14:36:00-07:00</lastmod>
+<changefreq>weekly</changefreq>
+<priority>0.6</priority>
 </url>
 
 <url>
@@ -180,7 +187,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>https://decipheringbigdata.com/category/career.html</loc>
-<lastmod>2021-03-28T00:00:00-07:53</lastmod>
+<lastmod>2022-05-22T14:36:00-07:53</lastmod>
 <changefreq>weekly</changefreq>
 <priority>0.5</priority>
 </url>
@@ -228,6 +235,13 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
+<loc>https://decipheringbigdata.com/tag/career.html</loc>
+<lastmod>2022-05-22T14:36:00-07:53</lastmod>
+<changefreq>weekly</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
 <loc>https://decipheringbigdata.com/tag/programming.html</loc>
 <lastmod>2022-05-21T19:15:00-07:53</lastmod>
 <changefreq>weekly</changefreq>
@@ -244,13 +258,6 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
 <loc>https://decipheringbigdata.com/tag/data-engineering.html</loc>
 <lastmod>2021-05-04T00:00:00-07:53</lastmod>
-<changefreq>weekly</changefreq>
-<priority>0.5</priority>
-</url>
-
-<url>
-<loc>https://decipheringbigdata.com/tag/career.html</loc>
-<lastmod>2021-03-28T00:00:00-07:53</lastmod>
 <changefreq>weekly</changefreq>
 <priority>0.5</priority>
 </url>
@@ -285,7 +292,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>https://decipheringbigdata.com/author/adams-rosales.html</loc>
-<lastmod>2022-05-21T19:15:00-07:53</lastmod>
+<lastmod>2022-05-22T14:36:00-07:53</lastmod>
 <changefreq>weekly</changefreq>
 <priority>0.5</priority>
 </url>

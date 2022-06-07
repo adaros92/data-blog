@@ -46,11 +46,11 @@
 		</h1>
 		<div class="section" id="why-gradle">
 <h2>Why Gradle?</h2>
-<p>There are three main build tools out there for Scala projects: SBT, Maven, and Gradle. SBT is typically preferred when you're starting out with Scala and your project will purely be Scala based. I find that it's the most documented when learning how to write Scala online and has the most build plugins contributed by the Scala community. On the other hand, I haven't come across SBT-backed projects in the professional world. They tend to use either Maven or Gradle. I'm not quite sure why this is the case but my hunch is that these build tools play better with other JVM languages like Java, which is still a lot more popular than Scala at most companies, and most of the developers working on Scala codebases come from Java backgrounds. They started out building their projects with Maven or Gradle and since they're familiar with those tools, that's just what ends up being used. Then between Maven and Gradle, the latter is typically faster and offers a simpler way to control dependencies in your project than the XML-based format of Maven.</p>
+<p>There are three main build tools out there for Scala projects: SBT, Maven, and Gradle. SBT is typically preferred when you're starting out with Scala and your project will purely be Scala based. I find that it's the most documented when learning how to write Scala online and has the most build plugins contributed by the Scala community. On the other hand, I haven't come across SBT-backed projects in the professional world. They tend to use either Maven or Gradle. I'm not quite sure why this is the case but my hunch is that these build tools play better with other JVM languages like Java, which is still a lot more popular than Scala at most companies, and most of the developers working on Scala code bases come from Java backgrounds. They started out building their projects with Maven or Gradle and since they're familiar with those tools, that's just what ends up being used. Then between Maven and Gradle, the latter is typically faster and offers a simpler way to control dependencies in your project than the XML-based format of Maven.</p>
 <p>There's no shortage of opinions on what's best online! Whatever the reasons why people choose the build tools they do, I think it's important to be familiar with what's used most in the industry so here is an easy guide on how to get started!</p>
 </div>
-<div class="section" id="install-prerequsites">
-<h2>Install Prerequsites</h2>
+<div class="section" id="install-prerequisites">
+<h2>Install Prerequisites</h2>
 <p>The first thing you want to do is have an IDE, Scala, and Gradle installed. I recommend using the <a class="reference external" href="https://www.jetbrains.com/idea/download/#section=mac">Intellij</a> Community edition IDE. It will handle a lot of things for you and ensure a smoother development experience when working on the JVM.</p>
 <p>To install Scala simply follow the instructions <a class="reference external" href="https://www.scala-lang.org/download/">on their site</a> and Gradle <a class="reference external" href="https://gradle.org/install/">here</a>. If you have a Mac, you can use Homebrew to install these pretty easily</p>
 <div class="highlight"><pre><span></span>brew install gradle
@@ -62,7 +62,7 @@
 <p>Once you have everything installed, you should be able to create a project on Intellij by selecting a Scala new project using IDEA like so.</p>
 <img alt="Intellij new project setup" src="/static/post19/post19_1.png" style="width: 100%;" />
 <img alt="Intellij new project setup" src="/static/post19/post19_2.png" style="width: 100%;" />
-<p>Name it whatever you want and choose the lestest Java JDK on your system.</p>
+<p>Name it whatever you want and choose the latest Java JDK on your system.</p>
 <img alt="Intellij new project setup" src="/static/post19/post19_3.png" style="width: 100%;" />
 </div>
 <div class="section" id="initialize-the-gradle-project">

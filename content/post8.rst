@@ -36,7 +36,7 @@ Most publisher/subscriber relationships you've come across can be modeled with t
 - New data becomes available in a table and downstream jobs that depend on the table are notified of the data being
   available
 - A metrics aggregator collects a bunch of stats about a running system and notifies attached alarm objects about when
-  new data is available; the alarmers check their respective metrics and send out an alarm if the metrics pass some
+  new data is available; the "alarmers" check their respective metrics and send out an alarm if the metrics pass some
   threshold
 - E-bay's bidding mechanism broadcasts the highest bid and whether the item has sold yet to all the watchers of an
   item

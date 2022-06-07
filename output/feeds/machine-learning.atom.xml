@@ -70,7 +70,7 @@ class in the resulting list with the highest occurrence.&lt;/p&gt;
 &lt;p&gt;Next let's write the code to iterate over every data point and calculate the distances.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;get_similarity_scores&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;point_to_classify&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;data&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
     &lt;span class="sd"&gt;&amp;quot;&amp;quot;&amp;quot;Calculates an array of the class and the given point&lt;/span&gt;
-&lt;span class="sd"&gt;    to classify&amp;#39;s distance to the variables corresponding to&lt;/span&gt;
+&lt;span class="sd"&gt;    to classify distance to the variables corresponding to&lt;/span&gt;
 &lt;span class="sd"&gt;    each class in the data&lt;/span&gt;
 &lt;span class="sd"&gt;    :param point_to_classify - NP array of point to classify&lt;/span&gt;
 &lt;span class="sd"&gt;    :param data - NP array of classified data&lt;/span&gt;

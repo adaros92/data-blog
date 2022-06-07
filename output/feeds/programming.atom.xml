@@ -2,11 +2,11 @@
 <feed xmlns="http://www.w3.org/2005/Atom"><title>Deciphering Big Data - Programming</title><link href="https://decipheringbigdata.com/" rel="alternate"></link><link href="https://decipheringbigdata.com/feeds/programming.atom.xml" rel="self"></link><id>https://decipheringbigdata.com/</id><updated>2022-05-21T19:15:00-07:00</updated><subtitle>Description of the site</subtitle><entry><title>Creating a Gradle Scala Project</title><link href="https://decipheringbigdata.com/creating-a-gradle-scala-project.html" rel="alternate"></link><published>2022-05-21T19:15:00-07:00</published><updated>2022-05-21T19:15:00-07:00</updated><author><name>Adams Rosales</name></author><id>tag:decipheringbigdata.com,2022-05-21:/creating-a-gradle-scala-project.html</id><summary type="html">&lt;p class="first last"&gt;Setting up a Scala project with the Gradle build tool&lt;/p&gt;
 </summary><content type="html">&lt;div class="section" id="why-gradle"&gt;
 &lt;h2&gt;Why Gradle?&lt;/h2&gt;
-&lt;p&gt;There are three main build tools out there for Scala projects: SBT, Maven, and Gradle. SBT is typically preferred when you're starting out with Scala and your project will purely be Scala based. I find that it's the most documented when learning how to write Scala online and has the most build plugins contributed by the Scala community. On the other hand, I haven't come across SBT-backed projects in the professional world. They tend to use either Maven or Gradle. I'm not quite sure why this is the case but my hunch is that these build tools play better with other JVM languages like Java, which is still a lot more popular than Scala at most companies, and most of the developers working on Scala codebases come from Java backgrounds. They started out building their projects with Maven or Gradle and since they're familiar with those tools, that's just what ends up being used. Then between Maven and Gradle, the latter is typically faster and offers a simpler way to control dependencies in your project than the XML-based format of Maven.&lt;/p&gt;
+&lt;p&gt;There are three main build tools out there for Scala projects: SBT, Maven, and Gradle. SBT is typically preferred when you're starting out with Scala and your project will purely be Scala based. I find that it's the most documented when learning how to write Scala online and has the most build plugins contributed by the Scala community. On the other hand, I haven't come across SBT-backed projects in the professional world. They tend to use either Maven or Gradle. I'm not quite sure why this is the case but my hunch is that these build tools play better with other JVM languages like Java, which is still a lot more popular than Scala at most companies, and most of the developers working on Scala code bases come from Java backgrounds. They started out building their projects with Maven or Gradle and since they're familiar with those tools, that's just what ends up being used. Then between Maven and Gradle, the latter is typically faster and offers a simpler way to control dependencies in your project than the XML-based format of Maven.&lt;/p&gt;
 &lt;p&gt;There's no shortage of opinions on what's best online! Whatever the reasons why people choose the build tools they do, I think it's important to be familiar with what's used most in the industry so here is an easy guide on how to get started!&lt;/p&gt;
 &lt;/div&gt;
-&lt;div class="section" id="install-prerequsites"&gt;
-&lt;h2&gt;Install Prerequsites&lt;/h2&gt;
+&lt;div class="section" id="install-prerequisites"&gt;
+&lt;h2&gt;Install Prerequisites&lt;/h2&gt;
 &lt;p&gt;The first thing you want to do is have an IDE, Scala, and Gradle installed. I recommend using the &lt;a class="reference external" href="https://www.jetbrains.com/idea/download/#section=mac"&gt;Intellij&lt;/a&gt; Community edition IDE. It will handle a lot of things for you and ensure a smoother development experience when working on the JVM.&lt;/p&gt;
 &lt;p&gt;To install Scala simply follow the instructions &lt;a class="reference external" href="https://www.scala-lang.org/download/"&gt;on their site&lt;/a&gt; and Gradle &lt;a class="reference external" href="https://gradle.org/install/"&gt;here&lt;/a&gt;. If you have a Mac, you can use Homebrew to install these pretty easily&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;brew install gradle
@@ -18,7 +18,7 @@
 &lt;p&gt;Once you have everything installed, you should be able to create a project on Intellij by selecting a Scala new project using IDEA like so.&lt;/p&gt;
 &lt;img alt="Intellij new project setup" src="/static/post19/post19_1.png" style="width: 100%;" /&gt;
 &lt;img alt="Intellij new project setup" src="/static/post19/post19_2.png" style="width: 100%;" /&gt;
-&lt;p&gt;Name it whatever you want and choose the lestest Java JDK on your system.&lt;/p&gt;
+&lt;p&gt;Name it whatever you want and choose the latest Java JDK on your system.&lt;/p&gt;
 &lt;img alt="Intellij new project setup" src="/static/post19/post19_3.png" style="width: 100%;" /&gt;
 &lt;/div&gt;
 &lt;div class="section" id="initialize-the-gradle-project"&gt;
@@ -657,7 +657,7 @@ notified when the subject's state changes.&lt;/p&gt;
 &lt;li&gt;New data becomes available in a table and downstream jobs that depend on the table are notified of the data being
 available&lt;/li&gt;
 &lt;li&gt;A metrics aggregator collects a bunch of stats about a running system and notifies attached alarm objects about when
-new data is available; the alarmers check their respective metrics and send out an alarm if the metrics pass some
+new data is available; the &amp;quot;alarmers&amp;quot; check their respective metrics and send out an alarm if the metrics pass some
 threshold&lt;/li&gt;
 &lt;li&gt;E-bay's bidding mechanism broadcasts the highest bid and whether the item has sold yet to all the watchers of an
 item&lt;/li&gt;
