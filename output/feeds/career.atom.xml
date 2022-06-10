@@ -52,6 +52,7 @@
 &lt;li&gt;An &lt;a class="reference external" href="https://decipheringbigdata.com/mysql-yoursql-oursql-nosql.html"&gt;overview&lt;/a&gt; on different data storage solutions you can learn about&lt;/li&gt;
 &lt;li&gt;An intro to &lt;a class="reference external" href="https://decipheringbigdata.com/be-normal.html"&gt;normalization&lt;/a&gt; and &lt;a class="reference external" href="https://decipheringbigdata.com/stars-and-snowflakes.html"&gt;star schemas&lt;/a&gt; that can come in handy when modeling data&lt;/li&gt;
 &lt;li&gt;Using &lt;a class="reference external" href="https://decipheringbigdata.com/my-friend-sam.html"&gt;AWS Lambda&lt;/a&gt; as an orchestration tool to ingest data from Twitter on a schedule&lt;/li&gt;
+&lt;li&gt;A basic &lt;a class="reference external" href="https://decipheringbigdata.com/scala-spark-hello-world.html"&gt;Scala Spark template&lt;/a&gt; to get started with&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/div&gt;
 </content><category term="Career"></category><category term="Career"></category></entry><entry><title>Data Engineering at FAANG</title><link href="https://decipheringbigdata.com/data-engineering-at-faang.html" rel="alternate"></link><published>2021-03-28T00:00:00-07:00</published><updated>2021-03-28T00:00:00-07:00</updated><author><name>Adams Rosales</name></author><id>tag:decipheringbigdata.com,2021-03-28:/data-engineering-at-faang.html</id><summary type="html">&lt;p class="first last"&gt;The top companies may not necessarily provide the top opportunities&lt;/p&gt;

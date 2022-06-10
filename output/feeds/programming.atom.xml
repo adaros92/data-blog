@@ -1,5 +1,171 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Deciphering Big Data - Programming</title><link href="https://decipheringbigdata.com/" rel="alternate"></link><link href="https://decipheringbigdata.com/feeds/programming.atom.xml" rel="self"></link><id>https://decipheringbigdata.com/</id><updated>2022-05-21T19:15:00-07:00</updated><subtitle>Description of the site</subtitle><entry><title>Creating a Gradle Scala Project</title><link href="https://decipheringbigdata.com/creating-a-gradle-scala-project.html" rel="alternate"></link><published>2022-05-21T19:15:00-07:00</published><updated>2022-05-21T19:15:00-07:00</updated><author><name>Adams Rosales</name></author><id>tag:decipheringbigdata.com,2022-05-21:/creating-a-gradle-scala-project.html</id><summary type="html">&lt;p class="first last"&gt;Setting up a Scala project with the Gradle build tool&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Deciphering Big Data - Programming</title><link href="https://decipheringbigdata.com/" rel="alternate"></link><link href="https://decipheringbigdata.com/feeds/programming.atom.xml" rel="self"></link><id>https://decipheringbigdata.com/</id><updated>2022-06-09T19:04:00-07:00</updated><subtitle>Description of the site</subtitle><entry><title>Ranking Windows: A SQL Story</title><link href="https://decipheringbigdata.com/ranking-windows-a-sql-story.html" rel="alternate"></link><published>2022-06-09T19:04:00-07:00</published><updated>2022-06-09T19:04:00-07:00</updated><author><name>Adams Rosales</name></author><id>tag:decipheringbigdata.com,2022-06-09:/ranking-windows-a-sql-story.html</id><summary type="html">&lt;p class="first last"&gt;Using SQL window functions and the differences between row_number, rank, and dense rank&lt;/p&gt;
+</summary><content type="html">&lt;div class="section" id="window-functions-101"&gt;
+&lt;h2&gt;Window Functions 101&lt;/h2&gt;
+&lt;p&gt;Window functions or analytical functions, as they are sometimes called, are nothing more than functions that can be
+applied at different granularities within your data in the same select statement.&lt;/p&gt;
+&lt;p&gt;A traditional SQL function is applied for only one granularity per select statement. For example, take the following SUM
+over a table of orders.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;SELECT&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;ORDER_DATE&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;SUM&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;UNITS&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;UNITS_SOLD&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="k"&gt;FROM&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;ORDERS&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="k"&gt;GROUP&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;BY&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;ORDER_DATE&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;The granularity here is order date. We are summing all of the units sold for each date. If we were to add another function
+like count of records,&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;SELECT&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;ORDER_DATE&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;SUM&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;UNITS&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;UNITS_SOLD&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;COUNT&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;RECORDS&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="k"&gt;FROM&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;ORDERS&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="k"&gt;GROUP&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;BY&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;ORDER_DATE&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;that too would be per order date. So any function we include in this single select scope can only be for one granularity.&lt;/p&gt;
+&lt;p&gt;But now let's say we want to vary each one of these functions so that they are calculated over different ranges of data
+in a single select statement. Say for example, we wanted the total number of units per order date as well as the total
+amount in the entire table. We can do something like this with the help of window functions:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;SELECT&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;ORDER_DATE&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="k"&gt;SUM&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;UNITS&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;OVER&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;PARTITION&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;BY&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;ORDER_DATE&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;UNITS_SOLD&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="k"&gt;SUM&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;UNITS&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;OVER&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;TOTAL_UNITS&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="k"&gt;FROM&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;ORDERS&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;What you actually get here is a bit tricky if you're not used to working with these. For that, it helps to look at some
+dummy data.&lt;/p&gt;
+&lt;img alt="A table of orders" src="/static/post21/post21_1.png" style="width: 50%;" /&gt;
+&lt;p&gt;And the result of the query above is:&lt;/p&gt;
+&lt;img alt="A table of orders after some window functions" src="/static/post21/post21_2.png" style="width: 50%;" /&gt;
+&lt;p&gt;Notice how the granularity here is order_id (one record per order_id). We don't affect this granularity at all
+with our query because we're not grouping by any column here. So the result set stays at the same granularity of one
+row per order_id. So the number of order_date records remains the same as in the original data. But, if you take
+a look at the two measures, you'll see they've been aggregated over other granularities or &amp;quot;windows&amp;quot; of data. The first
+measure is the total number of units per order_date. This is the case because we partitioned by order_date in the window
+function. The second measure is the total number of units in the entire table, because we didn't partition over anything,
+so it ran the sum on the entire data.&lt;/p&gt;
+&lt;p&gt;The partition keyword essentially determines what window you are running your aggregation over. If it's not specified,
+the function will run over the entire data. Let's visualize this!&lt;/p&gt;
+&lt;p&gt;With &lt;tt class="docutils literal"&gt;SUM(UNITS) OVER (PARTITION BY ORDER_DATE) UNITS_SOLD&lt;/tt&gt;, we perform the sums over the following windows of data.&lt;/p&gt;
+&lt;img alt="A table split by order_date" src="/static/post21/post21_3.png" style="width: 50%;" /&gt;
+&lt;p&gt;But with &lt;tt class="docutils literal"&gt;SUM(UNITS) OVER () TOTAL_UNITS&lt;/tt&gt;, the window is the entire table.&lt;/p&gt;
+&lt;img alt="A table with no partitioning" src="/static/post21/post21_4.png" style="width: 50%;" /&gt;
+&lt;/div&gt;
+&lt;div class="section" id="ranking-with-window-functions"&gt;
+&lt;h2&gt;Ranking With Window Functions&lt;/h2&gt;
+&lt;p&gt;So now that you sort of got the hang of window functions, let's look at a specific application used to rank data. By
+that I mean assigning numbers to each record in the data based on the order of some column.&lt;/p&gt;
+&lt;div class="section" id="row-number"&gt;
+&lt;h3&gt;Row Number&lt;/h3&gt;
+&lt;p&gt;Let's use the same dummy data. Take the following query as an example.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;SELECT&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;ORDER_ID&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;ORDER_DATE&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;UNITS&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;ROW_NUMBER&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;OVER&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;PARTITION&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;BY&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;ORDER_DATE&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;ORDER&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;BY&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;UNITS&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;DESC&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;RN&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="k"&gt;FROM&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;ORDERS&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;This will add a sequential number (1, 2, 3, etc.) to each row based on how many units were sold. But, since
+we're partitioning by order_date, it will only count within each order_date window. This means, that each order date
+records will have individual row number series counting up to the total number of records for that order date. Here,
+take a look at the result.&lt;/p&gt;
+&lt;img alt="Row number example when partitioning by order date" src="/static/post21/post21_5.png" style="width: 75%;" /&gt;
+&lt;p&gt;Notice how we've assigned a row number in descending order by the total number of units in the each order. The order with
+the most units gets a 1, followed by 2, then 3, etc. But, when we reach a new order date, this row number restarts so
+that units are ranked within individual order dates. If on the other hand, we would have run the following query,&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;SELECT&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;ORDER_ID&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;ORDER_DATE&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;UNITS&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;ROW_NUMBER&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;OVER&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;ORDER&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;BY&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;UNITS&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;DESC&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;RN&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="k"&gt;FROM&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;ORDERS&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;without specifying any partition argument in the ROW_NUMBER function, the result would have been as follows.&lt;/p&gt;
+&lt;img alt="Row number example without a partition" src="/static/post21/post21_6.png" style="width: 75%;" /&gt;
+&lt;p&gt;In this case, the row numbers don't reset all all. We simply rank all of the order records by the number of units sold.
+The order with the largest number of units in the entire table comes first, without any regard to the order date like
+before.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="rank"&gt;
+&lt;h3&gt;Rank&lt;/h3&gt;
+&lt;p&gt;With the row number function, we assign a number to each row sequentially no matter what. If there are duplicate values,
+such as unit values 3, 2, and 1 in the example above, we still increment the row number by 1. With the rank function,
+though, any repeated values we're ranking by get the same rank number. Take the following query:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;SELECT&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;ORDER_ID&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;ORDER_DATE&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;UNITS&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;RANK&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;OVER&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;ORDER&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;BY&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;UNITS&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;DESC&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;RANK&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="k"&gt;FROM&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;ORDERS&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;This again doesn't partition by anything so there will be no resets of the ranking by order date. However, take a look
+at the rank column. You'll notice that duplicate unit values get the same rank. When the unit value changes, the rank
+continues as if we had ranked consecutively. For example, there are 2 repeating unit values of 3. When we reach unit value
+2, the rank continues to 5, since there were 2 repeating 3s.&lt;/p&gt;
+&lt;img alt="Rank without partition" src="/static/post21/post21_7.png" style="width: 75%;" /&gt;
+&lt;p&gt;There are 3 repeating values of 2, so when we continue on to unit value 1, the rank goes from 5 to 8 (5 + 3).&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="dense-rank"&gt;
+&lt;h3&gt;Dense Rank&lt;/h3&gt;
+&lt;p&gt;Dense rank also assigns the same rank to repeating values, but doesn't do the same gap as rank does after repeating
+values. It will just continue counting up without any breaks. Take for example, the following query:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;SELECT&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;ORDER_ID&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;ORDER_DATE&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;UNITS&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;DENSE_RANK&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;OVER&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;ORDER&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;BY&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;UNITS&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;DESC&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;RANK&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="k"&gt;FROM&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;ORDERS&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;which yields the following,&lt;/p&gt;
+&lt;img alt="Dense rank without partition" src="/static/post21/post21_8.png" style="width: 75%;" /&gt;
+&lt;p&gt;If there are any repeating values, we repeat the rank, but then continue on to the next consecutive rank number after
+that. So when there 2 unit values of 3, we assign them both the rank of 3 and continue on to rank 4 for unit value
+2 without skipping any ranks.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="practical-use-cases"&gt;
+&lt;h2&gt;Practical Use Cases&lt;/h2&gt;
+&lt;p&gt;So why should you care? Well, window functions make it easy to perform complex calculations while reducing the
+amount of logic written. Here are some applications I come across often at work.&lt;/p&gt;
+&lt;div class="section" id="top-n-values-by-some-segment"&gt;
+&lt;h3&gt;Top N values by some segment&lt;/h3&gt;
+&lt;p&gt;Calculate the top 2 salaries by department given a table of employees.&lt;/p&gt;
+&lt;img alt="Top 2 salaries by department data" src="/static/post21/post21_9.png" style="width: 50%;" /&gt;
+&lt;p&gt;Answer:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;SELECT&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;DEPARTMENT&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;EMPLOYEE_ID&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="k"&gt;FROM&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="k"&gt;SELECT&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="n"&gt;EMPLOYEE_ID&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;DEPARTMENT&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;RANK&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;OVER&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;PARTITION&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;BY&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;DEPARTMENT&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;ORDER&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;BY&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;SALARY&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;DESC&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;RNK&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="k"&gt;FROM&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;EMPLOYEE&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;WHERE&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;RNK&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;lt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;We partition by department so the ranking happens individually for each department by salary descending. Remember that
+the grain of the data remains at the employee_id level because we are just restricting the grain within the scope
+of the function. So the result is that we get a rank for each employee in their individual departments. We can then filter
+on that rank to get the top 2. See how the result of the subquery would look for more clarity.&lt;/p&gt;
+&lt;img alt="Top 2 salaries by department inner query data" src="/static/post21/post21_10.png" style="width: 50%;" /&gt;
+&lt;p&gt;The red squares are the windows created by the partition on department and the highlighted values are what we filter on
+to retrieve the final result. See how it gets the employees with the top 2 salaries by department?&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="of-total-by-segment"&gt;
+&lt;h3&gt;% of total by segment&lt;/h3&gt;
+&lt;p&gt;Get the percentage of total employees working in each department from the same data above.&lt;/p&gt;
+&lt;p&gt;Answer:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;SELECT&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;DISTINCT&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;DEPARTMENT&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;COUNT&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;OVER&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;PARTITION&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;BY&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;DEPARTMENT&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;00&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;COUNT&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;OVER&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;100&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;PERCENT_OF_TOTAL&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="k"&gt;FROM&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;EMPLOYEE&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;This calculates the count of records in this table or employees since it's one record per employee by department and
+divides by the total count of records in the table. We add a distinct here because the granularity of the table is
+employee_id.&lt;/p&gt;
+&lt;p&gt;Before distinct:&lt;/p&gt;
+&lt;img alt="Department count of total before distinct" src="/static/post21/post21_11.png" style="width: 50%;" /&gt;
+&lt;p&gt;After distinct:&lt;/p&gt;
+&lt;img alt="Department count of total after distinct" src="/static/post21/post21_12.png" style="width: 50%;" /&gt;
+&lt;p&gt;Now try to answer the same questions without using window functions. Hint: it's a lot more code :).&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+</content><category term="Programming"></category><category term="Programming"></category></entry><entry><title>Creating a Gradle Scala Project</title><link href="https://decipheringbigdata.com/creating-a-gradle-scala-project.html" rel="alternate"></link><published>2022-05-21T19:15:00-07:00</published><updated>2022-05-21T19:15:00-07:00</updated><author><name>Adams Rosales</name></author><id>tag:decipheringbigdata.com,2022-05-21:/creating-a-gradle-scala-project.html</id><summary type="html">&lt;p class="first last"&gt;Setting up a Scala project with the Gradle build tool&lt;/p&gt;
 </summary><content type="html">&lt;div class="section" id="why-gradle"&gt;
 &lt;h2&gt;Why Gradle?&lt;/h2&gt;
 &lt;p&gt;There are three main build tools out there for Scala projects: SBT, Maven, and Gradle. SBT is typically preferred when you're starting out with Scala and your project will purely be Scala based. I find that it's the most documented when learning how to write Scala online and has the most build plugins contributed by the Scala community. On the other hand, I haven't come across SBT-backed projects in the professional world. They tend to use either Maven or Gradle. I'm not quite sure why this is the case but my hunch is that these build tools play better with other JVM languages like Java, which is still a lot more popular than Scala at most companies, and most of the developers working on Scala code bases come from Java backgrounds. They started out building their projects with Maven or Gradle and since they're familiar with those tools, that's just what ends up being used. Then between Maven and Gradle, the latter is typically faster and offers a simpler way to control dependencies in your project than the XML-based format of Maven.&lt;/p&gt;

@@ -62,3 +62,4 @@ The important theme here is to just start! You have all of the resources availab
 - An `overview <https://decipheringbigdata.com/mysql-yoursql-oursql-nosql.html>`_ on different data storage solutions you can learn about
 - An intro to `normalization <https://decipheringbigdata.com/be-normal.html>`_ and `star schemas <https://decipheringbigdata.com/stars-and-snowflakes.html>`_ that can come in handy when modeling data
 - Using `AWS Lambda <https://decipheringbigdata.com/my-friend-sam.html>`_ as an orchestration tool to ingest data from Twitter on a schedule
+- A basic `Scala Spark template <https://decipheringbigdata.com/scala-spark-hello-world.html>`_ to get started with

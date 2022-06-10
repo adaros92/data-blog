@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<link rel="stylesheet" type="text/css" href="https://decipheringbigdata.com/theme/css/style.css">
+	<!--<link rel="stylesheet/less" type="text/css" href="/theme/css/style.less">-->
+	<!--<script src="/theme/js/less.js" type="text/javascript"></script>-->
+	<link rel="stylesheet" type="text/css" href="https://decipheringbigdata.com/theme/css/pygments.css">
+	<link href='//fonts.googleapis.com/css?family=Open+Sans:800,400,300|Inconsolata' rel='stylesheet' type='text/css'>
+
+
+
+		<title>Deciphering Big Data</title>
+		<meta charset="utf-8" />
+</head>
+<body>
+	<section id="sidebar">
+		<figure id="user_logo">
+            <a href="https://decipheringbigdata.com"><div class="logo">&nbsp;</div></a>
+		</figure>
+
+		<div class="user_meta">
+            <h1 id="user"><a href="https://decipheringbigdata.com" class="">Adams Rosales</a></h1>
+			<h2></h2>
+			<p class="bio">has some opinions about data engineering</p>
+			<ul>
+					<a href="https://decipheringbigdata.com/pages/about-me.html">About Me</a><br><br>
+					<a href="https://www.linkedin.com/in/adamsr09/">LinkedIn</a>
+			</ul>
+		</div>
+		<footer>
+			<address>
+				Powered by <a href="https://blog.getpelican.com/">Pelican</a>
+			</address>
+		</footer>
+	</section>
+
+	<section id="posts">
+	<header>
+		<h1>Adams Rosales's blog</h1>
+		<h3>Posted Jun 09, 2022</h3>
+	</header>
+	<article>
+		<h1 id="title">
+			<a href="https://decipheringbigdata.com/ranking-windows-a-sql-story.html" rel="bookmark"
+				title="Permalink to Ranking Windows: A SQL Story">Ranking Windows: A SQL Story</a>
+		</h1>
+		<div class="section" id="window-functions-101">
+<h2>Window Functions 101</h2>
+<p>Window functions or analytical functions, as they are sometimes called, are nothing more than functions that can be
+applied at different granularities within your data in the same select statement.</p>
+<p>A traditional SQL function is applied for only one granularity per select statement. For example, take the following SUM
+over a table of orders.</p>
+<div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"> </span><span class="n">ORDER_DATE</span><span class="p">,</span><span class="w"> </span><span class="k">SUM</span><span class="p">(</span><span class="n">UNITS</span><span class="p">)</span><span class="w"> </span><span class="n">UNITS_SOLD</span><span class="w"></span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">ORDERS</span><span class="w"></span>
+<span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">ORDER_DATE</span><span class="w"></span>
+</pre></div>
+<p>The granularity here is order date. We are summing all of the units sold for each date. If we were to add another function
+like count of records,</p>
+<div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"> </span><span class="n">ORDER_DATE</span><span class="p">,</span><span class="w"> </span><span class="k">SUM</span><span class="p">(</span><span class="n">UNITS</span><span class="p">)</span><span class="w"> </span><span class="n">UNITS_SOLD</span><span class="p">,</span><span class="w"> </span><span class="k">COUNT</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="n">RECORDS</span><span class="w"></span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">ORDERS</span><span class="w"></span>
+<span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">ORDER_DATE</span><span class="w"></span>
+</pre></div>
+<p>that too would be per order date. So any function we include in this single select scope can only be for one granularity.</p>
+<p>But now let's say we want to vary each one of these functions so that they are calculated over different ranges of data
+in a single select statement. Say for example, we wanted the total number of units per order date as well as the total
+amount in the entire table. We can do something like this with the help of window functions:</p>
+<div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"></span>
+<span class="w">    </span><span class="n">ORDER_DATE</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="k">SUM</span><span class="p">(</span><span class="n">UNITS</span><span class="p">)</span><span class="w"> </span><span class="n">OVER</span><span class="w"> </span><span class="p">(</span><span class="n">PARTITION</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">ORDER_DATE</span><span class="p">)</span><span class="w"> </span><span class="n">UNITS_SOLD</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="k">SUM</span><span class="p">(</span><span class="n">UNITS</span><span class="p">)</span><span class="w"> </span><span class="n">OVER</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="n">TOTAL_UNITS</span><span class="w"></span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">ORDERS</span><span class="w"></span>
+</pre></div>
+<p>What you actually get here is a bit tricky if you're not used to working with these. For that, it helps to look at some
+dummy data.</p>
+<img alt="A table of orders" src="/static/post21/post21_1.png" style="width: 50%;" />
+<p>And the result of the query above is:</p>
+<img alt="A table of orders after some window functions" src="/static/post21/post21_2.png" style="width: 50%;" />
+<p>Notice how the granularity here is order_id (one record per order_id). We don't affect this granularity at all
+with our query because we're not grouping by any column here. So the result set stays at the same granularity of one
+row per order_id. So the number of order_date records remains the same as in the original data. But, if you take
+a look at the two measures, you'll see they've been aggregated over other granularities or &quot;windows&quot; of data. The first
+measure is the total number of units per order_date. This is the case because we partitioned by order_date in the window
+function. The second measure is the total number of units in the entire table, because we didn't partition over anything,
+so it ran the sum on the entire data.</p>
+<p>The partition keyword essentially determines what window you are running your aggregation over. If it's not specified,
+the function will run over the entire data. Let's visualize this!</p>
+<p>With <tt class="docutils literal">SUM(UNITS) OVER (PARTITION BY ORDER_DATE) UNITS_SOLD</tt>, we perform the sums over the following windows of data.</p>
+<img alt="A table split by order_date" src="/static/post21/post21_3.png" style="width: 50%;" />
+<p>But with <tt class="docutils literal">SUM(UNITS) OVER () TOTAL_UNITS</tt>, the window is the entire table.</p>
+<img alt="A table with no partitioning" src="/static/post21/post21_4.png" style="width: 50%;" />
+</div>
+<div class="section" id="ranking-with-window-functions">
+<h2>Ranking With Window Functions</h2>
+<p>So now that you sort of got the hang of window functions, let's look at a specific application used to rank data. By
+that I mean assigning numbers to each record in the data based on the order of some column.</p>
+<div class="section" id="row-number">
+<h3>Row Number</h3>
+<p>Let's use the same dummy data. Take the following query as an example.</p>
+<div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"></span>
+<span class="w">    </span><span class="n">ORDER_ID</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="n">ORDER_DATE</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="n">UNITS</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="n">ROW_NUMBER</span><span class="p">()</span><span class="w"> </span><span class="n">OVER</span><span class="w"> </span><span class="p">(</span><span class="n">PARTITION</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">ORDER_DATE</span><span class="w"> </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">UNITS</span><span class="w"> </span><span class="k">DESC</span><span class="p">)</span><span class="w"> </span><span class="n">RN</span><span class="w"></span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">ORDERS</span><span class="w"></span>
+</pre></div>
+<p>This will add a sequential number (1, 2, 3, etc.) to each row based on how many units were sold. But, since
+we're partitioning by order_date, it will only count within each order_date window. This means, that each order date
+records will have individual row number series counting up to the total number of records for that order date. Here,
+take a look at the result.</p>
+<img alt="Row number example when partitioning by order date" src="/static/post21/post21_5.png" style="width: 75%;" />
+<p>Notice how we've assigned a row number in descending order by the total number of units in the each order. The order with
+the most units gets a 1, followed by 2, then 3, etc. But, when we reach a new order date, this row number restarts so
+that units are ranked within individual order dates. If on the other hand, we would have run the following query,</p>
+<div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"></span>
+<span class="w">    </span><span class="n">ORDER_ID</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="n">ORDER_DATE</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="n">UNITS</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="n">ROW_NUMBER</span><span class="p">()</span><span class="w"> </span><span class="n">OVER</span><span class="w"> </span><span class="p">(</span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">UNITS</span><span class="w"> </span><span class="k">DESC</span><span class="p">)</span><span class="w"> </span><span class="n">RN</span><span class="w"></span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">ORDERS</span><span class="w"></span>
+</pre></div>
+<p>without specifying any partition argument in the ROW_NUMBER function, the result would have been as follows.</p>
+<img alt="Row number example without a partition" src="/static/post21/post21_6.png" style="width: 75%;" />
+<p>In this case, the row numbers don't reset all all. We simply rank all of the order records by the number of units sold.
+The order with the largest number of units in the entire table comes first, without any regard to the order date like
+before.</p>
+</div>
+<div class="section" id="rank">
+<h3>Rank</h3>
+<p>With the row number function, we assign a number to each row sequentially no matter what. If there are duplicate values,
+such as unit values 3, 2, and 1 in the example above, we still increment the row number by 1. With the rank function,
+though, any repeated values we're ranking by get the same rank number. Take the following query:</p>
+<div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"></span>
+<span class="w">    </span><span class="n">ORDER_ID</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="n">ORDER_DATE</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="n">UNITS</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="n">RANK</span><span class="p">()</span><span class="w"> </span><span class="n">OVER</span><span class="w"> </span><span class="p">(</span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">UNITS</span><span class="w"> </span><span class="k">DESC</span><span class="p">)</span><span class="w"> </span><span class="n">RANK</span><span class="w"></span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">ORDERS</span><span class="w"></span>
+</pre></div>
+<p>This again doesn't partition by anything so there will be no resets of the ranking by order date. However, take a look
+at the rank column. You'll notice that duplicate unit values get the same rank. When the unit value changes, the rank
+continues as if we had ranked consecutively. For example, there are 2 repeating unit values of 3. When we reach unit value
+2, the rank continues to 5, since there were 2 repeating 3s.</p>
+<img alt="Rank without partition" src="/static/post21/post21_7.png" style="width: 75%;" />
+<p>There are 3 repeating values of 2, so when we continue on to unit value 1, the rank goes from 5 to 8 (5 + 3).</p>
+</div>
+<div class="section" id="dense-rank">
+<h3>Dense Rank</h3>
+<p>Dense rank also assigns the same rank to repeating values, but doesn't do the same gap as rank does after repeating
+values. It will just continue counting up without any breaks. Take for example, the following query:</p>
+<div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"></span>
+<span class="w">    </span><span class="n">ORDER_ID</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="n">ORDER_DATE</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="n">UNITS</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="n">DENSE_RANK</span><span class="p">()</span><span class="w"> </span><span class="n">OVER</span><span class="w"> </span><span class="p">(</span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">UNITS</span><span class="w"> </span><span class="k">DESC</span><span class="p">)</span><span class="w"> </span><span class="n">RANK</span><span class="w"></span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">ORDERS</span><span class="w"></span>
+</pre></div>
+<p>which yields the following,</p>
+<img alt="Dense rank without partition" src="/static/post21/post21_8.png" style="width: 75%;" />
+<p>If there are any repeating values, we repeat the rank, but then continue on to the next consecutive rank number after
+that. So when there 2 unit values of 3, we assign them both the rank of 3 and continue on to rank 4 for unit value
+2 without skipping any ranks.</p>
+</div>
+</div>
+<div class="section" id="practical-use-cases">
+<h2>Practical Use Cases</h2>
+<p>So why should you care? Well, window functions make it easy to perform complex calculations while reducing the
+amount of logic written. Here are some applications I come across often at work.</p>
+<div class="section" id="top-n-values-by-some-segment">
+<h3>Top N values by some segment</h3>
+<p>Calculate the top 2 salaries by department given a table of employees.</p>
+<img alt="Top 2 salaries by department data" src="/static/post21/post21_9.png" style="width: 50%;" />
+<p>Answer:</p>
+<div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"></span>
+<span class="w">    </span><span class="n">DEPARTMENT</span><span class="w"></span>
+<span class="w">    </span><span class="p">,</span><span class="w"> </span><span class="n">EMPLOYEE_ID</span><span class="w"></span>
+<span class="k">FROM</span><span class="w"> </span><span class="p">(</span><span class="w"></span>
+<span class="w">    </span><span class="k">SELECT</span><span class="w"></span>
+<span class="w">        </span><span class="n">EMPLOYEE_ID</span><span class="w"></span>
+<span class="w">        </span><span class="p">,</span><span class="w"> </span><span class="n">DEPARTMENT</span><span class="w"></span>
+<span class="w">        </span><span class="p">,</span><span class="w"> </span><span class="n">RANK</span><span class="p">()</span><span class="w"> </span><span class="n">OVER</span><span class="w"> </span><span class="p">(</span><span class="n">PARTITION</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">DEPARTMENT</span><span class="w"> </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">SALARY</span><span class="w"> </span><span class="k">DESC</span><span class="p">)</span><span class="w"> </span><span class="n">RNK</span><span class="w"></span>
+<span class="w">    </span><span class="k">FROM</span><span class="w"> </span><span class="n">EMPLOYEE</span><span class="w"></span>
+<span class="p">)</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">RNK</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mi">2</span><span class="w"></span>
+</pre></div>
+<p>We partition by department so the ranking happens individually for each department by salary descending. Remember that
+the grain of the data remains at the employee_id level because we are just restricting the grain within the scope
+of the function. So the result is that we get a rank for each employee in their individual departments. We can then filter
+on that rank to get the top 2. See how the result of the subquery would look for more clarity.</p>
+<img alt="Top 2 salaries by department inner query data" src="/static/post21/post21_10.png" style="width: 50%;" />
+<p>The red squares are the windows created by the partition on department and the highlighted values are what we filter on
+to retrieve the final result. See how it gets the employees with the top 2 salaries by department?</p>
+</div>
+<div class="section" id="of-total-by-segment">
+<h3>% of total by segment</h3>
+<p>Get the percentage of total employees working in each department from the same data above.</p>
+<p>Answer:</p>
+<div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"> </span><span class="k">DISTINCT</span><span class="w"></span>
+<span class="w">    </span><span class="n">DEPARTMENT</span><span class="w"></span>
+<span class="w">    </span><span class="p">,</span><span class="w"> </span><span class="k">COUNT</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="n">OVER</span><span class="w"> </span><span class="p">(</span><span class="n">PARTITION</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">DEPARTMENT</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">1</span><span class="p">.</span><span class="mi">00</span><span class="w"></span>
+<span class="w">        </span><span class="o">/</span><span class="w"> </span><span class="k">COUNT</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="n">OVER</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">100</span><span class="w"> </span><span class="n">PERCENT_OF_TOTAL</span><span class="w"></span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">EMPLOYEE</span><span class="w"></span>
+</pre></div>
+<p>This calculates the count of records in this table or employees since it's one record per employee by department and
+divides by the total count of records in the table. We add a distinct here because the granularity of the table is
+employee_id.</p>
+<p>Before distinct:</p>
+<img alt="Department count of total before distinct" src="/static/post21/post21_11.png" style="width: 50%;" />
+<p>After distinct:</p>
+<img alt="Department count of total after distinct" src="/static/post21/post21_12.png" style="width: 50%;" />
+<p>Now try to answer the same questions without using window functions. Hint: it's a lot more code :).</p>
+</div>
+</div>
+
+
+		<div id="article_meta">
+				Category:
+					<a href="https://decipheringbigdata.com/category/programming.html">Programming</a>
+				<br />Tags:
+					<a href="https://decipheringbigdata.com/tag/programming.html">Programming</a>
+		</div>
+	</article>
+
+	<footer>
+		<a href="https://decipheringbigdata.com/" class="button_accent">&larr;&nbsp;&nbsp;&nbsp;Back to blog</a>
+	</footer>
+
+
+	</section>
+
+</body>
+</html>
