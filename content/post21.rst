@@ -7,7 +7,7 @@ Ranking Windows: A SQL Story
 :tags: Programming
 :category: Programming
 :authors: Adams Rosales
-:summary: Using SQL window functions and the differences between row_number, rank, and dense rank
+:summary: Using SQL window functions and the differences between row number, rank, and dense rank
 
 Window Functions 101
 ####################
