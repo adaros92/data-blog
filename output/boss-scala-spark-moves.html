@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<link rel="stylesheet" type="text/css" href="https://decipheringbigdata.com/theme/css/style.css">
+	<!--<link rel="stylesheet/less" type="text/css" href="/theme/css/style.less">-->
+	<!--<script src="/theme/js/less.js" type="text/javascript"></script>-->
+	<link rel="stylesheet" type="text/css" href="https://decipheringbigdata.com/theme/css/pygments.css">
+	<link href='//fonts.googleapis.com/css?family=Open+Sans:800,400,300|Inconsolata' rel='stylesheet' type='text/css'>
+
+
+
+		<title>Deciphering Big Data</title>
+		<meta charset="utf-8" />
+
+	<script>
+  (function (s, e, n, d, er) {
+    s['Sender'] = er;
+    s[er] = s[er] || function () {
+      (s[er].q = s[er].q || []).push(arguments)
+    }, s[er].l = 1 * new Date();
+    var a = e.createElement(n),
+        m = e.getElementsByTagName(n)[0];
+    a.async = 1;
+    a.src = d;
+    m.parentNode.insertBefore(a, m)
+  })(window, document, 'script', 'https://cdn.sender.net/accounts_resources/universal.js', 'sender');
+  sender('b39da685833967')
+</script>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-154188882-2">
+</script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-154188882-2');
+</script>
+</head>
+<body>
+	<section id="sidebar">
+		<figure id="user_logo">
+            <a href="https://decipheringbigdata.com"><div class="logo">&nbsp;</div></a>
+		</figure>
+
+		<div class="user_meta">
+            <h1 id="user"><a href="https://decipheringbigdata.com" class="">Adams Rosales</a></h1>
+			<h2></h2>
+			<p class="bio">has some opinions about data engineering</p>
+			<ul>
+					<a href="https://decipheringbigdata.com/pages/about-me.html">About Me</a><br><br>
+					<a href="https://www.linkedin.com/in/adamsr09/">LinkedIn</a>
+			</ul>
+		</div>
+		<footer>
+			<address>
+				Powered by <a href="https://blog.getpelican.com/">Pelican</a>
+			</address>
+		</footer>
+	</section>
+
+	<section id="posts">
+	<header>
+		<h1>Adams Rosales's blog</h1>
+		<h3>Posted Jun 16, 2022</h3>
+	</header>
+	<article>
+		<h1 id="title">
+			<a href="https://decipheringbigdata.com/boss-scala-spark-moves.html" rel="bookmark"
+				title="Permalink to Boss Scala Spark Moves">Boss Scala Spark Moves</a>
+		</h1>
+		<div class="section" id="functional-heaven">
+<h2>Functional Heaven</h2>
+<p>I started writing Spark code in Scala about 2 years ago after working mostly with PySpark before.
+I've never looked back! The built-in functional syntax available in Scala pairs really well with
+Spark. Below are some quick snippets so you can see what I'm talking about.</p>
+</div>
+<div class="section" id="it-folds">
+<h2>It Folds</h2>
+<p>Say you have a list of column names.</p>
+<div class="highlight"><pre><span></span><span class="kd">val</span><span class="w"> </span><span class="n">someList</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">Seq</span><span class="p">(</span><span class="s">&quot;column_a&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;column_b&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;column_c&quot;</span><span class="p">)</span><span class="w"></span>
+</pre></div>
+<p>You can use the built in foldLeft method of this collection to apply transformations to a Spark data
+frame for each value and keep track of the results. The data frame you get back will be the cumulative
+result of all of those transformations. This works great for renaming columns such as in the example below.</p>
+<div class="highlight"><pre><span></span><span class="kd">val</span><span class="w"> </span><span class="n">renamedDf</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">someList</span><span class="p">.</span><span class="n">foldLeft</span><span class="p">(</span><span class="n">df</span><span class="p">){</span><span class="k">case</span><span class="p">(</span><span class="n">tmpDf</span><span class="p">,</span><span class="w"> </span><span class="n">column</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="n">tmpDf</span><span class="p">.</span><span class="n">withColumnRenamed</span><span class="p">(</span><span class="n">column</span><span class="p">,</span><span class="w"> </span><span class="s">s&quot;renamed_</span><span class="si">$</span><span class="n">column</span><span class="s">&quot;</span><span class="p">)</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+<p>Here the tmpDf data frame will contain the intermediate results from the previous iteration. This will continue until
+we traverse the entire collection. The result is that each one of those columns will now be prefixed with
+&quot;renamed&quot; in renamedDf.</p>
+</div>
+<div class="section" id="reduction-junction">
+<h2>Reduction Junction</h2>
+<p>If you have a collection of data frames instead, you can easily combine them with the reduce method of that collection.</p>
+<div class="highlight"><pre><span></span><span class="kd">val</span><span class="w"> </span><span class="n">dfs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">Seq</span><span class="p">(</span><span class="n">df1</span><span class="p">,</span><span class="w"> </span><span class="n">df2</span><span class="p">,</span><span class="w"> </span><span class="n">df3</span><span class="p">,</span><span class="w"> </span><span class="n">df4</span><span class="p">,</span><span class="w"> </span><span class="n">df5</span><span class="p">)</span><span class="w"></span>
+</pre></div>
+<p>One handy reduction here is simply unioning these data frames together into one.</p>
+<div class="highlight"><pre><span></span><span class="kd">val</span><span class="w"> </span><span class="n">combinedDf</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dfs</span><span class="p">.</span><span class="n">reduce</span><span class="p">(</span><span class="n">_</span><span class="w"> </span><span class="n">union</span><span class="w"> </span><span class="n">_</span><span class="p">)</span><span class="w"></span>
+</pre></div>
+<p>As long as all of these data frames have the same columns, the result will be a single data frame containing the union of
+all of them.</p>
+</div>
+<div class="section" id="variable-argument-sequences">
+<h2>Variable Argument Sequences</h2>
+<p>You can pass collections of objects to data frame methods with the _* operator in Scala. Say you have some columns you
+want to alias and select.</p>
+<div class="highlight"><pre><span></span><span class="kd">val</span><span class="w"> </span><span class="n">columns</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">Seq</span><span class="p">(</span><span class="s">&quot;column_a&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;column_b&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;column_c&quot;</span><span class="p">)</span><span class="w"></span>
+<span class="kd">val</span><span class="w"> </span><span class="n">aliases</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">columns</span><span class="p">.</span><span class="n">map</span><span class="p">(</span><span class="n">columnName</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">col</span><span class="p">(</span><span class="n">columnName</span><span class="p">).</span><span class="n">alias</span><span class="p">(</span><span class="s">s&quot;alias_of_</span><span class="si">$</span><span class="n">columnName</span><span class="s">&quot;</span><span class="p">)</span><span class="w"></span>
+<span class="p">})</span><span class="w"></span>
+</pre></div>
+<p>You can pass this list of aliases to the select method as follows.</p>
+<div class="highlight"><pre><span></span><span class="kd">val</span><span class="w"> </span><span class="n">selectDf</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">df</span><span class="p">.</span><span class="n">select</span><span class="p">(</span><span class="n">aliases</span><span class="p">:</span><span class="n">_*</span><span class="p">)</span><span class="w"></span>
+</pre></div>
+<p>You can also use this for other methods like groupBy and agg.</p>
+<div class="highlight"><pre><span></span><span class="kd">val</span><span class="w"> </span><span class="n">groupByColumns</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">Seq</span><span class="p">(</span><span class="s">&quot;partition_a&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;partition_b&quot;</span><span class="p">)</span><span class="w"></span>
+<span class="kd">val</span><span class="w"> </span><span class="n">measureColumns</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">Seq</span><span class="p">(</span><span class="s">&quot;measure_a&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;measure_b&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;measure_c&quot;</span><span class="p">)</span><span class="w"></span>
+<span class="kd">val</span><span class="w"> </span><span class="n">maxOfMeasures</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">measureColumns</span><span class="p">.</span><span class="n">map</span><span class="p">(</span><span class="n">max</span><span class="p">)</span><span class="w"></span>
+
+<span class="kd">val</span><span class="w"> </span><span class="n">resultDf</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">df</span><span class="w"></span>
+<span class="w">    </span><span class="p">.</span><span class="n">groupBy</span><span class="p">(</span><span class="n">groupByColumns</span><span class="p">.</span><span class="n">head</span><span class="p">,</span><span class="w"> </span><span class="n">groupByColumns</span><span class="p">.</span><span class="n">tail</span><span class="p">:</span><span class="n">_*</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="p">.</span><span class="n">agg</span><span class="p">(</span><span class="n">maxOfMeasures</span><span class="p">.</span><span class="n">head</span><span class="p">,</span><span class="w"> </span><span class="n">maxOfMeasures</span><span class="p">.</span><span class="n">tail</span><span class="p">:</span><span class="n">_*</span><span class="p">)</span><span class="w"></span>
+</pre></div>
+<p>The result here is that we group by the group by columns and take the max of all the measures.</p>
+</div>
+<div class="section" id="case-class-schemas">
+<h2>Case Class Schemas</h2>
+<p>You can use collections of case classes to model records in a data frame. The case class defines the schema of the data
+and each instance is a record. Take the following schema as an example</p>
+<div class="highlight"><pre><span></span><span class="k">case</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">Employee</span><span class="p">(</span><span class="w"></span>
+<span class="w">    </span><span class="n">id</span><span class="p">:</span><span class="w"> </span><span class="nc">Long</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="n">name</span><span class="p">:</span><span class="w"> </span><span class="nc">String</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="n">department</span><span class="p">:</span><span class="w"> </span><span class="nc">String</span><span class="w"></span>
+<span class="p">)</span><span class="w"></span>
+</pre></div>
+<p>Let's define a collection of employee records using this case class.</p>
+<div class="highlight"><pre><span></span><span class="kd">val</span><span class="w"> </span><span class="n">employees</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">Seq</span><span class="p">(</span><span class="w"></span>
+<span class="w">    </span><span class="nc">Employee</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;John Smith&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Finance&quot;</span><span class="p">),</span><span class="w"></span>
+<span class="w">    </span><span class="nc">Employee</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Pocahontas&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Engineering&quot;</span><span class="p">)</span><span class="w"></span>
+<span class="p">)</span><span class="w"></span>
+</pre></div>
+<p>Now we can easily create a data frame from this data.</p>
+<div class="highlight"><pre><span></span><span class="k">import</span><span class="w"> </span><span class="nn">spark</span><span class="p">.</span><span class="nn">implicits</span><span class="p">.</span><span class="n">_</span>
+<span class="kd">val</span><span class="w"> </span><span class="n">df</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">employees</span><span class="p">.</span><span class="n">toDF</span><span class="w"></span>
+</pre></div>
+<p>The data frame will have a bigint/long column for id, a string name column, and a string department
+column with the 2 employee records.</p>
+</div>
+<div class="section" id="monkey-patching-spark">
+<h2>Monkey Patching Spark</h2>
+<p>With the use of implicit classes, you can even add your own functionality to Spark data frames. This allows you to
+extend them beyond the set of methods built-in natively, which can be pretty useful to cut down repetitive boiler
+plate code if used with caution. I've written about this in detail before here:
+<a class="reference external" href="https://decipheringbigdata.com/modularizing-and-chaining-scala-spark-transformations.html">Modularizing and Chaining Scala Spark Transformations</a></p>
+</div>
+
+
+		<div id="article_meta">
+				Category:
+					<a href="https://decipheringbigdata.com/category/programming.html">Programming</a>
+				<br />Tags:
+					<a href="https://decipheringbigdata.com/tag/programming.html">Programming</a>
+		</div>
+	</article>
+
+	<footer>
+		<a href="https://decipheringbigdata.com/" class="button_accent">&larr;&nbsp;&nbsp;&nbsp;Back to blog</a>
+		<a id="emailSignup" class="button_accent">&nbsp;&nbsp;&nbsp;Sign up for our newsletter!</a>
+	</footer>
+
+
+	</section>
+
+</body>
+</html>
